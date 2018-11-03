@@ -1,9 +1,9 @@
-var express = require("express");
-
-var app = express();
-
-app.get("/", function(req, res) {
-    res.send("hi");
+const app = require('./app');
+const server = app.listen(3300, "localhost");
+server.on('listening', () => {
+	const addr = server.address();
+	const bind = typeof addr === 'string'
+		? 'pipe ' + addr
+		: 'port ' + addr.port;
+	console.log('Listening on ' + bind);
 });
-
-app.listen(3300, "localhost", null, function() { console.log("Server started!") });
