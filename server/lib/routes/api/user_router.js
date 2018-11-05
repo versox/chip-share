@@ -17,9 +17,19 @@ router.post('/login', (req, res, next) => {
 		res.status(200).send({token: 'Bearer '+token});
 	});
 });
-// creates a new user
-router.post('/register', (req, res, next) => {
-	// TODO
+router.post('/register', (req, res) => {
+	const user = new User({
+		name: req.body.name,
+		username: req.body.username,
+		password: req.body.password // will be hashed pre-save
+	});
+	user.save((err) => {
+		if (err) {
+			res.status(400).send({errors: err.errors});
+		} else {
+			res.status(201).end();
+		}
+	});
 });
 
 module.exports = router;
