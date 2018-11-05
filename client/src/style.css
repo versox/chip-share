@@ -1,0 +1,40 @@
+body {
+    background-color: #38393a;
+}
+
+h1 {
+    color: white;
+}
+
+.editor {
+    width: 80%;
+    margin: auto;
+}
+
+div.on {
+    background-color: #dee0e2;
+}
+
+div.on:hover {
+    background-color: #a4a6aa;
+}
+
+div.off {
+    background-color: #72777f;
+}
+
+div.off:hover {
+    background-color: #dee0e2;
+}
+
+.bar {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    flex-direction: row;
+}
+
+.tile {
+    flex: 0 0 12.5%;
+    border: solid 1px black;
+}
