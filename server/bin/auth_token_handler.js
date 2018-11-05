@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
-const secret = process.env.CHIP_SHARE_SECRET | '&$j#*GrqkAa2S|P:Xur26rWI^XOtao';
+const secret = process.env.CHIP_SHARE_SECRET || '&$j#*GrqkAa2S|P:Xur26rWI^XOtao';
 const User = require('../lib/models/User');
 exports.check = function(req, res, next) {
 	let token = req.headers['Authorization'];

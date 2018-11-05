@@ -11,8 +11,9 @@ router.post('/login', (req, res, next) => {
 	User.findOne({username: req.body.username}, async (err, user) => {
 		if (err)
 			return next(createError(500, 'database error'));
-		if (!user || await !user.checkPassword(req.body.password))
+		if (!user || !(await user.checkPassword(req.body.password)))
 			return next(createError(401, 'invalid username or password'));
+		console.log("creating token for "+user.username+" ("+user.id+")"); // TODO remove
 		const token = await authTokenHandler.createToken(user.id);
 		res.status(200).send({token: 'Bearer '+token});
 	});
@@ -25,7 +26,15 @@ router.post('/register', (req, res) => {
 	});
 	user.save((err) => {
 		if (err) {
-			res.status(400).send({errors: err.errors});
+			const errorMessages = {};
+			if (err.message.indexOf('duplicate key error') !== -1) {
+				errorMessages.username = 'Username already taken.';
+			} else {
+				for (const errorKey in err.errors) {
+					errorMessages[errorKey] = err.errors[errorKey].message;
+				}
+			}
+			res.status(400).send({errors: errorMessages});
 		} else {
 			res.status(201).end();
 		}
