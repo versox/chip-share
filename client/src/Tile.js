@@ -11,7 +11,7 @@ class Tile extends Component {
 	this.id = props.id;
     }
 
-    onClick() {
+    toggle() {
 	if(this.state.active) {
 	    this.unset(this.id);
 	} else {
@@ -21,14 +21,25 @@ class Tile extends Component {
 	    active: !state.active 
 	}));
     }
+    
+    onMouseDown(event) {
+	console.log(this.id);
+	this.toggle();
+    }
+
+    onMouseUp(event) {
+	console.log(this.id);
+	this.toggle();
+    }
 
     render() {
 	return (
 	    <div
 		class={"tile " + (this.state.active ? "on" : "off")}
-		onClick={this.onClick.bind(this)}
+		onClick={this.toggle.bind(this)}
+		onMouseDown={this.onMouseDown.bind(this)}
+		onMouseUp={this.onMouseUp.bind(this)}
 		>
-		&nbsp;
 	    </div>
 	);
     }
