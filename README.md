@@ -1,5 +1,7 @@
 # chip-share
 
+![gitShareFirstLook](chipShareFirstLook.png)
+
 Week One:
 ---------
 
