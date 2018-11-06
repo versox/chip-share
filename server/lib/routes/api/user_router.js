@@ -33,7 +33,7 @@ router.post('/register', (req, res) => {
 					errorMessages[errorKey] = err.errors[errorKey].message;
 				}
 			}
-			res.status(400).send({errors: errorMessages});
+			res.status(400).send({fieldErrors: errorMessages});
 		} else {
 			res.status(201).end();
 		}
