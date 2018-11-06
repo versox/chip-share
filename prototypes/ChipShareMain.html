@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chip Share</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <style>
 @font-face {
@@ -17,28 +18,128 @@ h1 {
 	font-size: 100pt;
 	color: white;
 }
+h3 {
+	font-size: 30pt;
+	color: white;
+	text-align: center;
+}
 p {
 	font-size: 12pt;
 	color: white;
 }
+body {
+	background-color: #38393a;
+}
+.col-sm-4 {
+	background-color: #252525;
+	margin-left: 10px;
+	margin-right: 10px;
+	width: 30%;
+	height: 500px;
+	text-align: center;
+	border-radius: 10px;
+}
+span {
+	color: white;
+	font-size: 12pt;
+}
+.song-list {
+	background-color: #111111;
+	border-radius: 10px;
+	text-align: left;
+	padding: 10px;
+}
 </style>
 </head>
-<body style="background-color: #0d0d0d">
+<body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Chip Share</a>
-		<p class="navbar-text navbar-right">Logged in as: Test User &nbsp;</p>
+		<a class="navbar-brand" href="ChipShareMain.html">Chip Share</a>
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Home</a></li>
 			<li><a href="#">Create</a></li>
 			<li><a href="#">My songs</a></li>
 			<li><a href="#">Favourites</a></li>
 			<li><a href="#">Community</a></li>
-		</ul>	
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+        			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Logged in as: Test User <span class="caret"></span></a>
+        			<ul class="dropdown-menu">
+          				<li><a href="#">Profile</a></li>
+          				<li><a href="#">Options</a></li>
+					<li role="separator" class="divider"></li>
+          				<li><a href="#">Log Out</a></li>
+        			</ul>
+      			</li>
+		</ul>
 	</div>
 </nav>
 <br><br>
 <h1 style="text-align:center;margin-top:50px">Chip Share</h1>
-<p style="text-align:center">Welcome to Chip Share! Chip Share is browser-based chiptune generator that allows users to create, save, and share songs.</p>
+<p style="text-align:center">Welcome to Chip Share! Chip Share is browser-based chiptune generator that allows users to create, save, and share songs.</p><br><br>
+<div class="container-fluid" style="width:85%;margin-left:auto;margin-right:auto;">
+	<div class="row">
+		<div class="col-sm-4">
+			<h3>Get Started</h3>
+			<p>Start your adventure on Chip Share by creating a song:</p>
+			<button type="button" class="btn btn-success">Create a New Song &nbsp<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button><br><br>
+			<p>Learn how to make a song by viewing the tutorial:</p>
+			<button type="button" class="btn btn-info">View The Tutorial &nbsp<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button><br><br>
+			<p>Or look at some examples songs:</p>
+			<button type="button" class="btn btn-primary">Example Songs &nbsp<span class="glyphicon glyphicon-music"></span></button><br><br>
+		</div>
+		<div class="col-sm-4">
+			<h3>Most Popular Songs</h3>
+			<p>Chip Share's top rated songs: </p>
+			<p style="text-align: left; margin-top: 10px;">#1</p>
+			<div class="song-list">
+				<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+				<span style="font-size: 15pt">&nbspSong Name</span>
+				<a href="#" style="float: right">Artist Name</a>
+				<div style="text-align: center;">
+					<span class="glyphicon glyphicon-star" aria-hidden:true></span>
+					<span class="glyphicon glyphicon-star" aria-hidden:true></span>
+					<span class="glyphicon glyphicon-star" aria-hidden:true></span>
+					<span class="glyphicon glyphicon-star-empty" aria-hidden:true></span>
+					<span class="glyphicon glyphicon-star-empty" aria-hidden:true></span>
+					<span>&nbspAverage rating: 3.5/5</span>
+				</div>
+			</div>
+			<p style="text-align: left; margin-top: 10px;">#2</p>
+                        <div class="song-list">
+                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+                                <span style="font-size: 15pt">&nbspSong Name</span>
+                                <a href="#" style="float: right">Artist Name</a>
+                                <div style="text-align: center;">
+                                        <span class="glyphicon glyphicon-star" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star-empty" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star-empty" aria-hidden:true></span>
+                                        <span>&nbspAverage rating: 3.5/5</span>
+                                </div>
+                        </div>
+			<p style="text-align: left; margin-top: 10px;">#3</p>
+                        <div class="song-list">
+                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+                                <span style="font-size: 15pt">&nbspSong Name</span>
+                                <a href="#" style="float: right">Artist Name</a>
+                                <div style="text-align: center;">
+                                        <span class="glyphicon glyphicon-star" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star-empty" aria-hidden:true></span>
+                                        <span class="glyphicon glyphicon-star-empty" aria-hidden:true></span>
+                                        <span>&nbspAverage rating: 3.5/5</span>
+                                </div>
+                        </div>
+		</div>
+		<div class="col-sm-4">
+			<h3>About</h3>
+			<p>Chip Share is a thing.</p>
+			<p>It is a school project</p>
+		</div>
+	</div>
+</div>
 </body>
 </html>
