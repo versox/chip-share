@@ -3,7 +3,7 @@ const createError = require('http-errors');
 const secret = process.env.CHIP_SHARE_SECRET || '&$j#*GrqkAa2S|P:Xur26rWI^XOtao';
 const User = require('../lib/models/User');
 exports.check = function(req, res, next) {
-	let token = req.headers['Authorization'];
+	let token = req.header('Authorization');
 	if (!token)
 		return next(createError(401, 'authorization token required'));
 	if (!token.startsWith('Bearer '))
@@ -13,21 +13,12 @@ exports.check = function(req, res, next) {
 		if (err)
 			return next(createError(401, 'invalid authorization token'));
 		else {
-			// async getter method
-			req.getUser = function() {
-				return new Promise(function(resolve, reject) {
-					if (req.hasOwnProperty('user'))
-						resolve(req.user);
-					else {
-						User.findById(decoded.id, function (err, user) {
-							if (err) reject(err);
-							req.user = user ? user : null;
-							resolve(req.user);
-						});
-					}
-				});
-			};
-			next();
+			User.findById(decoded.id, function (err, user) {
+				if (err) return next(createError(500, 'database error (fetch user)'));
+				if (user == null) return next(createError(401, 'invalid authorization token'));
+				req.user = user;
+				next();
+			});
 		}
 	});
 };
