@@ -1,5 +1,5 @@
 const app = require('./app');
-const server = app.listen(3300, "localhost");
+const server = app.listen(parseInt(process.env.CHIP_SHARE_PORT || '3300', 10), "localhost");
 server.on('listening', () => {
 	const addr = server.address();
 	const bind = typeof addr === 'string'
