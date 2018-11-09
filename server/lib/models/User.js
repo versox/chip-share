@@ -38,14 +38,6 @@ schema.post('validate', function(user, next) {
 });
 // custom method for checking the password
 schema.methods.checkPassword = function(test) {
-	const password = this.password;
-	return new Promise(function(resolve, reject) {
-		bcrypt.compare(test, password, function(err, res) {
-			if (err)
-				reject(err);
-			else
-				resolve(res);
-		});
-	});
+	return bcrypt.compare(test, this.password);
 };
 module.exports = mongoose.model('User', schema);

@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 const secret = process.env.CHIP_SHARE_SECRET || '&$j#*GrqkAa2S|P:Xur26rWI^XOtao';
 const User = require('../lib/models/User');
+const bcrypt = require('bcryptjs');
+const uuidv4 = require('uuid/v4');
 exports.check = function(req, res, next) {
 	let token = req.header('Authorization');
 	if (!token)
@@ -17,6 +19,7 @@ exports.check = function(req, res, next) {
 				if (err) return next(createError(500, 'database error (fetch user)'));
 				if (user == null) return next(createError(401, 'invalid authorization token'));
 				req.user = user;
+				req.tokenRefreshSecret = decoded.hs;
 				next();
 			});
 		}
@@ -24,11 +27,18 @@ exports.check = function(req, res, next) {
 };
 exports.createToken = function(userId) {
 	return new Promise(function(resolve, reject) {
-		jwt.sign({ id: userId }, secret, { expiresIn: '1h' }, function(err, token) {
-			if (err)
-				reject(err);
-			else
-				resolve(token);
+		const refreshSecret = uuidv4();
+		bcrypt.genSalt(10, function(err, salt) {
+			if (err) return next(err);
+			bcrypt.hash(refreshSecret, salt, function(err, hashedSecret) {
+				if (err) return reject(err);
+				jwt.sign({ id: userId, hs: hashedSecret }, secret, { expiresIn: '30m' }, function(err, token) {
+					if (err)
+						reject(err);
+					else
+						resolve([token, refreshSecret]);
+				});
+			});
 		});
 	});
 };
