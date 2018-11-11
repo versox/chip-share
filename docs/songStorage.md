@@ -11,6 +11,7 @@ Songs consist of instruments. Each instrument has blocks (pieces of the song) wh
 - Date created / edited??
 - BPM (beats per minute): integer value
 - Key: two ascii characters
+- Song Length: 1-8 (amount of blocks to loop around)
 
 ---
 ### Instruments:
