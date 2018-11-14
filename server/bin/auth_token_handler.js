@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 const secret = process.env.CHIP_SHARE_SECRET || '&$j#*GrqkAa2S|P:Xur26rWI^XOtao';
-const User = require('../lib/models/User');
+const User = require('../lib/schemas/models/User');
 const bcrypt = require('bcryptjs');
 const uuidv4 = require('uuid/v4');
 exports.check = function(req, res, next) {

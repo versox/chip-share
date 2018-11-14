@@ -40,4 +40,15 @@ schema.post('validate', function(user, next) {
 schema.methods.checkPassword = function(test) {
 	return bcrypt.compare(test, this.password);
 };
+schema.methods.toFormattedObject = function(hidePassword = true) {
+	return this.toObject({
+		versionKey: false,
+		transform: (user, output) => {
+			if (hidePassword)
+				delete output.password;
+			output.id = output._id;
+			delete output._id;
+		}
+	});
+};
 module.exports = mongoose.model('User', schema);
