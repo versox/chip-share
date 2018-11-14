@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router({});
 const authTokenHandler = require('../../../bin/auth_token_handler');
-const User = require('../../models/User');
+const User = require('../../schemas/models/User');
 const createError = require('http-errors');
 const bcrypt = require('bcryptjs');
 
 router.get('/account-info', authTokenHandler.check, (req, res) => {
-	res.send(req.user.toObject({versionKey: false, transform: (doc, output) => { delete output.password; }}));
+	res.send(req.user.toFormattedObject());
 });
 router.post('/login', (req, res, next) => {
 	try {
