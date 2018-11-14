@@ -16,7 +16,7 @@ class Editor extends Component {
 	for(let i = 0; i < 12; i++)
 	{
 	    let line = [];
-	    for(let j = 0; j < 8; j++)
+	    for(let j = 0; j < 16; j++)
 	    {
 		line.push({
 		    type: 'off',
@@ -61,7 +61,7 @@ class Editor extends Component {
 	this.synth = new Tone.PolySynth(6, Tone.Synth).toMaster();
 	Tone.Transport.loopEnd = '1m';
 	Tone.Transport.loop = true;
-	Tone.Transport.bpm.value = 30;
+	Tone.Transport.bpm.value = 200;
 
 	this.looper = {
 	    count: 0,
@@ -89,7 +89,7 @@ class Editor extends Component {
 		    }
 		
 	    }
-	    if(this.looper.count >= 7)
+	    if(this.looper.count >= 15)
 	    {
 		this.looper.count = 0;
 	    }

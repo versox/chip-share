@@ -57,13 +57,11 @@ div.off:hover {
 }
 
 div.start, div.mid {
-    border-right: solid 1px #dee0e2;
-    background-color: green;
+    background-color: #54D6AF;
 }
 
 div.end, div.mid {
-    border-left: solid 1px #dee0e2;
-    background-color: red;
+    background-color: #D6547B;
 }
 
 .line {
@@ -74,6 +72,6 @@ div.end, div.mid {
 }
 
 .tile {
-    flex: 0 0 12.5%;
+    flex: 0 0 6.25%;
     border: solid 1px black;
 }
