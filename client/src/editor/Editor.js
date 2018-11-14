@@ -36,9 +36,9 @@ class Editor extends Component {
 		    endF: function() {
 			this.type = 'end';
 		    },
-		    linePt: line,
-		    row: i,
-		    col: j
+		    midF: function() {
+			this.type = 'mid';
+		    }
 		});
 	    }
 	    this.block.push(line);
@@ -58,10 +58,10 @@ class Editor extends Component {
 	    }
 	}).toMaster();
 
-	this.synth = new Tone.PolySynth(6, Tone.Synth).toMaster();
+	this.synth = new Tone.PolySynth(16, Tone.Synth).toMaster();
 	Tone.Transport.loopEnd = '1m';
 	Tone.Transport.loop = true;
-	Tone.Transport.bpm.value = 200;
+	//Tone.Transport.bpm.value = ;
 
 	this.looper = {
 	    count: 0,
