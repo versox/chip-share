@@ -3,42 +3,48 @@ import React, { Component } from 'react';
 class Tile extends Component {
     constructor(props) {
 	super(props);
-	this.state = {
-	    active: false
-	};
-	this.set = props.set;
-	this.unset = props.unset;
-	this.id = props.id;
+	this.state = props.tile;
     }
 
-    toggle() {
-	if(this.state.active) {
-	    this.unset(this.id);
-	} else {
-	    this.set(this.id);
-	}
-	this.setState(state => ({
-	    active: !state.active 
-	}));
+    onMouseMove(event) {
     }
-    
+
     onMouseDown(event) {
-	console.log(this.id);
-	this.toggle();
+	this.props.dragger.active = this.props.line;
+	this.props.dragger.start = this;
+	//this.state.startF();
+	//this.forceUpdate();
     }
 
     onMouseUp(event) {
-	console.log(this.id);
-	this.toggle();
+	console.log(this.props.line);
+	console.log(this.props.dragger.active);
+	if(this.props.line === this.props.dragger.active)
+	{
+	    if(this.props.dragger.start === this)
+	    {
+		this.state.clickF();
+	    }
+	    else
+	    {
+		console.log(this.props.dragger.start);
+		console.log(this);
+		this.props.dragger.start.state.startF();
+		this.props.dragger.start.forceUpdate();
+		this.state.endF();
+	    }
+	    this.forceUpdate();
+	}
+	this.props.dragger.active = null;
     }
 
     render() {
 	return (
 	    <div
-		class={"tile " + (this.state.active ? "on" : "off")}
-		onClick={this.toggle.bind(this)}
+		class={"tile " + (this.state.type)}
 		onMouseDown={this.onMouseDown.bind(this)}
 		onMouseUp={this.onMouseUp.bind(this)}
+		onMouseMove={this.onMouseMove.bind(this)}
 		>
 	    </div>
 	);
