@@ -64,7 +64,7 @@ router.post('/create', authTokenHandler.check, (req, res, next) => {
 				const errorMessages = {};
 				for (const errorKey in err.errors)
 					errorMessages[errorKey] = err.errors[errorKey].message;
-				res.status(400).send(errorMessages);
+				res.status(400).send({fieldErrors: errorMessages});
 			} else {
 				console.log(err);
 				next(createError(500, 'an error occurred while attempting to save song'));
@@ -98,7 +98,7 @@ router.post('/update/:songId', authTokenHandler.check, (req, res, next) => {
 					const errorMessages = {};
 					for (const errorKey in err.errors)
 						errorMessages[errorKey] = err.errors[errorKey].message;
-					res.status(400).send(errorMessages);
+					res.status(400).send({fieldErrors: errorMessages});
 				} else {
 					console.log(err);
 					next(createError(500, 'an error occurred while attempting to update song'));

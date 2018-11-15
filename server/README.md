@@ -229,11 +229,13 @@ Example payload:
 Upon invalid input, you'll get a map of field errors, such as the following example:
 ```json
 {
-    "bpm": "Path `bpm` (0) is less than minimum allowed value (1).",
-    "blocks": "Block ids must range from 1-32, inclusive.",
-    "instruments.0.blocks": "There must be 8 total block ids per instrument (use null for empty blocks).",
-    "instruments.0.settings.metadata": "Metadata must be a string consisting of 3 integers followed by 2 characters.",
-    "instruments.0.settings": "Validation failed: metadata: Metadata must be a string consisting of 3 integers followed by 2 characters."
+	"fieldErrors": {
+		"bpm": "Path `bpm` (0) is less than minimum allowed value (1).",
+		"blocks": "Block ids must range from 1-32, inclusive.",
+		"instruments.0.blocks": "There must be 8 total block ids per instrument (use null for empty blocks).",
+		"instruments.0.settings.metadata": "Metadata must be a string consisting of 3 integers followed by 2 characters.",
+		"instruments.0.settings": "Validation failed: metadata: Metadata must be a string consisting of 3 integers followed by 2 characters."
+	}
 }
 ```
 If the song is created successfully, you'll get a `200 OK` response code, with the id of the new song:
@@ -247,6 +249,7 @@ If the song is created successfully, you'll get a `200 OK` response code, with t
 ### `POST /api/songs/update/<songId>`
 _Access token needed for this request._<br>
 Same payload as for create request, but only need to include the properties to be updated.
+Same `fieldErrors` mapping given for invalid input.
 Upon successful update, returns `200 OK` with no body.
 <br>
 <br>
