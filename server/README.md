@@ -92,15 +92,15 @@ The auth token should be discarded after this request.
   * Each block must have a **unique integer id, ranging from 1-32**.
   * The blocks property of each song is a **mapping of ids to objects**, which contain a single `data` field for the 2d-array.
   * There **cannot be more than 32 blocks** per song.
- * An instrument contains various settings, and an array of block ids.
-  * Each instrument has a `typeId` (single digit), and a `metadata` string composed of 3 integers followed by 2 characters (aka the instrument _profile_).
+* An instrument contains various settings, and an array of block ids.
+  * The settings object contains a `typeId` (single digit), and a `metadata` string composed of 3 integers followed by 2 characters (aka the instrument _profile_).
   * The block id array **must have the same length as `blockLength`** of the song!
   * The instruments property of each song is **an array**.
   * There **cannot be more than 4 instruments** per song.
 
 
 ### `GET /api/songs/[<songId>/<format>]`
-If optional paramters `songId` and `format` are **not** specified, returns an array of all songs, including all properties **except blocks and instruments**.
+If optional parameters `songId` and `format` are **not** specified, returns an array of all songs, including all properties **except blocks and instruments**.
 To fetch the **composition** of a song (the blocks and instruments data), specify the optional parameters (explained below).<br>
 Example response:
 ```json
