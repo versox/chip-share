@@ -195,8 +195,8 @@ If the song is created successfully, you'll get a `200 OK` response code, with t
 	"id": "5beb935a70f5a113b818a9ad"
 }
 ```
-<br>
-<br>
+
+
 ### `POST /api/songs/update/<songId>`
 _Access token needed for this request._<br>
 Same payload as for create request, but only need to include the properties to be updated.
