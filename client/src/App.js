@@ -1,60 +1,53 @@
 import React, { Component } from 'react';
 import Editor from './editor/Editor.js';
 import Home from './Home.js';
+import Login from './Login.js';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.pages = [
-	   <Home />, <Editor />
-    ];
     this.state = {
 	    activePage: 0
     }
+    this.pages = [
+	   <Home />, <Editor />, <Login />
+    ];
+    this.itemNames = [
+	   "Create", "My Songs", "Community"
+    ];
   }
 
-  SetActiveHome () {
-    this.setState(state => ({
-      activePage: 0
-    }));
-  }
-
-  SetActiveCreate () {
-    this.setState(state => ({
-      activePage: 1
-    }));
+  setActive(index) {
+      this.setState({
+	activePage: index
+      });
   }
 
   render() {
+    var navBarItems = this.itemNames.map((name, index) => {
+	return <li class="nav-item" key={index}>
+	    <a href="#" className={"nav-link " + (this.state.activePage === (index+1) ? "active" : "")}
+	       onClick={() => this.setActive(index+1)}>{name}
+	    </a>
+	</li>;
+    });
+    console.log(navBarItems);
     return (
       <div className="App">
-	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-	          <div class="container">
-	            <a class="navbar-brand" href="#" onClick={this.SetActiveHome.bind(this)}>Chip Share</a>
-	            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-	              <span class="navbar-toggler-icon"></span>
+	    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	          <div className="container">
+	            <a className="navbar-brand" href="#" onClick={() => this.setActive(0)}>Chip Share</a>
+	            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+	              <span className="navbar-toggler-icon"></span>
 	            </button>
-	            <div class="collapse navbar-collapse" id="navbarResponsive">
-	              <ul class="navbar-nav ml-auto">
-	                <li class="nav-item active">
-	                  <a class="nav-link" href="#" onClick={this.SetActiveHome.bind(this)}>Home
-	                    <span class="sr-only">(current)</span>
-	                  </a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link" href="#" onClick={this.SetActiveCreate.bind(this)}>Create</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link" href="#">My Songs</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link" href="#">Community</a>
-	                </li>
+	            <div className="collapse navbar-collapse" id="navbarResponsive">
+	              <ul className="navbar-nav ml-auto">
+			{navBarItems}
 	              </ul>
 	            </div>
 	          </div>
-	        </nav>
+	    </nav>
 	    {this.pages[this.state.activePage]}
       </div>
     );
