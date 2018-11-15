@@ -90,9 +90,13 @@ The auth token should be discarded after this request.
   * Each inner array contains 16 integers as notes.
   * Each note is a 4-bit unsigned integer (0-15) representing the state of the note.
   * Each block must have a **unique integer id, ranging from 1-32**.
+  * The blocks property of each song is a **mapping of ids to objects**, which contain a single `data` field for the 2d-array.
+  * There **cannot be more than 32 blocks** per song.
  * An instrument contains various settings, and an array of block ids.
-  * Each instrument has a 'typeId' (single digit), and a 'metadata' string composed of 3 integers followed by 2 characters (aka the instrument _profile_).
-  * The block id array **must have the same length as 'blockLength'** of the song!
+  * Each instrument has a `typeId` (single digit), and a `metadata` string composed of 3 integers followed by 2 characters (aka the instrument _profile_).
+  * The block id array **must have the same length as `blockLength`** of the song!
+  * The instruments property of each song is **an array**.
+  * There **cannot be more than 4 instruments** per song.
 
 
 ### `GET /api/songs/[<songId>/<format>]`
@@ -129,15 +133,16 @@ Example response:
     }
 ]
 ```
-To get an array of songs from one individual user (by id), specify the user's id with the `?userId=...` query.
+To get an array of songs from **one individual user** (by id), specify the user's id with the `?userId=...` query (e.g. `/api/songs/get?userId=5be0ecb6c14fa64be84a7611`).
 <br>
 <br>
-You can fetch an individual song with the `songId` and `format` parameters (**both must be provided**).
-The format parameter can either be `composition` or `full`:
+You can fetch an individual song with the `songId` and `format` parameters (both must be provided).
+The format parameter can either equal `composition` or `full`:
 * `composition`: Only returns the block and instrument data of the song.
 * `full`: Returns everything about the song.
 
-####Why have it like this, you ask?
+If the format parameter is anything else, or not specified, you'll get an error.
+#### Why have it like this, you ask?
 When fetching a list of songs, the actual user may not want to play every single one of them. With the `composition` format request, you can grab the actual music data once the user presses play.
 <br>
 Example response for `GET /api/songs/5beb935a70f5a113b818a9ad/composition`:
@@ -187,8 +192,50 @@ A `full` format request would have the above data, along with all other basic pr
 <br>
 ### `POST /api/songs/create`
 _Access token needed for this request._<br>
-Request to create a song. The payload must be of the exact same format as shown in the above responses.
-Upon invalid input, you'll get a map of field errors, similar to the `/api/user/register` request.
+Request to create a song. The payload must be of the exact same format as shown in the above responses.<br>
+Example payload:
+```json
+{
+	"name": "Song Title",
+	"bpm": 123,
+	"blockLength": 4,
+	"instruments": [{
+		"settings": {
+			"typeId": 1,
+			"metadata": "123ab"
+		},
+		"blocks": [1, null, null, null]
+	}],
+	"blocks": {
+		"1": {
+			"data": [
+				[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0]
+			]
+		}
+	}
+}
+```
+Upon invalid input, you'll get a map of field errors, such as the following example:
+```json
+{
+    "bpm": "Path `bpm` (0) is less than minimum allowed value (1).",
+    "blocks": "Block ids must range from 1-32, inclusive.",
+    "instruments.0.blocks": "There must be 8 total block ids per instrument (use null for empty blocks).",
+    "instruments.0.settings.metadata": "Metadata must be a string consisting of 3 integers followed by 2 characters.",
+    "instruments.0.settings": "Validation failed: metadata: Metadata must be a string consisting of 3 integers followed by 2 characters."
+}
+```
 If the song is created successfully, you'll get a `200 OK` response code, with the id of the new song:
 ```json
 {
@@ -205,4 +252,4 @@ Upon successful update, returns `200 OK` with no body.
 <br>
 ### `POST /api/songs/delete/<songId>`
 _Access token needed for this request._<br>
-Self-explanatory.
+Self-explanatory purpose. Returns `200 OK` upon successful deletion.
