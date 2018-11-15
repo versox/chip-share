@@ -75,26 +75,26 @@ The auth token should be discarded after this request.
 ## Song API
 ### Notes
 * Songs contain the following properties:
-  * 'name': Name of the song, 0-200 characters.
-  * 'user': Set automatically; the full user object of the song's artist.
-  * 'blockLength': The block-length of the song, 1-8.
-  * 'bpm'
-  * 'blocks': A mapping of ids to blocks. _More on this below_.
-  * 'instruments': An array of instruments. _More on this below_.
-  * 'ratings': **Will be changed and fully implemented in the future.**
-  * 'createDate': Formatted to ISO 8601.
-  * 'updateDate': Formatted to ISO 8601.
+  * `name`: Name of the song, 0-200 characters.
+  * `user`: Set automatically; the full user object of the song's artist.
+  * `blockLength`: The block-length of the song, 1-8.
+  * `bpm`: Integer, 1-500.
+  * `blocks`: A mapping of ids to blocks. _More on this below_.
+  * `instruments`: An array of instruments. _More on this below_.
+  * `ratings`: **Will be changed and fully implemented in the future.**
+  * `createDate`: Formatted to ISO 8601.
+  * `updateDate`: Formatted to ISO 8601.
 * Actual song music data is composed of blocks and instruments.
 * A block defines a collection of notes, in a 2d-array fashion:
   * The outer array contains 12 arrays, each for a separate pitch.
   * Each inner array contains 16 integers as notes.
   * Each note is a 4-bit unsigned integer (0-15) representing the state of the note.
   * Each block must have a **unique integer id, ranging from 1-32**.
-* An instrument contains various settings, and an array of block ids.
+ * An instrument contains various settings, and an array of block ids.
   * Each instrument has a 'typeId' (single digit), and a 'metadata' string composed of 3 integers followed by 2 characters (aka the instrument _profile_).
   * The block id array **must have the same length as 'blockLength'** of the song!
-<br>
-<br>
+
+
 ### `GET /api/songs/[<songId>/<format>]`
 If optional paramters `songId` and `format` are **not** specified, returns an array of all songs, including all properties **except blocks and instruments**.
 To fetch the **composition** of a song (the blocks and instruments data), specify the optional parameters (explained below).<br>
