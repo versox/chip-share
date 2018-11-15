@@ -3,6 +3,8 @@ const ObjectId = mongoose.Schema.ObjectId;
 const Rating = require('../Rating');
 const totalPitches = 12;
 const totalNotes = 16;
+const totalInstruments = 4;
+const maxBlockLength = 8;
 const noteEncodingFormat = 'base64'; // utf8 wont work, since it's multi-byte, ascii seem to work fine, but using base64 to be safe
 const objectArrayTypeCheck = function(value) {
 	// mongoose issue: setting value of sub-document arrays to false or 0 or [false] or [0] throws
@@ -137,13 +139,17 @@ const Instrument = new mongoose.Schema({
 		required: true,
 		validate: {
 			validator: function(value) {
-				if (value.length !== 8)
-					throw new Error('There must be 8 total block ids per instrument (use null for empty blocks).');
+				const song = this.parent();
+				if (!song.blockLength || !Number.isInteger(song.blockLength) || song.blockLength < 1 || song.blockLength > maxBlockLength)
+					throw new Error('Specify valid blockLength.');
+				if (value.length !== song.blockLength)
+					throw new Error('There must be '+song.blockLength+' total block ids per instrument (use null for empty blocks).');
 				value.every(function(blockId) {
 					if (blockId == null)
 						return true;
-					if (blockId < 1 || blockId > 32)
-						throw new Error('Block ids must range from 1-32, inclusive.');
+					const maxIds = maxBlockLength*totalInstruments;
+					if (blockId < 1 || blockId > maxIds)
+						throw new Error('Block ids must range from 1-'+maxIds+', inclusive.');
 					return true;
 				});
 				return true;
@@ -154,7 +160,9 @@ const Instrument = new mongoose.Schema({
 const Song = new mongoose.Schema({
 	name: {
 		type: String,
-		required: true
+		required: true,
+		minlength: 1,
+		maxlength: 200
 	},
 	userId: {
 		type: ObjectId,
@@ -174,7 +182,7 @@ const Song = new mongoose.Schema({
 		type: Number,
 		required: true,
 		min: 1,
-		max: 8
+		max: maxBlockLength
 	},
 	bpm: {
 		type: Number,
@@ -188,8 +196,8 @@ const Song = new mongoose.Schema({
 		set: objectArrayTypeCheck,
 		validate: {
 			validator: function(value) {
-				if (value.length > 4)
-					throw new Error('There cannot be more than 4 instruments.');
+				if (value.length > totalInstruments)
+					throw new Error('There cannot be more than '+totalInstruments+' instruments.');
 				return true;
 			}
 		}
@@ -200,20 +208,23 @@ const Song = new mongoose.Schema({
 		required: true,
 		validate: {
 			validator: function(value) {
+				if (!this.blockLength || !Number.isInteger(this.blockLength) || this.blockLength < 1 || this.blockLength > maxBlockLength)
+					throw new Error('Specify valid blockLength.');
 				if (value == null || typeof value !== 'object')
 					throw new Error('Given value is not an object.');
 				const keys = Array.from(value.keys());
 				if (keys.length === 0)
 					throw new Error('At least one block must be specified.');
-				if (keys.length > 32)
-					throw new Error('There cannot be more than 32 blocks.');
+				if (keys.length > this.blockLength*totalInstruments)
+					throw new Error('There cannot be more than '+this.blockLength*totalInstruments+' blocks.');
 				const ids = [];
 				keys.every(function(rawId) {
 					const parsedId = parseInt(rawId);
 					if (isNaN(parsedId))
 						throw new Error('Block key must be an integer.');
-					if (parsedId < 1 || parsedId > 32)
-						throw new Error('Block ids must range from 1-32, inclusive.');
+					const maxIds = maxBlockLength*totalInstruments;
+					if (parsedId < 1 || parsedId > maxIds)
+						throw new Error('Block ids must range from 1-'+maxIds+', inclusive.');
 					if (ids.includes(parsedId))
 						throw new Error('Duplicate block id '+parsedId+'.');
 					ids.push(parsedId);
@@ -254,17 +265,18 @@ Song.methods.getFormattedObject = function() {
 	const song = this;
 	return new Promise(async resolve => {
 		const result = song.toObject({versionKey: false});
-		delete result.userId;
-		if (result.hasOwnProperty('user')) {
+		if (result.hasOwnProperty('userId')) {
+			delete result.userId;
 			result.user = await song.getUser();
 		}
 		if (result.hasOwnProperty('blocks')) {
 			const parsedBlocks = {};
 			for (const [key, block] of song.blocks.entries()) {
-				parsedBlocks[key] = block.getParsedData();
+				parsedBlocks[key] = {data: block.getParsedData()};
 			}
 			result.blocks = parsedBlocks;
 		}
+		delete result.ratings; // TODO implement
 		result.id = result._id;
 		delete result._id;
 		resolve(result);

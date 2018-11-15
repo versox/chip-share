@@ -71,3 +71,138 @@ For security purposes, it's best to request a refreshed token only a few minutes
 _Access token needed for this request._<br>
 Deletes the account associated with the token. Returns `200 OK` on successful deletion.
 The auth token should be discarded after this request.
+
+## Song API
+### Notes
+* Songs contain the following properties:
+  * 'name': Name of the song, 0-200 characters.
+  * 'user': Set automatically; the full user object of the song's artist.
+  * 'blockLength': The block-length of the song, 1-8.
+  * 'bpm'
+  * 'blocks': A mapping of ids to blocks. _More on this below_.
+  * 'instruments': An array of instruments. _More on this below_.
+  * 'ratings': **Will be changed and fully implemented in the future.**
+  * 'createDate': Formatted to ISO 8601.
+  * 'updateDate': Formatted to ISO 8601.
+* Actual song music data is composed of blocks and instruments.
+* A block defines a collection of notes, in a 2d-array fashion:
+  * The outer array contains 12 arrays, each for a separate pitch.
+  * Each inner array contains 16 integers as notes.
+  * Each note is a 4-bit unsigned integer (0-15) representing the state of the note.
+  * Each block must have a **unique integer id, ranging from 1-32**.
+* An instrument contains various settings, and an array of block ids.
+  * Each instrument has a 'typeId' (single digit), and a 'metadata' string composed of 3 integers followed by 2 characters (aka the instrument _profile_).
+  * The block id array **must have the same length as 'blockLength'** of the song!
+<br>
+<br>
+### `GET /api/songs/[<songId>/<format>]`
+If optional paramters `songId` and `format` are **not** specified, returns an array of all songs, including all properties **except blocks and instruments**.
+To fetch the **composition** of a song (the blocks and instruments data), specify the optional parameters (explained below).<br>
+Example response:
+```json
+[
+    {
+        "name": "Renamed Song",
+        "bpm": 1,
+        "blockLength": 8,
+        "createDate": "2018-11-14T03:15:38.881Z",
+        "updateDate": "2018-11-14T03:33:57.628Z",
+        "user": {
+            "name": "John Smith",
+            "username": "johnsmith",
+            "id": "5be0ecb6c14fa64be84a7611"
+        },
+        "id": "5beb935a70f5a113b818a9ad"
+    },
+    {
+        "name": "Another Song",
+        "bpm": 1,
+        "blockLength": 8,
+        "createDate": "2018-11-14T04:26:56.072Z",
+        "updateDate": null,
+        "user": {
+            "name": "John Smith",
+            "username": "johnsmith",
+            "id": "5be0ecb6c14fa64be84a7611"
+        },
+        "id": "5beba410050a434fd42c421e"
+    }
+]
+```
+To get an array of songs from one individual user (by id), specify the user's id with the `?userId=...` query.
+<br>
+<br>
+You can fetch an individual song with the `songId` and `format` parameters (**both must be provided**).
+The format parameter can either be `composition` or `full`:
+* `composition`: Only returns the block and instrument data of the song.
+* `full`: Returns everything about the song.
+
+####Why have it like this, you ask?
+When fetching a list of songs, the actual user may not want to play every single one of them. With the `composition` format request, you can grab the actual music data once the user presses play.
+<br>
+Example response for `GET /api/songs/5beb935a70f5a113b818a9ad/composition`:
+```json
+{
+    "instruments": [
+        {
+            "blocks": [
+                1,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "settings": {
+                "typeId": 1,
+                "metadata": "123ab"
+            }
+        }
+    ],
+    "blocks": {
+        "1": {
+            "data": [
+            	[1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+            	[0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            	[0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            	[0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
+            	[0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0],
+            	[0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0],
+            	[0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0],
+            	[0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0],
+            	[0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0],
+            	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            	[0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+            	[1,1,1,0,0,0,0,0,0,0,0,2,0,0,0,0]
+            ]
+        }
+    },
+    "id": "5beb935a70f5a113b818a9ad"
+}
+```
+A `full` format request would have the above data, along with all other basic properties of the song.
+<br>
+<br>
+### `POST /api/songs/create`
+_Access token needed for this request._<br>
+Request to create a song. The payload must be of the exact same format as shown in the above responses.
+Upon invalid input, you'll get a map of field errors, similar to the `/api/user/register` request.
+If the song is created successfully, you'll get a `200 OK` response code, with the id of the new song:
+```json
+{
+	"id": "5beb935a70f5a113b818a9ad"
+}
+```
+
+
+### `POST /api/songs/update/<songId>`
+_Access token needed for this request._<br>
+Same payload as for create request, but only need to include the properties to be updated.
+Upon successful update, returns `200 OK` with no body.
+<br>
+<br>
+### `POST /api/songs/delete/<songId>`
+_Access token needed for this request._<br>
+Self-explanatory.
