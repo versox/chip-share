@@ -3,7 +3,8 @@ import Tone from 'tone';
 import './editor.css';
 import './awesome.css';
 import InstrEdit from './InstrEdit.js';
-import BlockEdit from './BlockEdit.js';
+import BlockEdit from './blockEdit/BlockEdit.js';
+import Time from './time/Time.js';
 
 class Editor extends Component {  
     constructor(props)
@@ -123,6 +124,7 @@ class Editor extends Component {
 		    <InstrEdit />
 		    <BlockEdit block={this.block} />
 		</div>
+		<Time />
    	    </div>
 	);
     }
