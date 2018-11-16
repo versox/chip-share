@@ -46,10 +46,7 @@ class Home extends Component {
 		        </a>
 		      </div>
 		    </header>
-<<<<<<< HEAD
 		  <div class="msec">
-=======
->>>>>>> 5a819929dbbfe319725aa2ce6d0f1b6fbdcc93cd
 			<h3>Most Popular Songs</h3>
 			<div className="song-list">
 				<button type="button" className="btn btn-light">Play</button>
