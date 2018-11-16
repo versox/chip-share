@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import APIHelper from './apiHelper.js';
 
 class Register extends Component {
@@ -8,13 +9,28 @@ class Register extends Component {
 	this.state = {
 	    name: "",
 	    user: "",
-	    pass: ""
+	    pass: "",
+	    alertComponent: null
 	}
     }
 
-    onSubmit()
+    onSubmit(event)
     {
-	console.log(APIHelper.register(this.state.name, this.state.user, this.state.pass));
+	event.preventDefault();
+	var response = APIHelper.register(this.state.name, this.state.user, this.state.pass);
+	var comp;
+	if (response === "Success")
+	{
+	    APIHelper.login(this.state.user, this.state.pass);
+	    comp = <Redirect to="/profile"/>;
+	}
+	else
+	{
+	    comp = <div class="alert alert-danger" role="alert">{response}</div>;
+	}
+	this.setState({
+	    alertComponent: comp
+	});
     }
 
     onChange(evt)
@@ -27,13 +43,16 @@ class Register extends Component {
     render() {
 	return (
 	    <div>
-		<form onSubmit={() => this.onSubmit()} class="form-signin">
+		<form onSubmit={(evt) => this.onSubmit(evt)} class="form-signin">
 		    <h1>Register</h1>
 		    <input value={this.state.name} onChange={evt => this.onChange(evt)} type="text" id="name" class="form-control" placeholder="Name" required autofocus /> 
 		    <input value={this.state.user} onChange={evt => this.onChange(evt)} type="text" id="user" class="form-control" placeholder="Username" required />
 		    <input value={this.state.pass} onChange={evt => this.onChange(evt)} type="password" id="pass" class="form-control" placeholder="Password" required />
 		    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+		    <h3>Already have an account?</h3>
+		    <Link to="/login">Login Here</Link>
 		</form>
+		{this.state.alertComponent}
 	    </div>
 	);
     }

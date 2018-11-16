@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, Link } from 'react-router-dom';
 import APIHelper from './apiHelper.js';
 
 class Login extends Component {
@@ -42,7 +42,9 @@ class Login extends Component {
 		    <label for="pass" class="sr-only">Password</label>
 		    <input value={this.state.pass} onChange={evt => this.onChange(evt)} type="password" id="pass" class="form-control" placeholder="Password" required />
 		    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-		</form>
+		    <h3>Don't have an account?</h3>
+		    <Link to="/register">Register Here</Link>
+		</form>	
 		{this.state.alertComponent}
 	    </div>
 	);

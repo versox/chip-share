@@ -70,3 +70,6 @@ code {
     margin: auto;
     width: 400px;
 }
+h1, h3 {
+    color: white;
+}
