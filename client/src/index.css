@@ -71,3 +71,7 @@ code {
 	margin-left: 20px;
 	font-size: 16pt;
 }
+.form-signin {
+    margin: auto;
+    width: 400px;
+}

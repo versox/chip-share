@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import APIHelper from './apiHelper.js';
 
 class Login extends Component {
     constructor(props)
@@ -6,43 +7,46 @@ class Login extends Component {
 	super(props);
 	this.state = {
 	    user: "",
-	    pass: ""
+	    pass: "",
+	    alertComponent: null
 	}
     }
 
     onSubmit()
     {
-	console.log(this.state.user + " " + this.state.pass);
+	var response = APIHelper.login(this.state.user, this.state.pass);
+	if (response === "Success")
+	{
+	       
+	}
+	else
+	{
+	    this.setState({ alertComponent:
+		<div class="alert alert-danger" role="alert">
+		    {response}
+		</div> });
+	}
     }
 
     onChange(evt)
     {
-	console.log(evt);
-	var updateState = function()
-	{
-	    var newState = {};
-	    newState[evt.target.id] = evt.target.value;
-	    return newState;
-	}
-	this.setState(
-	    () => updateState()
-	    //{
-	    //var newState = {};
-	    //newState[evt.target.id] = evt.target.value;
-	    //return newState;
-	    //user: evt.target.value
-	    //}
-	);
+	var newState = {};
+	newState[evt.target.id] = evt.target.value; 
+	this.setState(newState);
     }
     
     render() {
 	return (
 	    <div>
-		<form onSubmit={() => this.onSubmit()}>
-		    <input id='user' value={this.state.user} onChange={evt => this.onChange(evt)} type='text' />
-		    <input id='pass' value={this.state.password} onChange={evt => this.onChange(evt)} type='password' />
-		    <input type='submit' />
+		<form onSubmit={() => this.onSubmit()} class="form-signin">
+		    <h1>Please sign in</h1>
+		    <label for="user" class="sr-only">Username</label>
+		    <input value={this.state.user} onChange={evt => this.onChange(evt)} type="text" id="user" class="form-control" placeholder="Username" required autofocus />
+		    <label for="pass" class="sr-only">Password</label>
+		    <input value={this.state.pass} onChange={evt => this.onChange(evt)} type="password" id="pass" class="form-control" placeholder="Password" required />
+		    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 		</form>
+		{this.state.alertComponent}
 	    </div>
 	);
     }
