@@ -15,7 +15,7 @@ class App extends Component {
 	"Create", "My Songs", "Community"
     ];
     this.destination = [
-	"editor", "profile", "register"
+	"editor", "profile", ""
     ];
   }
 
@@ -27,49 +27,69 @@ class App extends Component {
   }
 
   render() {
-    var navBarItems = this.itemNames.map((name, index) => {
+    const navBarItems = this.itemNames.map((name, index) => {
 	return <li className="nav-item" key={index}>
 	    <a href={this.destination[index]} className={"nav-link " + (false ? "active" : "")}>
 		{this.itemNames[index]}
 	    </a>
 	</li>;
     });
+    const UserMenu = (props) => {
+	let name = Cookies.get('name');
+	return (
+	<ul className="navbar-nav ml-auto">
+	    { name ?  
+	    (<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    Logged in as: {name}
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		    <a class="dropdown-item" href="#">Profile</a>
+		    <a class="dropdown-item" href="#">Options</a>
+		    <div class="dropdown-divider"></div>
+		    <a class="dropdown-item" href="/logout">Log Out</a>
+		</div>
+	    </li>) :
+	    (
+		<a class="nav-link" href="/login">Log In / Register</a> 
+	    )}
+	</ul>
+	);
+    }
+    const Logout = (props) => {
+	Object.keys(Cookies.get()).forEach((key, i) => {
+	    Cookies.remove(key);
+	});
+	return (
+	    <div class="alert alert-success" role="alert">Logged out!</div>
+	);
+    }
     return (
       <div className="App">
-	    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-	          <div className="container">
-	            <a className="navbar-brand" href="/">Chip Share</a>
-	            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-	              <span className="navbar-toggler-icon"></span>
-	            </button>
-	            <div className="collapse navbar-collapse" id="navbarResponsive">
-	              <ul className="navbar-nav mr-auto">
-			{navBarItems}
-	              </ul>
-	    	      <ul className="navbar-nav ml-auto">
-	    		<a class="nav-link" href="#">Log In</a>
-	    	        <li class="nav-item dropdown">
-	                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                  Logged in as: Test User
-	                  </a>
-	                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	                    <a class="dropdown-item" href="#">Profile</a>
-	                    <a class="dropdown-item" href="#">Options</a>
-	                    <div class="dropdown-divider"></div>
-	                    <a class="dropdown-item" href="#">Log Out</a>
-	                  </div>
-	                </li>
-	              </ul>
-	            </div>
-	          </div>
-	    </nav>
 	    <Router>
 		<div>
+		    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		      <div className="container">
+			<a className="navbar-brand" href="/">Chip Share</a>
+			<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			  <span className="navbar-toggler-icon"></span>
+			</button>
+			<div className="collapse navbar-collapse" id="navbarResponsive">
+			  <ul className="navbar-nav mr-auto">
+			    {navBarItems}
+			  </ul>
+			  <Route path="/logout" component={Logout} />
+			  <Route path="/" component={UserMenu} />
+			</div>
+		      </div>
+		    </nav>
+		    <Route path="/logout" component={Home} />
+
 		    <Route path="/" exact component={Home} />
 		    <Route path="/editor" component={Editor} />
 		    <Route path="/login" component={Login} />
 		    <Route path="/register" component={Register} />
-	    	    <Route path="/profile" component={Profile} />
+		    <Route path="/profile" component={Profile} />
 		</div>
 	    </Router>
       </div>

@@ -1,5 +1,7 @@
 import * as Cookies from 'js-cookie';
 
+const in30Minutes = 1/48;
+
 var apiHelper =
 {
     register: function(name, user, pass) {
@@ -28,10 +30,15 @@ var apiHelper =
 	if (req.status === 200)
 	{
 	    var res = JSON.parse(req.response);
-	    Cookies.set('name', res.name || "unknown");
-	    Cookies.set('token', res.token);
-	    console.log(res.token);
-	    Cookies.set('secret', res.refreshSecret);
+	    Cookies.set('name', res.name || "unknown", {
+		expires: in30Minutes
+	    });
+	    Cookies.set('token', res.token, {
+		expires: in30Minutes
+	    });
+	    Cookies.set('secret', res.refreshSecret, {
+		expires: in30Minutes
+	    });
 	    return "Success";
 	}
 	return req.response;

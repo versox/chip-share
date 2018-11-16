@@ -81,3 +81,7 @@ hr {
 	border-color: black;
 	font-weight: bold;
 }
+
+h1, h3 {
+    color: white;
+}
