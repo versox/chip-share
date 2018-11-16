@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import * as Cookies from 'js-cookie';
 import Editor from './editor/Editor.js';
 import Home from './Home.js';
@@ -9,19 +10,11 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    var page = Cookies.get('actPage');
-    if(!page)
-    {
-	page = 0;
-    }
-    this.state = {
-	    activePage: page
-    }
-    this.pages = [
-	   <Home />, <Editor />, <Login />, <Register />
-    ];
     this.itemNames = [
-	   "Create", "My Songs", "Community"
+	"Create", "My Songs", "Community"
+    ];
+    this.destination = [
+	"editor", "login", "register"
     ];
   }
 
@@ -35,8 +28,8 @@ class App extends Component {
   render() {
     var navBarItems = this.itemNames.map((name, index) => {
 	return <li className="nav-item" key={index}>
-	    <a href="#top" className={"nav-link " + (this.state.activePage === (index+1) ? "active" : "")}
-	       onClick={() => this.setActive(index+1)}>{name}
+	    <a href={this.destination[index]} className={"nav-link " + (false ? "active" : "")}>
+		{this.itemNames[index]}
 	    </a>
 	</li>;
     });
@@ -44,7 +37,7 @@ class App extends Component {
       <div className="App">
 	    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	          <div className="container">
-	            <a className="navbar-brand" href="#top" onClick={() => this.setActive(0)}>Chip Share</a>
+	            <a className="navbar-brand" href="/">Chip Share</a>
 	            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 	              <span className="navbar-toggler-icon"></span>
 	            </button>
@@ -55,7 +48,14 @@ class App extends Component {
 	            </div>
 	          </div>
 	    </nav>
-	    {this.pages[this.state.activePage]}
+	    <Router>
+		<div>
+		    <Route path="/" exact component={Home} />
+		    <Route path="/editor" component={Editor} />
+		    <Route path="/login" component={Login} />
+		    <Route path="/register" component={Register} />
+		</div>
+	    </Router>
       </div>
     );
   }
