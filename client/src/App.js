@@ -42,8 +42,22 @@ class App extends Component {
 	              <span className="navbar-toggler-icon"></span>
 	            </button>
 	            <div className="collapse navbar-collapse" id="navbarResponsive">
-	              <ul className="navbar-nav ml-auto">
+	              <ul className="navbar-nav mr-auto">
 			{navBarItems}
+	              </ul>
+	    	      <ul className="navbar-nav ml-auto">
+	    		<a class="nav-link" href="#">Log In</a>
+	    	        <li class="nav-item dropdown">
+	                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                  Logged in as: Test User
+	                  </a>
+	                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	                    <a class="dropdown-item" href="#">Profile</a>
+	                    <a class="dropdown-item" href="#">Options</a>
+	                    <div class="dropdown-divider"></div>
+	                    <a class="dropdown-item" href="#">Log Out</a>
+	                  </div>
+	                </li>
 	              </ul>
 	            </div>
 	          </div>

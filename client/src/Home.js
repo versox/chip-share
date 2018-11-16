@@ -46,11 +46,7 @@ class Home extends Component {
 		        </a>
 		      </div>
 		    </header>
-		  <h1 className="logo">Chip Share</h1>
-		  <div className="sublogo">
-			<p>Welcome to Chip Share! Chip Share is browser-based chiptune generator that allows users to create, save, and share songs.</p>
-		  </div>
-		  <div className="msec">
+		  <div class="msec">
 			<h3>Most Popular Songs</h3>
 			<div className="song-list">
 				<button type="button" className="btn btn-light">Play</button>
