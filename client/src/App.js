@@ -5,6 +5,7 @@ import Editor from './editor/Editor.js';
 import Home from './Home.js';
 import Login from './Login.js';
 import Register from './Register.js';
+import Profile from './Profile.js';
 
 class App extends Component {
 
@@ -14,7 +15,7 @@ class App extends Component {
 	"Create", "My Songs", "Community"
     ];
     this.destination = [
-	"editor", "", ""
+	"editor", "profile", ""
     ];
   }
 
@@ -68,6 +69,7 @@ class App extends Component {
 		    <Route path="/editor" component={Editor} />
 		    <Route path="/login" component={Login} />
 		    <Route path="/register" component={Register} />
+	    	    <Route path="/profile" component={Profile} />
 		</div>
 	    </Router>
       </div>
