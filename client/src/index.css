@@ -38,7 +38,7 @@ code {
 	bottom: 70px;
 	transform: translateX(-50%);
 }
-.logo {
+.account-name {
 	text-align: center;
 	font-family: bit;
 	font-size: 80pt;
@@ -51,11 +51,6 @@ code {
 	color: white;
 	margin: 20px 50px 20px 50px;
 	padding: 10px;
-}
-.sublogo {
-	color: white;
-	text-align: center;
-	font-size: 16pt;
 }
 .song-list {
 	background-color: #101010;
