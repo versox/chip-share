@@ -13,6 +13,12 @@ class Home extends Component {
 	    this.slide3 = {
               backgroundImage: 'url(/assets/Slide3.png)'
 	    }
+	    this.titles = [
+	      "Title 1", "Title 2", "Title 3"
+	    ];
+	    this.artists = [
+	      "Artist 1", "Artist 2", "Artist 3"
+	    ];
     }
 
     render() {
@@ -50,18 +56,18 @@ class Home extends Component {
 			<h3>Most Popular Songs</h3>
 			<div className="song-list">
 				<button type="button" className="btn btn-light">Play</button>
-				<span className="song-title">Song Title</span>
-				<a href="#top" className="artist-name">Artist Name</a>
+				<span className="song-title">{this.titles[0]}</span>
+				<a href="#top" className="artist-name">{this.artists[0]}</a>
 			</div>
 			<div className="song-list">
 		        	<button type="button" className="btn btn-light">Play</button>
-		                <span className="song-title">Song Title</span>
-		                <a href="#top" className="artist-name">Artist Name</a>
+		                <span className="song-title">{this.titles[1]}</span>
+		                <a href="#top" className="artist-name">{this.artists[1]}</a>
 		        </div>
 			<div className="song-list">
 		                <button type="button" className="btn btn-light">Play</button>
-		                <span className="song-title">Song Title</span>
-		          	<a href="#top" className="artist-name">Artist Name</a>
+		                <span className="song-title">{this.titles[2]}</span>
+		          	<a href="#top" className="artist-name">{this.artists[2]}</a>
 		        </div>
 		  </div>
 		  <div className="msec">
