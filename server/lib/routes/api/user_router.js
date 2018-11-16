@@ -16,7 +16,7 @@ router.post('/login', (req, res, next) => {
 			if (!user || !(await user.checkPassword(req.body.password)))
 				return next(createError(401, 'invalid username or password'));
 			const [token, refreshSecret] = await authTokenHandler.createToken(user.id);
-			res.status(200).send({token: 'Bearer '+token, refreshSecret: refreshSecret});
+			res.status(200).send({name: user.name, token: 'Bearer '+token, refreshSecret: refreshSecret});
 		});
 	} catch (e) { // mainly for bcrypt, in case it throws errors
 		console.log(e);
