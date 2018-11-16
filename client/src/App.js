@@ -14,7 +14,7 @@ class App extends Component {
 	"Create", "My Songs", "Community"
     ];
     this.destination = [
-	"editor", "login", "register"
+	"editor", "", ""
     ];
   }
 
@@ -46,7 +46,7 @@ class App extends Component {
 			{navBarItems}
 	              </ul>
 	    	      <ul className="navbar-nav ml-auto">
-	    		<a class="nav-link" href="#">Log In</a>
+	    		<a class="nav-link" href="/login">Log In / Register</a>
 	    	        <li class="nav-item dropdown">
 	                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                  Logged in as: Test User
