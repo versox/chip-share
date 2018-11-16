@@ -3,11 +3,6 @@ import Block from './Block.js';
 
 class Track extends Component {
 
-    constructor(props)
-    {
-	super(props);
-	
-    }
 
     remove() {
 	this.props.remove(this);
