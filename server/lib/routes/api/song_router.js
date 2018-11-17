@@ -92,6 +92,7 @@ router.post('/update/:songId', authTokenHandler.check, (req, res, next) => {
 		if (!song) return next(createError(404, 'song with that id does not exist'));
 		if (song.userId !== req.user.id) return next(createError(403, 'you cannot edit this song'));
 		song.set(req.body); // update
+		song.updateDate = Date.now(); // set update date
 		song.save(err => {
 			if (err != null) {
 				if (err.name === 'ValidationError') {

@@ -282,7 +282,4 @@ Song.methods.getFormattedObject = function() {
 		resolve(result);
 	});
 };
-Song.pre('save', function() {
-	this.updateDate = Date.now();
-});
 module.exports = mongoose.model('Song', Song);
