@@ -4,26 +4,24 @@ class InstrEdit extends Component {
     render(params) {
 	return (
 	    <div id='instrEdit'>
-		<span>Instrument</span>
+		<span>Instrument </span>
 		<select>
-		    <option>Hello</option>
+		    <option>Instrument 1</option>
+		    <option>Instrument 2</option>
+		    <option>Instrument 3</option>
 		</select>
 		<br />
-		<span>Drive</span>
+		<span>Drive </span>
 		<input type='number' />
 		<input type='range' />
 		<br />
-		<span>B</span>
+		<span>Value 2 </span>
 		<input type='number' />
 		<input type='range' />
 		<br />
-		<span>C</span>
+		<span>Value 3 </span>
 		<input type='number' />
 		<input type='range' />
-		<br />
-		D
-		<br />
-		E
 	    </div>
 	);
     }

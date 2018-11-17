@@ -26,6 +26,10 @@ code {
 	monospace;
 }
 
+hr {
+	background-color: white;
+}
+
 .bg-dark {
 	background-color: #202020 !important;
 }
@@ -208,11 +212,12 @@ code {
 /* end content */
 
 .msec {
-	box-shadow: 5px 5px black;
+	box-shadow: 8px 8px black;
 	background-color: #202020;
 	color: white;
 	margin: 20px 50px 20px 50px;
 	padding: 10px;
+	float: center;
 }
 .song-listOLD {
 	background-color: #101010;
@@ -227,4 +232,14 @@ code {
 .form-signin {
 	margin: auto;
 	width: 400px;
+}
+.btn-light {
+	border-radius: 0;
+	box-shadow: 3px 3px grey;
+	border-color: black;
+	font-weight: bold;
+}
+
+h1, h3 {
+    color: white;
 }
