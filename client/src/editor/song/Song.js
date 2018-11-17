@@ -5,28 +5,52 @@ import Block from './Block.js';
 
 class Song {
     // User: opening song, id of song
-    constructor(user, id) {
+    constructor(openingUsername, songMeta) {
 	this.blocks = [];
 	this.tracks = [];
-	if (!id === undefined) {
-	    // Load song
-	    
+	console.log("New song:");
+	console.log(songMeta);
+	if (!(songMeta === undefined)) {
+	    // Load meta
+	    this.name = songMeta.name;
+	    this.bpm = songMeta.bpm;
+	    this.blockLength = songMeta.blockLength;
+
+	    this.createDate = new Date(songMeta.createDate);
+	    this.updateDate = new Date(songMeta.updateDate);
+	    this.author = songMeta.user.name;
+	    this.username = songMeta.user.username;
+
+	    this.id = songMeta.id;
 	} else {
-	    // Load empty
-	    this.name = "cool song";
-	    this.user = user || "unknown";
-	    this.createDate = (new Date()).toISOString();
-	    this.updateDate = this.createDate;
-	    
+	    // Empty meta
+	    this.name = "awesome song";
 	    this.bpm = 120;
-	    
-	    this.blocks.push(new Block());
-	    this.tracks.push(new Track());
 	    this.blockLength = 1;
 	}
-	
-	this.activeBlock = this.blocks[0].block;
 	this.key = ['C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4', 'B3', 'A3', 'G3', 'F3'];
+    }
+
+    getFormattedCreate() {
+	return getFormattedDate(this.createDate);
+    }
+
+    getFormattedUpdate() {
+	return getFormattedDate(this.updateDate);
+    }
+
+    hasBeenUpdated() {
+	return (!(Math.abs(this.createDate - this.updateDate) < 50));
+    }
+
+
+    load() {
+	if(this.id === undefined)
+	{
+	    this.blocks.push(new Block());
+	    this.tracks.push(new Track()); 
+	}
+	this.activeBlock = this.blocks[0].block;
     }
 
     start() {
@@ -85,6 +109,35 @@ class Song {
 	}
 	return sendableSong;
     }
+}
+
+
+function getFormattedDate(date) {
+    var currentDate = new Date();
+    // same day
+    if(currentDate.getDate() === date.getDate()
+       && currentDate.getMonth() === date.getMonth()
+       && currentDate.getFullYear() === date.getFullYear())
+    {
+	let totMin = Math.floor((currentDate - date) / 60000);
+	let hours = Math.floor(totMin / 60);
+	let minutes = totMin % 60;
+	let hourString = "hour";
+	if(hours > 1) hourString += "s";
+	if(minutes === 0)
+	{
+	    return hours + " " + hourString + "  ago";
+	}
+	let minuteString = "minute";
+	if(minutes > 1) minuteString += "s";
+	if(hours === 0)
+	{
+	    return minutes + " " + minuteString + " ago";
+	}
+	return hours + " " + hourString + " and " + minutes + " " + minuteString + " ago";
+    }
+
+    return date.getMonth() + " " + date.getDate() + ", " + date.getFullYear();
 }
 
 export default Song;

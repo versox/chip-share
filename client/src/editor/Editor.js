@@ -16,6 +16,7 @@ class Editor extends Component {
 	};
 	Tone.Transport.loop = true;
 	this.song = new Song();
+	this.song.load();
     }
     
     componentDidMount() {

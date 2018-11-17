@@ -59,6 +59,19 @@ var apiHelper =
 	} else {
 	    console.log("not logged in!");
 	}
+    },
+    getSongs: function(userId) {
+	var req = new XMLHttpRequest();
+	var url;
+	if(userId === undefined) {    
+	    url = "/api/songs";
+	} else {
+	    url = "/api/songs/get?userId=" + userId;
+	}
+	req.open("GET", url, false);
+	req.send();
+	console.log(req.response);
+	return (JSON.parse(req.response));
     }
 };
 

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import APIHelper from './apiHelper.js';
+import SongPlayer from './SongPlayer.js';
+import Song from './editor/song/Song.js';
 
 class Profile extends Component {
 
@@ -13,6 +16,12 @@ class Profile extends Component {
     }
 
     render() {
+	var songs = [];
+	var songMetas = APIHelper.getSongs();
+	for (let i = 0; i< songMetas.length; i++) {
+	    songs.push(<SongPlayer song={new Song("open", songMetas[i])} />);
+	}
+
 	return (
 	    <div>
 	      <h1 class="account-name">Account Name</h1>
@@ -63,6 +72,9 @@ class Profile extends Component {
 		  </div>
 		</div>
 	      </div>
+	    <ul className='song-list'>
+		{songs}
+	    </ul>
 	    </div>
 	);
     }
