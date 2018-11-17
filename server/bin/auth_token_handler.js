@@ -29,7 +29,7 @@ exports.createToken = function(userId) {
 	return new Promise(function(resolve, reject) {
 		const refreshSecret = uuidv4();
 		bcrypt.genSalt(10, function(err, salt) {
-			if (err) return next(err);
+			if (err) return reject(err);
 			bcrypt.hash(refreshSecret, salt, function(err, hashedSecret) {
 				if (err) return reject(err);
 				jwt.sign({ id: userId, hs: hashedSecret }, secret, { expiresIn: '30m' }, function(err, token) {

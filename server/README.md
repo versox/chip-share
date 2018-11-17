@@ -7,20 +7,39 @@
   * `errorCode`: the numeric HTTP error code, same one as returned with the response itself.
   * `message`: a message describing the error.
 ## Users API
+### `GET /api/user/register`
+Returns a captcha for registration.<br>
+Sample response:
+```json
+{
+    "captcha": {
+        "data": "<svg>...</svg>",
+        "token": "..."
+    }
+}
+```
+The `data` field contains a SVG-image to be displayed.
+The captcha `token` is valid for 5 minutes, and must be sent with the captcha answer in the next request.
 ### `POST /api/user/register`
 Creates a new user based on the JSON payload. Example payload:
 ```json
 {
 	"name": "John Smith",
 	"username": "johnsmith",
-	"password": "password"
+	"password": "password",
+	"captcha": {
+		"answer": "...",
+		"token": "..."
+	}
 }
 ```
+You must provide the captcha `answer` (specified by user input) and `token`.
 If there were any errors in the registration, `400 Bad Request` status code is returned. The response body also contain all the field errors, e.g.:
 ```
 {
     "fieldErrors": {
-        "username": "Username already taken."
+        "username": "Username already taken.",
+        "captcha": "Invalid captcha answer."
     }
 }
 ```

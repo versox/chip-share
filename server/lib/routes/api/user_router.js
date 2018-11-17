@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router({});
 const authTokenHandler = require('../../../bin/auth_token_handler');
+const captchaHelper = require('../../../bin/captcha_helper');
 const User = require('../../schemas/models/User');
 const createError = require('http-errors');
 const bcrypt = require('bcryptjs');
@@ -36,13 +37,21 @@ router.post('/refresh-access', authTokenHandler.check, async (req, res, next) =>
 		next(createError(500, 'server error'));
 	}
 });
-router.post('/register', (req, res) => {
+router.get('/register', async (req, res, next) => {
+	try {
+		const [data, token] = await captchaHelper.generateCaptcha();
+		res.status(200).send({captcha: {data: data, token: token}});
+	} catch (e) {
+		next(createError(500, 'failed to generate captcha'));
+	}
+});
+router.post('/register', async (req, res, next) => {
 	const user = new User({
 		name: req.body.name,
 		username: req.body.username,
 		password: req.body.password // will be hashed pre-save
 	});
-	user.save((err) => {
+	const validationErrors = (err) => {
 		if (err) {
 			const errorMessages = {};
 			if (err.message.indexOf('duplicate key error') !== -1) {
@@ -52,10 +61,33 @@ router.post('/register', (req, res) => {
 					errorMessages[errorKey] = err.errors[errorKey].message;
 				}
 			}
-			res.status(400).send({fieldErrors: errorMessages});
+			return errorMessages;
 		} else {
-			res.status(201).end();
+			return null;
 		}
+	};
+	user.validate(async (err) => {
+		let errors = validationErrors(err);
+		try {
+			if (!req.body.hasOwnProperty('captcha') || typeof req.body.captcha !== 'object')
+				throw new Error('No captcha was provided.');
+			if (!req.body.captcha.hasOwnProperty('answer') || !req.body.captcha.hasOwnProperty('token'))
+				throw new Error('Invalid captcha data.');
+			await captchaHelper.checkCaptcha(req.body.captcha.answer, req.body.captcha.token);
+		} catch (e) {
+			if (errors == null)
+				errors = {};
+			errors.captcha = e.message;
+		}
+		if (errors)
+			return res.status(400).send({fieldErrors: errors});
+		user.save((err) => {
+			const errors = validationErrors(err);
+			if (errors)
+				res.status(400).send({fieldErrors: errors});
+			else
+				res.status(201).end();
+		});
 	});
 });
 router.post('/delete-account', authTokenHandler.check, (req, res, next) => {
