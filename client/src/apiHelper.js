@@ -43,6 +43,23 @@ var apiHelper =
 	}
 	return req.response;
     },
+    createSong: function(song) {
+	var token = Cookies.get('token');
+	console.log(token);
+	if(!(token === undefined)) {
+	    var req = new XMLHttpRequest();
+	    req.open("POST", "/api/songs/create", false);
+	    req.setRequestHeader("Content-Type", "application/json");
+	    req.setRequestHeader("Authorization", token);
+	    req.send(JSON.stringify(song));
+	    console.log(req.response);
+	    if (req.status === 200) {
+		return req.response.id;
+	    }
+	} else {
+	    console.log("not logged in!");
+	}
+    }
 };
 
 export default apiHelper;

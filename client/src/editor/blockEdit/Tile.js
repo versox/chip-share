@@ -17,8 +17,6 @@ class Tile extends Component {
     }
 
     onMouseUp(event) {
-	console.log(this.props.line);
-	console.log(this.props.dragger.active);
 	if(this.props.line === this.props.dragger.active)
 	{
 	    if(this.props.dragger.start === this)
@@ -27,8 +25,6 @@ class Tile extends Component {
 	    }
 	    else
 	    {
-		console.log(this.props.dragger.start);
-		console.log(this);
 		this.props.dragger.start.state.startF();
 		this.props.dragger.start.forceUpdate();
 		this.state.endF();
