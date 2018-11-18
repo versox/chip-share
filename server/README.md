@@ -14,12 +14,14 @@ Sample response:
 {
     "captcha": {
         "data": "<svg>...</svg>",
-        "token": "..."
+        "key": "..."
     }
 }
 ```
 The `data` field contains a SVG-image to be displayed.
-The captcha `token` is valid for 5 minutes, and must be sent with the captcha answer in the next request.
+The captcha `key` is valid for 5 minutes, and must be sent with the captcha answer in the next request.
+<br>
+<br>
 ### `POST /api/user/register`
 Creates a new user based on the JSON payload. Example payload:
 ```json
@@ -29,7 +31,7 @@ Creates a new user based on the JSON payload. Example payload:
 	"password": "password",
 	"captcha": {
 		"answer": "...",
-		"token": "..."
+		"key": "..."
 	}
 }
 ```
@@ -38,11 +40,12 @@ If there were any errors in the registration, `400 Bad Request` status code is r
 ```
 {
     "fieldErrors": {
-        "username": "Username already taken.",
-        "captcha": "Invalid captcha answer."
-    }
+        "username": "Username already taken."
+    },
+    "captchaError": "Captcha has expired."
 }
 ```
+The `captchaError` field will only be present if the captcha validation failed for any reason, including an incorrect answer. 
 If the registration succeeds, a `201 Created` status code is returned with no body.
 <br>
 <br>

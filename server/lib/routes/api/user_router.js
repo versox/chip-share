@@ -39,8 +39,8 @@ router.post('/refresh-access', authTokenHandler.check, async (req, res, next) =>
 });
 router.get('/register', async (req, res, next) => {
 	try {
-		const [data, token] = await captchaHelper.generateCaptcha();
-		res.status(200).send({captcha: {data: data, token: token}});
+		const [data, key] = await captchaHelper.generateCaptcha();
+		res.status(200).send({captcha: {data: data, key: key}});
 	} catch (e) {
 		next(createError(500, 'failed to generate captcha'));
 	}
@@ -61,7 +61,7 @@ router.post('/register', async (req, res, next) => {
 					errorMessages[errorKey] = err.errors[errorKey].message;
 				}
 			}
-			return errorMessages;
+			return {fieldErrors: errorMessages};
 		} else {
 			return null;
 		}
@@ -71,20 +71,20 @@ router.post('/register', async (req, res, next) => {
 		try {
 			if (!req.body.hasOwnProperty('captcha') || typeof req.body.captcha !== 'object')
 				throw new Error('No captcha was provided.');
-			if (!req.body.captcha.hasOwnProperty('answer') || !req.body.captcha.hasOwnProperty('token'))
+			if (!req.body.captcha.hasOwnProperty('answer') || !req.body.captcha.hasOwnProperty('key'))
 				throw new Error('Invalid captcha data.');
-			await captchaHelper.checkCaptcha(req.body.captcha.answer, req.body.captcha.token);
+			await captchaHelper.checkCaptcha(req.body.captcha.answer, req.body.captcha.key);
 		} catch (e) {
 			if (errors == null)
 				errors = {};
-			errors.captcha = e.message;
+			errors.captchaError = e.message;
 		}
 		if (errors)
-			return res.status(400).send({fieldErrors: errors});
+			return res.status(400).send(errors);
 		user.save((err) => {
 			const errors = validationErrors(err);
 			if (errors)
-				res.status(400).send({fieldErrors: errors});
+				res.status(400).send(errors);
 			else
 				res.status(201).end();
 		});
