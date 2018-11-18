@@ -35,8 +35,8 @@ Creates a new user based on the JSON payload. Example payload:
 	}
 }
 ```
-You must provide the captcha `answer` (specified by user input) and `token`.
-If there were any errors in the registration, `400 Bad Request` status code is returned. The response body also contain all the field errors, e.g.:
+You must provide the captcha `answer` (specified by user input) and captcha `key`.
+If there were any errors in the registration, `400 Bad Request` status code is returned. The response body also contain all the field errors and a possible captcha error, e.g.:
 ```
 {
     "fieldErrors": {
@@ -45,7 +45,7 @@ If there were any errors in the registration, `400 Bad Request` status code is r
     "captchaError": "Captcha has expired."
 }
 ```
-The `captchaError` field will only be present if the captcha validation failed for any reason, including an incorrect answer. 
+The `captchaError` field will only be present if the captcha validation failed for any reason, including but no limited to an incorrect answer.
 If the registration succeeds, a `201 Created` status code is returned with no body.
 <br>
 <br>
