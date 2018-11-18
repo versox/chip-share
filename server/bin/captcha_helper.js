@@ -35,10 +35,12 @@ exports.checkCaptcha = function(answer, key) {
 				return reject(new Error('Captcha has expired.'));
 			if (correctAnswer !== answer)
 				return reject(new Error('Invalid captcha answer.'));
-			usedCaptchas[key] = expiry;
-			resolve();
+			resolve(expiry);
 		} catch (e) {
 			reject(new Error('Invalid captcha key.'));
 		}
 	});
+};
+exports.invalidateKey = function(key, expiry) {
+	usedCaptchas[key] = expiry;
 };

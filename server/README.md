@@ -13,12 +13,12 @@ Sample response:
 ```json
 {
     "captcha": {
-        "data": "<svg>...</svg>",
+        "image": "<svg>...</svg>",
         "key": "..."
     }
 }
 ```
-The `data` field contains a SVG-image to be displayed.
+The `image` field contains a SVG-image to be displayed.
 The captcha `key` is valid for 5 minutes, and must be sent with the captcha answer in the next request.
 <br>
 <br>
