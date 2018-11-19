@@ -51,23 +51,16 @@ router.post('/register', async (req, res, next) => {
 		username: req.body.username,
 		password: req.body.password // will be hashed pre-save
 	});
-	const validationErrors = (err) => {
-		if (err) {
-			const errorMessages = {};
-			if (err.message.indexOf('duplicate key error') !== -1) {
-				errorMessages.username = 'Username already taken.';
-			} else {
-				for (const errorKey in err.errors) {
-					errorMessages[errorKey] = err.errors[errorKey].message;
-				}
-			}
-			return {fieldErrors: errorMessages};
-		} else {
-			return null;
-		}
-	};
 	user.validate(async (err) => {
-		let errors = validationErrors(err);
+		let errors = null;
+		if (err != null) {
+			if (err.name !== 'ValidationError')
+				return next(createError(500, 'unknown error occurred during validation'));
+			const errorMessages = {};
+			for (const errorKey in err.errors)
+				errorMessages[errorKey] = err.errors[errorKey].message;
+			errors = {fieldErrors: errorMessages};
+		}
 		let captchaExpiry = 0;
 		try {
 			if (!req.body.hasOwnProperty('captcha') || typeof req.body.captcha !== 'object')
@@ -83,10 +76,14 @@ router.post('/register', async (req, res, next) => {
 		if (errors)
 			return res.status(400).send(errors);
 		user.save((err) => {
-			const errors = validationErrors(err);
-			if (errors) return res.status(400).send(errors);
-			captchaHelper.invalidateKey(req.body.captcha.key, captchaExpiry);
-			res.status(201).end();
+			if (err != null) {
+				if (err.name === 'MongoError' && err.message.indexOf('duplicate key error') !== -1)
+					return res.status(400).send({fieldErrors: {username: 'Username already taken.'}});
+				next(createError(500, 'unknown error occurred during saving'));
+			} else {
+				captchaHelper.invalidateKey(req.body.captcha.key, captchaExpiry);
+				res.status(201).end();
+			}
 		});
 	});
 });
