@@ -45,7 +45,6 @@ var apiHelper =
     },
     createSong: function(song) {
 	var token = Cookies.get('token');
-	console.log(token);
 	if(!(token === undefined)) {
 	    var req = new XMLHttpRequest();
 	    req.open("POST", "/api/songs/create", false);
@@ -70,8 +69,27 @@ var apiHelper =
 	}
 	req.open("GET", url, false);
 	req.send();
-	console.log(req.response);
 	return (JSON.parse(req.response));
+    },
+    getSong: function(id, type) {
+	var req = new XMLHttpRequest();
+	type = type || "/full";
+	req.open("GET", "/api/songs/" + id + type, true);
+	var songPromise = new Promise((resolve, reject) => {
+	    req.onreadystatechange = () => {
+		// Done
+		if (req.readyState === 4) {
+		    // Success
+		    if (req.status === 200) {
+			resolve(req.response);
+		    } else {
+			reject(req.response);
+		    }
+		}
+	    }
+	});
+	req.send();
+	return songPromise;
     }
 };
 

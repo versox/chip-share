@@ -19,7 +19,7 @@ class Profile extends Component {
 	var songs = [];
 	var songMetas = APIHelper.getSongs();
 	for (let i = 0; i< songMetas.length; i++) {
-	    songs.push(<SongPlayer song={new Song("open", songMetas[i])} />);
+	    songs.push(<SongPlayer song={new Song(songMetas[i])} />);
 	}
 
 	return (

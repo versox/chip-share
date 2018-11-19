@@ -1,20 +1,62 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import APIHelper from './apiHelper.js';
 
 class SongPlayer extends Component {
     constructor(props) {
 	super(props);
+	this.state = {
+	    redirect: false,
+	    to: "",
+	    playBtn: "play-btn",
+	    playing: false
+	}
 	this.song = props.song;
     }
 
+    onEdit() {
+	let id = this.song.id || "";
+	this.setState({
+	    redirect: true,
+	    to: "/editor/" + id
+	});
+    }
+
+    onPlayPause() {
+	if (this.state.playing) {
+	    this.setState({ playBtn: "play-btn", playing: false });
+	    this.song.pause();
+	} else {
+	    if (!this.song.loaded) {
+		APIHelper.getSong(this.song.id)
+		.then((data) => {
+		    return JSON.parse(data);
+		})
+		.then((parsed) => {
+		    this.song.load(parsed);
+		    this.song.start();
+		})
+		.catch({
+		    // Could not play error
+		});
+	    }
+	    this.setState({ playBtn: "pause-btn", playing: true });
+	    this.song.play();
+	}
+    }
+
     render() {
+	if (this.state.redirect) {
+	    return <Redirect to={this.state.to} />;
+	}
 	return (
 	    <li>
 		<div className="song-header" style={{background: '#00ff9545'}}>
-		    <button className="btn btn-light playback-btn play-btn"></button>
+		    <button onClick={() => this.onPlayPause()} className={"btn btn-light playback-btn " + this.state.playBtn}></button>
 		    <div className="song-title">{this.song.name}</div>
 		    <div className="play-progress" style={{width: '60%'}}></div>
 		    <div className="buttons-container">
-			<button className="btn btn-light"><i className="fa fa-pencil"></i></button>
+			<button onClick={()=> this.onEdit()} className="btn btn-light"><i className="fa fa-pencil"></i></button>
 			<button className="btn btn-light"><i className="fa fa-trash"></i></button>
 		    </div>
 		</div>

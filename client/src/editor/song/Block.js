@@ -43,9 +43,9 @@ var convertFromData = (data, block) => {
 class Block {
     constructor(storedBlock) {
 	this.block = [];
-	if (!storedBlock === undefined) {
+	if (!(storedBlock === undefined)) {
 	    // load block from data
-	    convertFromData(storedBlock, this.block);
+	    convertFromData(storedBlock.data, this.block);
 	} else {
 	    // create blank block
 	    for (let i = 0; i < 12; i++) {

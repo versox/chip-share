@@ -15,7 +15,7 @@ class App extends Component {
 			"Create", "My Songs", "Community"
 		];
 		this.destination = [
-			"editor", "profile", ""
+			"/editor/new", "/profile", ""
 		];
 	}
 
@@ -66,6 +66,7 @@ class App extends Component {
 					</nav>
 					<Route path="/" exact component={Home} />
 					<Route path="/editor" component={Editor} />
+					<Route path="/editor/:id" component={Editor} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
 					<Route path="/profile" component={Profile} />

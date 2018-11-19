@@ -5,13 +5,11 @@ import Block from './Block.js';
 
 class Song {
     // User: opening song, id of song
-    constructor(openingUsername, songMeta) {
+    constructor(songMeta) {
 	this.blocks = [];
 	this.tracks = [];
-	console.log("New song:");
-	console.log(songMeta);
 	if (!(songMeta === undefined)) {
-	    // Load meta
+	    // Song exist: Load meta
 	    this.name = songMeta.name;
 	    this.bpm = songMeta.bpm;
 	    this.blockLength = songMeta.blockLength;
@@ -29,46 +27,51 @@ class Song {
 	    this.blockLength = 1;
 	}
 	this.key = ['C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4', 'B3', 'A3', 'G3', 'F3'];
+	this.loaded = false;
     }
 
-    getFormattedCreate() {
-	return getFormattedDate(this.createDate);
-    }
-
-    getFormattedUpdate() {
-	return getFormattedDate(this.updateDate);
-    }
-
-    hasBeenUpdated() {
-	return (!(Math.abs(this.createDate - this.updateDate) < 50));
-    }
-
-
-    load() {
-	if(this.id === undefined)
+    load(songMeta) {
+	this.blocks.push(null);
+	if(this.id === undefined || songMeta === undefined)
 	{
+	    // Load empty song
 	    this.blocks.push(new Block());
 	    this.tracks.push(new Track()); 
+	} else {
+	    // Load song from composition data
+	    for (let i = 0; i < songMeta.instruments.length; i++) {
+		this.tracks.push(new Track(songMeta.instruments[i]));
+	    }
+	    for (let i = 1; i <= this.blockLength; i++) {
+		let block = new Block(songMeta.blocks[i]);
+		this.blocks.push(block);
+	    }
 	}
-	this.activeBlock = this.blocks[0].block;
+	this.activeBlock = this.blocks[1].block;
+	this.loaded = true;
     }
 
     start() {
-	this.synth = new Tone.PolySynth(16, Tone.Synth).toMaster();
+	Tone.Transport.cancel();
+	this.synth = new Tone.PolySynth(6, Tone.Synth).toMaster();
+	this.synth.triggerAttackRelease('C4', '4n');
 	Tone.Transport.loopEnd = this.blockLength + "m";
+	console.log(Tone.Transport.loopEnd);
+	Tone.Transport.loop = true;
 	Tone.Transport.bpm.value = this.bpm;
 	this.count = 0;
-	this.loop = new Tone.Loop(() => {
+	this.loop = new Tone.Loop((time) => {
 	    for (let i = 0; i < 12; i++) {
 		switch(this.activeBlock[i][this.count].type) {
 		    case 'on':
-			this.synth.triggerAttackRelease(this.key[i], '16n');
+			console.log("ON");
+			this.synth.triggerAttackRelease(this.key[i], '16n', time);
 			break;
 		    case 'start':
-			this.synth.triggerAttack(this.key[i]);
+			this.synth.triggerAttack(this.key[i], time);
 			break;
 		    case 'end':
-			this.synth.triggerRelease(this.key[i]);
+			this.synth.triggerRelease(this.key[i], time);
 			break;
 		}
 	    }
@@ -77,11 +80,19 @@ class Song {
 	    } else {
 		this.count++;
 	    }
-	}, '16n').start(0);
+	}, '16n').start();
     }
 
-    save()
-    {
+    play() {
+	Tone.Transport.start();	
+    }
+
+    pause() {
+	Tone.Transport.stop();
+	this.synth.releaseAll();
+    }
+
+    save() {
 	if(this.id === undefined) {
 	    // create new song and get id
 	    var id = APIHelper.createSong(this.getSendableSong());
@@ -102,15 +113,28 @@ class Song {
 	    }),
 	    blocks: {}
 	};
-	for(let i = 0; i < this.blocks.length; i++) {
-	    sendableSong.blocks[i + 1] = {
+	for(let i = 1; i <= (this.blocks.length - 1); i++) {
+	    sendableSong.blocks[i] = {
 		data: this.blocks[i].convertToData()
 	    };
 	}
 	return sendableSong;
     }
+    
+    getFormattedCreate() {
+	return getFormattedDate(this.createDate);
+    }
+
+    getFormattedUpdate() {
+	return getFormattedDate(this.updateDate);
+    }
+
+    hasBeenUpdated() {
+	return (!(Math.abs(this.createDate - this.updateDate) < 50));
+    }
 }
 
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function getFormattedDate(date) {
     var currentDate = new Date();
@@ -136,8 +160,7 @@ function getFormattedDate(date) {
 	}
 	return hours + " " + hourString + " and " + minutes + " " + minuteString + " ago";
     }
-
-    return date.getMonth() + " " + date.getDate() + ", " + date.getFullYear();
+    return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
 }
 
 export default Song;

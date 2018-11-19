@@ -2,10 +2,43 @@ import React, { Component } from 'react';
 import Tone from 'tone';
 import './editor.css';
 import './awesome.css';
+import APIHelper from '../apiHelper.js';
 import Song from './song/Song.js';
 import InstrEdit from './InstrEdit.js';
 import BlockEdit from './blockEdit/BlockEdit.js';
 import Time from './time/Time.js';
+
+const staticSongMeta = {
+		updateDate:"2018-11-18T22:04:55.797Z",
+		name:"awesome song",
+		bpm:120,
+		blockLength:1,
+		instruments:[{
+		    blocks:[1],
+		    settings:{
+			typeId:1,
+			metadata:"123ab"}}]
+		,blocks:{
+		    1:{
+			data:[
+			    [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+			    [0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]}},
+		createDate:"2018-11-18T22:04:55.794Z",
+		user:{
+		    name:"carson",
+		    username:"carson",
+		    id:"5bf1dee71f92600642c6c279"},
+		id:"5bf1e2071f92600642c6c27c"};
 
 class Editor extends Component {  
     constructor(props)
@@ -13,14 +46,42 @@ class Editor extends Component {
 	super(props);
 	this.state = {
 	    playing: false,
+	    error: false
 	};
-	Tone.Transport.loop = true;
-	this.song = new Song();
-	this.song.load();
+	this.ready = false;
+	this.songId = props.match.params.id;
+	if (this.songId === "new") {
+	    this.song = new Song();
+	    this.song.load();
+	    this.song.start();
+	    this.ready = true;
+	} else if (!(this.songId === undefined)) {
+	    APIHelper.getSong(this.songId)
+	    .then((res) => {
+		return JSON.parse(res);
+	    })
+	    .then((parsed) => {
+		this.song = new Song(parsed);
+		this.song.load(parsed);
+		this.song.start();
+		this.ready = true;
+		this.forceUpdate();
+	    })
+	    .catch((err) => {
+		this.state.error = true;
+		this.state.errComp = <h1> Could not load song: {err} </h1>;
+	    });
+	}
     }
     
     componentDidMount() {
-	this.song.start();
+	if(false && this.song && !this.ready)
+	{
+	    this.song.load(this.songMeta);
+	    this.song.start();
+	    this.ready = true;
+	    this.forceUpdate();
+	}
     }
    
     handleToggle() {
@@ -28,11 +89,10 @@ class Editor extends Component {
 	    playing: !state.playing
 	}));
 	if(this.state.playing) {
-	    Tone.Transport.stop();
-	    this.song.synth.releaseAll();
+	    this.song.pause();
 	}
 	else {
-	    Tone.Transport.start();
+	    this.song.play();
 	}
     }
 
@@ -41,6 +101,13 @@ class Editor extends Component {
     }
 
     render() {
+	if(this.state.error) {
+	    return this.state.errComp;
+	}
+	if(!this.song || !this.ready) {
+	    return ( <div> </div> );
+	}
+
 	return (
 	    <div class="editor">
 		<h1>Song name:</h1>
