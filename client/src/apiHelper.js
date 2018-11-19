@@ -4,14 +4,34 @@ const in30Minutes = 1/48;
 
 var apiHelper =
 {
-    register: function(name, user, pass) {
+    registerCaptcha: function() {
+	var req = new XMLHttpRequest();
+	req.open("GET", "/api/user/register", true);
+	var captchaPromise = new Promise((resolve, reject) => {
+	    req.onreadystatechange = () => {
+		// Done
+		if (req.readyState === 4) {
+		    if (req.status === 200) {
+			resolve(req.response);
+		    } else {
+			reject(req.response);
+		    }
+		}
+	    };
+	});
+	req.send();
+	return captchaPromise;
+    },
+    register: function(name, user, pass, captcha) {
+	console.log(captcha);
 	var req = new XMLHttpRequest();
 	req.open("POST", "/api/user/register", false);
 	req.setRequestHeader("Content-Type", "application/json");
 	req.send(JSON.stringify({
 	    name: name,
 	    username: user,
-	    password: pass
+	    password: pass,
+	    captcha: captcha
 	}));
 	if (req.status === 201)
 	{
