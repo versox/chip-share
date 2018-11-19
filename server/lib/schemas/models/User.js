@@ -25,16 +25,11 @@ const schema = new mongoose.Schema({
 	}
 });
 // hash password post validate (pre save)
-schema.post('validate', function(user, next) {
+schema.pre('save', async function(next) {
 	if (!user.isModified('password')) return next();
-	bcrypt.genSalt(10, function(err, salt) {
-		if (err) return next(err);
-		bcrypt.hash(user.password, salt, function(err, hash) {
-			if (err) return next(err);
-			user.password = hash;
-			next();
-		});
-	});
+	const user = this;
+	user.password = await bcrypt.hash(user.password, 10);
+	next();
 });
 // custom method for checking the password
 schema.methods.checkPassword = function(test) {
