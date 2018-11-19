@@ -51,6 +51,12 @@ hr {
 	bottom: 70px;
 	transform: translateX(-50%);
 }
+.slide-cap {
+	position: absolute;
+	bottom: 120px;
+	right: 50%;
+	transform: translateX(50%);
+}
 .account-name {
 	text-align: center;
 	font-family: bit;
