@@ -1,4 +1,5 @@
 import * as Cookies from 'js-cookie';
+import constant from './constants.js';
 
 const in30Minutes = 1/48;
 
@@ -6,7 +7,7 @@ var apiHelper =
 {
     registerCaptcha: function() {
 	var req = new XMLHttpRequest();
-	req.open("GET", "/api/user/register", true);
+	req.open("GET", constant.ROOT_PATH + "/api/user/register", true);
 	var captchaPromise = new Promise((resolve, reject) => {
 	    req.onreadystatechange = () => {
 		// Done
@@ -25,7 +26,7 @@ var apiHelper =
     register: function(name, user, pass, captcha) {
 	console.log(captcha);
 	var req = new XMLHttpRequest();
-	req.open("POST", "/api/user/register", false);
+	req.open("POST", constant.ROOT_PATH + "/api/user/register", false);
 	req.setRequestHeader("Content-Type", "application/json");
 	req.send(JSON.stringify({
 	    name: name,
@@ -41,7 +42,7 @@ var apiHelper =
     },
     login: function(user, pass) {
 	var req = new XMLHttpRequest();
-	req.open("POST", "/api/user/login", false);
+	req.open("POST", constant.ROOT_PATH + "/api/user/login", false);
 	req.setRequestHeader("Content-Type", "application/json");
 	req.send(JSON.stringify({
 	    username: user,
@@ -67,7 +68,7 @@ var apiHelper =
 	var token = Cookies.get('token');
 	if(!(token === undefined)) {
 	    var req = new XMLHttpRequest();
-	    req.open("POST", "/api/songs/create", false);
+	    req.open("POST", constant.ROOT_PATH + "/api/songs/create", false);
 	    req.setRequestHeader("Content-Type", "application/json");
 	    req.setRequestHeader("Authorization", token);
 	    req.send(JSON.stringify(song));
@@ -85,7 +86,7 @@ var apiHelper =
 	if(userId === undefined) {    
 	    url = "/api/songs";
 	} else {
-	    url = "/api/songs/get?userId=" + userId;
+	    url = constant.ROOT_PATH + "/api/songs/get?userId=" + userId;
 	}
 	req.open("GET", url, false);
 	req.send();
@@ -94,7 +95,7 @@ var apiHelper =
     getSong: function(id, type) {
 	var req = new XMLHttpRequest();
 	type = type || "/full";
-	req.open("GET", "/api/songs/" + id + type, true);
+	req.open("GET", constant.ROOT_PATH + "/api/songs/" + id + type, true);
 	var songPromise = new Promise((resolve, reject) => {
 	    req.onreadystatechange = () => {
 		// Done
