@@ -26,8 +26,22 @@ class Song {
 	    this.bpm = 120;
 	    this.blockLength = 1;
 	}
-	this.key = ['C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4', 'B3', 'A3', 'G3', 'F3'];
+	this.setKey();
 	this.loaded = false;
+    }
+
+    setKey(freq, type) {
+	this.freq = freq || "C";
+	this.keyType = type || "Maj";
+	this.key = [];
+	this.key[11] = (this.freq + "3");
+	var step = (type === "Maj") ? 
+	    [2, 2, 1, 2, 2, 2, 1, 2, 2, 1, 2] :
+	    [2, 1, 2, 2, 1, 2, 2, 2, 1, 2, 2];
+	for (let i = 10, j = 0; i >= 0; i--, j++) {
+	    this.key[i] = Tone.Frequency(this.key[i+1]).transpose(step[j]);
+	}
+	if (this.synth) this.synth.releaseAll();
     }
 
     load(songMeta) {
@@ -56,7 +70,6 @@ class Song {
 	this.synth = new Tone.PolySynth(6, Tone.Synth).toMaster();
 	this.synth.triggerAttackRelease('C4', '4n');
 	Tone.Transport.loopEnd = this.blockLength + "m";
-	console.log(Tone.Transport.loopEnd);
 	Tone.Transport.loop = true;
 	Tone.Transport.bpm.value = this.bpm;
 	this.count = 0;
@@ -64,7 +77,6 @@ class Song {
 	    for (let i = 0; i < 12; i++) {
 		switch(this.activeBlock[i][this.count].type) {
 		    case 'on':
-			console.log("ON");
 			this.synth.triggerAttackRelease(this.key[i], '16n', time);
 			break;
 		    case 'start':

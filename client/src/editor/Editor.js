@@ -8,55 +8,20 @@ import InstrEdit from './InstrEdit.js';
 import BlockEdit from './blockEdit/BlockEdit.js';
 import Time from './time/Time.js';
 
-const staticSongMeta = {
-		updateDate:"2018-11-18T22:04:55.797Z",
-		name:"awesome song",
-		bpm:120,
-		blockLength:1,
-		instruments:[{
-		    blocks:[1],
-		    settings:{
-			typeId:1,
-			metadata:"123ab"}}]
-		,blocks:{
-		    1:{
-			data:[
-			    [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-			    [0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]}},
-		createDate:"2018-11-18T22:04:55.794Z",
-		user:{
-		    name:"carson",
-		    username:"carson",
-		    id:"5bf1dee71f92600642c6c279"},
-		id:"5bf1e2071f92600642c6c27c"};
-
 class Editor extends Component {  
     constructor(props)
     {
 	super(props);
 	this.state = {
 	    playing: false,
-	    error: false
+	    error: false,
+	    name: "",
+	    bpm: 120,
+	    key: "",
+	    keyType: ""
 	};
-	this.keys = {
-	    c: [],
-	    d: [],
-	    e: [],
-	    f: [],
-	    g: []
-	};
-	this.keysArray = Object.keys(this.keys);
-	this.options = this.keysArray.map((key) => {
+	this.keysArray = ["C", "D", "E", "F", "G", "A", "B"];
+	this.keyOptions = this.keysArray.map((key) => {
 	    return (<option>{key}</option>);
 	});
 	this.ready = false;
@@ -76,6 +41,12 @@ class Editor extends Component {
 		this.song.load(parsed);
 		this.song.start();
 		this.ready = true;
+		this.setState({ 
+		    name: this.song.name,
+		    bpm: this.song.bpm,
+		    key: this.song.freq,
+		    keyType: this.song.keyType
+		});
 		this.forceUpdate();
 	    })
 	    .catch((err) => {
@@ -107,8 +78,36 @@ class Editor extends Component {
 	}
     }
 
-    onSave() {
+    onSave(evt) {
+	evt.preventDefault();
 	this.song.save();
+    }
+
+    onChange(evt) {
+	let newState = {};
+	let val = evt.target.value;
+	switch (evt.target.id) {
+	    case "name":
+		this.song.setName(val);
+		break;
+	    case "bpm":
+		if (val != "") {
+		    if (val < 1) {
+			val = 1;
+		    } else if (val > 500) {
+			val = 500;
+		    }
+		    this.song.setBPM(val);
+		}
+		break;
+	    case "keyType":
+		this.song.setKey(this.state.key, val);
+		break;
+	    case "key":
+		this.song.setKey(val, this.state.keyType);
+	}	
+	newState[evt.target.id] = val;
+	this.setState(newState);
     }
 
     render() {
@@ -124,18 +123,20 @@ class Editor extends Component {
 		<div class="editor-header">
 		    <i onClick={this.handleToggle.bind(this)} class={"fa " + (this.state.playing ? "fa-stop" : "fa-play")}></i>
 		    <span>BPM </span>
-		    <input type="number" />
+		    <input value={this.state.bpm} id='bpm' onChange={evt => this.onChange(evt)} type="number" />
 		    <span>Key </span>
-		    <select>
-		    {this.options}
+		    <select id="key" value={this.state.key} onChange={evt => this.onChange(evt)}>
+			{this.keyOptions}
 		    </select>
-		    <select>
-		    <option>Minor</option>
-		    <option>Major</option>
+		    <select onChange={evt => this.onChange(evt)} id="keyType" value={this.state.keyType}>
+			<option>Maj</option>
+			<option>min</option>
 		    </select>
 		    <div class="song-name">
-		        <input type='text' placeholder='my song' class="name-input" />
-		        <button onClick={() => this.onSave()} type='button' className='btn btn-success'>Save</button>
+			<form onSubmit={(evt) => this.onSave(evt)}>
+			    <input required onChange={evt => this.onChange(evt)} value={this.state.name} id='name' type='text' placeholder='untitled' class="name-input" />
+			    <input type='submit' value="Save" className='btn btn-success' />
+			</form>
 		    </div>
 		</div>
 		<div class="row">

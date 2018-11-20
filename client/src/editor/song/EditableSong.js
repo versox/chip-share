@@ -1,3 +1,4 @@
+import Tone from 'tone';
 import Song from './Song.js';
 
 class EditableSong extends Song {
@@ -8,6 +9,15 @@ class EditableSong extends Song {
 
     addTrack() {
 	
+    }
+
+    setName(name) {
+	this.name = name;
+    }
+
+    setBPM(bpm) {
+	this.bpm = bpm;
+	Tone.Transport.bpm.value = this.bpm;
     }
 }
 
