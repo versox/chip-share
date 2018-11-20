@@ -7,8 +7,6 @@ mongoose.connect(settings.databaseUrl || 'mongodb://localhost/chip-share', { use
 
 app.use(express.json()); // only parse json input
 
-console.log("HELLO");
-
 // routing
 app.use('/api', require('./lib/routes/api_router'));
 

@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/ryerson/chip-share/static/js/runtime~main.cb495f82.js"
   },
   {
-    "revision": "268e825a33baf6dcdd0b",
-    "url": "/ryerson/chip-share/static/js/main.268e825a.chunk.js"
+    "revision": "c41883d7963cc85b0ef4",
+    "url": "/ryerson/chip-share/static/js/main.c41883d7.chunk.js"
   },
   {
     "revision": "9c7e17277cb01905997d",
     "url": "/ryerson/chip-share/static/js/1.9c7e1727.chunk.js"
   },
   {
-    "revision": "268e825a33baf6dcdd0b",
+    "revision": "c41883d7963cc85b0ef4",
     "url": "/ryerson/chip-share/static/css/main.72b26275.chunk.css"
   },
   {
-    "revision": "72aac32898965982e3f5c69ab3e075aa",
+    "revision": "c518305f5105dd23410e4d38c1274845",
     "url": "/ryerson/chip-share/index.html"
   }
 ];
