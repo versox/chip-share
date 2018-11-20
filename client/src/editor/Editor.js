@@ -121,17 +121,21 @@ class Editor extends Component {
 	return (
 	    <div class="editor">
 		<div class="editor-header">
+		    <span class="header-left">
 		    <i onClick={this.handleToggle.bind(this)} class={"fa " + (this.state.playing ? "fa-stop" : "fa-play")}></i>
-		    <span>BPM </span>
-		    <input value={this.state.bpm} id='bpm' onChange={evt => this.onChange(evt)} type="number" />
-		    <span>Key </span>
-		    <select id="key" value={this.state.key} onChange={evt => this.onChange(evt)}>
-			{this.keyOptions}
-		    </select>
-		    <select onChange={evt => this.onChange(evt)} id="keyType" value={this.state.keyType}>
-			<option>Maj</option>
-			<option>min</option>
-		    </select>
+		    <div class="header-controls">
+		        <span>BPM </span>
+		        <input value={this.state.bpm} id='bpm' onChange={evt => this.onChange(evt)} type="number" />
+		        <span>Key </span>
+		        <select id="key" value={this.state.key} onChange={evt => this.onChange(evt)}>
+			    {this.keyOptions}
+		        </select>
+		        <select onChange={evt => this.onChange(evt)} id="keyType" value={this.state.keyType}>
+			    <option>Maj</option>
+			    <option>min</option>
+		        </select>
+		    </div>
+		    </span>
 		    <div class="song-name">
 			<form onSubmit={(evt) => this.onSave(evt)}>
 			    <input required onChange={evt => this.onChange(evt)} value={this.state.name} id='name' type='text' placeholder='untitled' class="name-input" />

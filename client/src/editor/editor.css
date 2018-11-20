@@ -27,10 +27,14 @@
 .editor-header {
     margin: 15px -15px;
     padding: 20px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.song-name {
-    float: right;
+.header-left {
+    display:flex;
+    align-items: center;
 }
 
 .name-input {
@@ -45,6 +49,11 @@
 
 .name-input:focus {
     outline: none;
+}
+
+.header-controls {
+    margin-left: 30px;
+    display: inline;
 }
 
 #instrEdit {
