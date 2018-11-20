@@ -48,6 +48,17 @@ class Editor extends Component {
 	    playing: false,
 	    error: false
 	};
+	this.keys = {
+	    c: [],
+	    d: [],
+	    e: [],
+	    f: [],
+	    g: []
+	};
+	this.keysArray = Object.keys(this.keys);
+	this.options = this.keysArray.map((key) => {
+	    return (<option>{key}</option>);
+	});
 	this.ready = false;
 	this.songId = props.match.params.id;
 	if (this.songId === "new") {
@@ -110,11 +121,24 @@ class Editor extends Component {
 
 	return (
 	    <div class="editor">
-		<h1>Song name:</h1>
-		<input type='text' placeholder='my song' />
-		<button onClick={() => this.onSave()} type='button' className='btn btn-success'>Save</button>
-		<br/>
-		<i onClick={this.handleToggle.bind(this)} class={"fa " + (this.state.playing ? "fa-stop" : "fa-play")}></i>
+		<div class="editor-header">
+		    <i onClick={this.handleToggle.bind(this)} class={"fa " + (this.state.playing ? "fa-stop" : "fa-play")}></i>
+		    <div class="">
+		    <span>BPM </span>
+		    <input type="number" />
+		    <span>Key </span>
+		    <select>
+		    {this.options}
+		    </select>
+		    <select>
+		    <option>Minor</option>
+		    <option>Major</option>
+		    </select>
+		    <div class="song-name">
+		        <input type='text' placeholder='my song' class="name-input" />
+		        <button onClick={() => this.onSave()} type='button' className='btn btn-success'>Save</button>
+		    </div>
+		</div>
 		<div class="row">
 		    <InstrEdit />
 		    <BlockEdit block={this.song.activeBlock} />

@@ -16,13 +16,39 @@
     display: flex;
 }
 
-#instrEdit {
+#instrEdit, .editor-header {
     background-color: #202020;
     border: 2px solid grey;
     box-shadow: 5px 5px black;
-    flex: 0.2;
     color: white;
     padding: 10px;
+}
+
+.editor-header {
+    margin: 15px -15px;
+    padding: 20px;
+}
+
+.song-name {
+    float: right;
+}
+
+.name-input {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid grey;
+    margin: 0 20px;
+    transform: translateY(2px);
+    font-size: 24px;
+    text-align: center;
+}
+
+.name-input:focus {
+    outline: none;
+}
+
+#instrEdit {
+    flex: 0.2;
 }
 
 input, select {
@@ -37,7 +63,8 @@ input, select {
 
 #blockEdit {
     flex: 1;
-    padding-left: 1em;
+    margin-left: 1em;
+    box-shadow: 5px 5px #101010;
 }
 
 div.on, div.start, div.mid, div.end {
