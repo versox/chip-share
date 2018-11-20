@@ -46,16 +46,16 @@ hr {
 	background-size: cover;
 	text-align: center;
 }
-.carousel-button {
-	position: absolute;
-	bottom: 70px;
-	transform: translateX(-50%);
+.slide {
+	text-align: center;
+	position: relative;
+	top: 50%;
 }
 .slide-cap {
-	position: absolute;
-	bottom: 120px;
-	right: 50%;
-	transform: translateX(50%);
+	transform: translateY(-100%);
+}
+.carousel-button {
+	transform: translateY(-100%);
 }
 .account-name {
 	text-align: center;
