@@ -6,10 +6,12 @@ import Home from './Home.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import Profile from './Profile.js';
+import constant from './constants.js';
 
 class App extends Component {
 
 	constructor(props) {
+		console.log(constant.ROOT_PATH);
 		super(props);
 		this.itemNames = [
 			"Create", "My Songs", "Community"
@@ -48,7 +50,7 @@ class App extends Component {
 		}
 		return (
 			<div className="App">
-				<Router>
+				<Router basename={constant.ROOT_PATH}>
 				    <div>
 					<nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 						<div className="container">
