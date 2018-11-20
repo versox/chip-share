@@ -3,7 +3,7 @@ import Tone from 'tone';
 import './editor.css';
 import './awesome.css';
 import APIHelper from '../apiHelper.js';
-import Song from './song/Song.js';
+import Song from './song/EditableSong.js';
 import InstrEdit from './InstrEdit.js';
 import BlockEdit from './blockEdit/BlockEdit.js';
 import Time from './time/Time.js';
