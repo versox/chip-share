@@ -17,7 +17,9 @@ class App extends Component {
 			"Create", "My Songs", "Community"
 		];
 		this.destination = [
-			"/editor/new", "/profile", ""
+			constant.ROOT_PATH + "editor/new",
+			constant.ROOT_PATH + "/profile",
+			constant.ROOT_PATH + ""
 		];
 	}
 
