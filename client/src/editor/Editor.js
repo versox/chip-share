@@ -123,7 +123,6 @@ class Editor extends Component {
 	    <div class="editor">
 		<div class="editor-header">
 		    <i onClick={this.handleToggle.bind(this)} class={"fa " + (this.state.playing ? "fa-stop" : "fa-play")}></i>
-		    <div class="">
 		    <span>BPM </span>
 		    <input type="number" />
 		    <span>Key </span>
@@ -144,7 +143,7 @@ class Editor extends Component {
 		    <BlockEdit block={this.song.activeBlock} />
 		</div>
 		<Time />
-   	    </div>
+	    </div>
 	);
     }
 }
