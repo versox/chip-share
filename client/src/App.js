@@ -18,7 +18,7 @@ class App extends Component {
 		];
 		this.destination = [
 			constant.ROOT_PATH + "editor/new",
-			constant.ROOT_PATH + "/profile",
+			constant.ROOT_PATH + "profile",
 			constant.ROOT_PATH + ""
 		];
 	}
@@ -35,7 +35,7 @@ class App extends Component {
 		    var name = Cookies.get('name');
 		    return <ul className="navbar-nav ml-auto">
 			{(name === undefined) ?
-			(<a class="nav-link" href="/login">Log In / Register</a>)
+			(<a class="nav-link" href={constant.ROOT_PATH + "login"}>Log In / Register</a>)
 			    :
 			(<li class="nav-item dropdown">
 			    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,7 +56,7 @@ class App extends Component {
 				    <div>
 					<nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 						<div className="container">
-							<a className="navbar-brand" href="/">Chip Share</a>
+							<a className="navbar-brand" href={constant.ROOT_PATH}>Chip Share</a>
 							<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 								<span className="navbar-toggler-icon"></span>
 							</button>
