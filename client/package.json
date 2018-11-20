@@ -16,6 +16,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "http://167.114.98.108/ryerson/chip-share",
   "proxy": "http://localhost:3300",
   "eslintConfig": {
     "extends": "react-app"
