@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import constant from './constants.js';
 
 class Home extends Component {
 
 	constructor(props) {
 		super(props);
 		this.slide1 = {
-			backgroundImage: 'url(/assets/Slide1.png)'
+			backgroundImage: 'url(' + constant.ROOT_PATH + 'assets/Slide1.png)'
 		};
 		this.slide2 = {
-			backgroundImage: 'url(/assets/Slide2.png)'
+			backgroundImage: 'url(' + constant.ROOT_PATH + 'assets/Slide2.png)'
 		};
 		this.slide3 = {
-			backgroundImage: 'url(/assets/Slide3.png)'
+			backgroundImage: 'url(' + constant.ROOT_PATH + 'assets/Slide3.png)'
 		};
 	}
 

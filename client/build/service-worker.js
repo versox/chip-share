@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/ryerson/chip-share/precache-manifest.1658d456cbccd03790e4bef46258d636.js"
+  "/ryerson/chip-share/precache-manifest.c6e23f69209df585a34bfe70648fc07e.js"
 );
 
 workbox.clientsClaim();
