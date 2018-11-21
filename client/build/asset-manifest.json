@@ -1,13 +1,13 @@
 {
-  "main.css": "/ryerson/chip-share/static/css/main.72b26275.chunk.css",
-  "main.js": "/ryerson/chip-share/static/js/main.e85efbd3.chunk.js",
-  "main.js.map": "/ryerson/chip-share/static/js/main.e85efbd3.chunk.js.map",
-  "static/js/1.9c7e1727.chunk.js": "/ryerson/chip-share/static/js/1.9c7e1727.chunk.js",
-  "static/js/1.9c7e1727.chunk.js.map": "/ryerson/chip-share/static/js/1.9c7e1727.chunk.js.map",
-  "runtime~main.js": "/ryerson/chip-share/static/js/runtime~main.cb495f82.js",
-  "runtime~main.js.map": "/ryerson/chip-share/static/js/runtime~main.cb495f82.js.map",
-  "static/css/main.72b26275.chunk.css.map": "/ryerson/chip-share/static/css/main.72b26275.chunk.css.map",
-  "index.html": "/ryerson/chip-share/index.html",
-  "precache-manifest.c6e23f69209df585a34bfe70648fc07e.js": "/ryerson/chip-share/precache-manifest.c6e23f69209df585a34bfe70648fc07e.js",
-  "service-worker.js": "/ryerson/chip-share/service-worker.js"
+  "main.css": "/static/css/main.72b26275.chunk.css",
+  "main.js": "/static/js/main.19a039d7.chunk.js",
+  "main.js.map": "/static/js/main.19a039d7.chunk.js.map",
+  "static/js/1.9c7e1727.chunk.js": "/static/js/1.9c7e1727.chunk.js",
+  "static/js/1.9c7e1727.chunk.js.map": "/static/js/1.9c7e1727.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
+  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
+  "static/css/main.72b26275.chunk.css.map": "/static/css/main.72b26275.chunk.css.map",
+  "index.html": "/index.html",
+  "precache-manifest.fd5b2de3d160621f9b138f0c08483fc6.js": "/precache-manifest.fd5b2de3d160621f9b138f0c08483fc6.js",
+  "service-worker.js": "/service-worker.js"
 }
