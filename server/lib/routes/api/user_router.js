@@ -11,7 +11,9 @@ router.get('/account-info', authTokenHandler.parse(), (req, res) => {
 });
 router.post('/login', (req, res, next) => {
 	try {
-		User.findOne({username: req.body.username}, async (err, user) => {
+		if (typeof req.body.username !== 'string' || typeof req.body.password !== 'string')
+			return next(createError(400, 'invalid input'));
+		User.findOne({username: req.body.username.toLowerCase()}, async (err, user) => {
 			if (err)
 				return next(createError(500, 'database error'));
 			if (!user || !(await user.checkPassword(req.body.password)))
