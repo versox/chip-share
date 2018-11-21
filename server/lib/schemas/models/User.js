@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
 		minlength: [5, 'Username must be at least 5 characters long.'],
 		maxlength: [16, 'Username cannot be longer than 16 characters.'],
 		lowercase: true,
-		match: [/^[a-z0-9_]?$/i, 'Username can only contain alpha-numeric characters and underscores.'],
+		match: [/^[a-z0-9_]*$/i, 'Username can only contain alpha-numeric characters and underscores.'],
 		unique: [true, 'That username is already taken.']
 	},
 	password: {
