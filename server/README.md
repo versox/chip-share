@@ -104,7 +104,10 @@ The auth token should be discarded after this request.
   * `bpm`: Integer, 1-500.
   * `blocks`: A mapping of ids to blocks. _More on this below_.
   * `instruments`: An array of instruments. _More on this below_.
-  * `ratings`: **Will be changed and fully implemented in the future.**
+  * `ratings`: An object containing the following fields:
+    * `average`: The average rating for song, a double from 1-5 inclusive, rounding the average to _.5_ of a star.
+    * `total`: The total amount of ratings.
+    * `currentUserRating`: The star rating of the currently logged in user (only present if **access token is provided** and the user rated the song).
   * `createDate`: Formatted to ISO 8601.
   * `updateDate`: Formatted to ISO 8601.
 * Actual song music data is composed of blocks and instruments.
@@ -279,3 +282,11 @@ Upon successful update, returns `200 OK` with no body.
 ### `POST /api/songs/delete/<songId>`
 _Access token needed for this request._<br>
 Self-explanatory purpose. Returns `200 OK` upon successful deletion.
+<br>
+<br>
+### `POST /api/songs/rate/<songId>/[rating]`
+_Access token needed for this request._<br>
+Request to rate a song by id.
+If optional `rating` parameter is present, and is a valid integer from 1-5 inclusive, sets that as the rating of the user.
+If the `rating` parameter is omitted, resets/removes the rating of the user.<br>
+Returns `200 OK` unless the rating is an invalid integer, or if an unknown error occurred.

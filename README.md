@@ -7,7 +7,7 @@ Remaining Tasks:
 **Only 2 weeks left!**
 
 * Server.
-  * Song ratings API.
+  * ~~Song ratings API.~~
   * Song ranking (post time & ratings factored).
   * Sequential fetching of songs (load more).
   * Add song colors enum.

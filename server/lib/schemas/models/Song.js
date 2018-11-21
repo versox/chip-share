@@ -261,7 +261,7 @@ Song.methods.getUser = function() {
 		});
 	});
 };
-Song.methods.getFormattedObject = function() {
+Song.methods.getFormattedObject = function(currUserId = null) {
 	const song = this;
 	return new Promise(async resolve => {
 		const result = song.toObject({versionKey: false});
@@ -276,7 +276,25 @@ Song.methods.getFormattedObject = function() {
 			}
 			result.blocks = parsedBlocks;
 		}
-		delete result.ratings; // TODO implement
+		if (result.hasOwnProperty('ratings')) {
+			delete result.ratings;
+			let avgRating = 0;
+			let currUserRating = null;
+			for (const i of song.ratings.keys()) {
+				avgRating += song.ratings[i].rating;
+				if (currUserId != null && song.ratings[i].userId.equals(currUserId)) {
+					currUserRating = song.ratings[i].rating;
+				}
+			}
+			avgRating /= song.ratings.length > 0 ? song.ratings.length : 1;
+			avgRating = Math.round(avgRating*2)/2;
+			result.ratings = {
+				average: avgRating,
+				total: song.ratings.length
+			};
+			if (currUserRating != null)
+				result.ratings.currentUserRating = currUserRating;
+		}
 		result.id = result._id;
 		delete result._id;
 		resolve(result);

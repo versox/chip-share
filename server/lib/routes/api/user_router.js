@@ -6,7 +6,7 @@ const User = require('../../schemas/models/User');
 const createError = require('http-errors');
 const bcrypt = require('bcryptjs');
 
-router.get('/account-info', authTokenHandler.check, (req, res) => {
+router.get('/account-info', authTokenHandler.parse(), (req, res) => {
 	res.send(req.user.toFormattedObject());
 });
 router.post('/login', (req, res, next) => {
@@ -24,7 +24,7 @@ router.post('/login', (req, res, next) => {
 		next(createError(500, 'server error'));
 	}
 });
-router.post('/refresh-access', authTokenHandler.check, async (req, res, next) => {
+router.post('/refresh-access', authTokenHandler.parse(), async (req, res, next) => {
 	try {
 		if (req.body.refreshSecret && req.tokenRefreshSecret && await bcrypt.compare(req.body.refreshSecret, req.tokenRefreshSecret)) {
 			const [token, refreshSecret] = await authTokenHandler.createToken(req.user.id);
@@ -87,7 +87,7 @@ router.post('/register', async (req, res, next) => {
 		});
 	});
 });
-router.post('/delete-account', authTokenHandler.check, (req, res, next) => {
+router.post('/delete-account', authTokenHandler.parse(), (req, res, next) => {
 	User.deleteOne({_id: req.user._id}, (err) => {
 		if (err) return next(createError(500, 'database error'));
 		res.status(200).end();

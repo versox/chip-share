@@ -5,7 +5,7 @@ const Song = require('../../schemas/models/Song');
 const createError = require('http-errors');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-router.get('/', (req, res, next) => {
+router.get('/', authTokenHandler.parse(false), (req, res, next) => {
 	const conditions = {};
 	if (req.query.userId) {
 		try {
@@ -19,12 +19,12 @@ router.get('/', (req, res, next) => {
 		const resultArray = [];
 		for (const i in songs) {
 			const song = songs[i];
-			resultArray.push(await song.getFormattedObject());
+			resultArray.push(await song.getFormattedObject(req.user ? req.user.id : null));
 		}
 		res.send(resultArray);
 	});
 });
-router.get('/:songId/:format?', (req, res, next) => {
+router.get('/:songId/:format?', authTokenHandler.parse(false), (req, res, next) => {
 	let selector = null;
 	switch (req.params.format ? req.params.format.toLowerCase() : '') {
 		case 'composition':
@@ -45,10 +45,10 @@ router.get('/:songId/:format?', (req, res, next) => {
 	Song.findById(id, selector, async function(err, song) {
 		if (err) return next(createError(500, 'database error occurred while fetching song'));
 		if (!song) return next(createError(404, 'song with that id does not exist'));
-		res.send(await song.getFormattedObject());
+		res.send(await song.getFormattedObject(req.user ? req.user.id : null));
 	});
 });
-router.post('/create', authTokenHandler.check, (req, res, next) => {
+router.post('/create', authTokenHandler.parse(), (req, res, next) => {
 	// remove data that should not be provided
 	delete req.body._id;
 	delete req.body.ratings;
@@ -74,7 +74,7 @@ router.post('/create', authTokenHandler.check, (req, res, next) => {
 		}
 	});
 });
-router.post('/update/:songId', authTokenHandler.check, (req, res, next) => {
+router.post('/update/:songId', authTokenHandler.parse(), (req, res, next) => {
 	// remove data that should not be provided
 	delete req.body._id;
 	delete req.body.userId; // userId stays constant
@@ -90,7 +90,7 @@ router.post('/update/:songId', authTokenHandler.check, (req, res, next) => {
 	Song.findOne({_id: id}, 'userId' , async function(err, song) {
 		if (err) return next(createError(500, 'database error occurred while fetching song'));
 		if (!song) return next(createError(404, 'song with that id does not exist'));
-		if (song.userId !== req.user.id) return next(createError(403, 'you cannot edit this song'));
+		if (song.userId.equals(req.user.id)) return next(createError(403, 'you cannot edit this song'));
 		song.set(req.body); // update
 		song.updateDate = Date.now(); // set update date
 		song.save(err => {
@@ -110,7 +110,7 @@ router.post('/update/:songId', authTokenHandler.check, (req, res, next) => {
 		});
 	});
 });
-router.delete('/:songId', authTokenHandler.check, (req, res, next) => {
+router.delete('/:songId', authTokenHandler.parse(), (req, res, next) => {
 	let id;
 	try {
 		id = new ObjectId(req.params.songId);
@@ -121,6 +121,61 @@ router.delete('/:songId', authTokenHandler.check, (req, res, next) => {
 		if (err) return next(createError(500, 'database error occurred while deleting song'));
 		if (info && info.hasOwnProperty('n') && info.n === 0) return next(createError(400, 'song could not be deleted'));
 		res.status(200).end();
+	});
+});
+router.post('/rate/:songId/:rating?', authTokenHandler.parse(), (req, res, next) => {
+	try {
+		id = new ObjectId(req.params.songId);
+	} catch (e) {
+		return next(createError(400, 'invalid song id'));
+	}
+	let rating = null;
+	if (req.params.hasOwnProperty('rating') && req.params.rating) {
+		if (/^[1-5]$/.test(req.params.rating)) {
+			rating = parseInt(req.params.rating);
+		} else {
+			return next(createError(400, 'invalid rating'));
+		}
+	}
+	Song.findOne({_id: id}, 'ratings' , async function(err, song) {
+		if (err) return next(createError(500, 'database error occurred while fetching song'));
+		if (!song) return next(createError(404, 'song with that id does not exist'));
+		let keyOfCurrentRating = -1;
+		for (const i of song.ratings.keys()) {
+			const rating = song.ratings[i];
+			if (rating.userId.equals(req.user.id)) {
+				keyOfCurrentRating = i;
+				break;
+			}
+		}
+		let save = false;
+		if (rating == null) {
+			if (keyOfCurrentRating >= 0) {
+				song.ratings.splice(keyOfCurrentRating, 1);
+				save = true;
+			}
+		} else {
+			if (keyOfCurrentRating >= 0) {
+				if (song.ratings[keyOfCurrentRating].rating !== rating) {
+					song.ratings[keyOfCurrentRating].rating = rating;
+					save = true;
+				}
+			} else {
+				song.ratings.push({
+					userId: req.user.id,
+					rating: rating
+				});
+				save = true;
+			}
+		}
+		if (save) {
+			song.save(err => {
+				if (err) return next(createError(500, 'unknown error occurred while updating rating'));
+				res.status(200).end();
+			});
+		} else {
+			res.status(200).end();
+		}
 	});
 });
 

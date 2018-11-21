@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 const schema = new mongoose.Schema({
-	_id: {
+	userId: {
 		type: ObjectId,
 		required: true
 	},
@@ -11,5 +11,5 @@ const schema = new mongoose.Schema({
 		max: 5,
 		required: true
 	}
-});
+}, { _id: false });
 module.exports = schema; // sub document
