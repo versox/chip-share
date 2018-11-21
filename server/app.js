@@ -16,7 +16,9 @@ app.get('*', (req, res) => {
 	res.sendFile('index.html', { root: clientBuildDir});
 });
 
-// handle errors
-require('./bin/error_handler')(app);
+// global error handler (4 parameters needed for express to recognize this as an error handler)
+app.use(function(err, req, res, next) {
+	res.status(err.status || 500).send({errorCode: err.status || 500, message: err.message || 'no message provided'});
+});
 
 module.exports = app;
