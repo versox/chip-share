@@ -11,8 +11,9 @@ import constant from './constants.js';
 class App extends Component {
 
 	constructor(props) {
-		console.log(constant.ROOT_PATH);
 		super(props);
+		console.log(process.env);
+		console.log(constant.ROOT_PATH);
 		this.itemNames = [
 			"Create", "My Songs", "Community"
 		];

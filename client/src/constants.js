@@ -1,5 +1,5 @@
 const constant = {
-    ROOT_PATH: "/ryerson/chip-share/"
+    ROOT_PATH: process.env.PUBLIC_URL 
 }
 
 export default constant;
