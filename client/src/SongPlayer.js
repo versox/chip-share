@@ -70,7 +70,7 @@ class SongPlayer extends Component {
 					<div className="play-progress" style={{width: '0%'}}></div>
 				</div>
 				<div className="song-body">
-					<SongRating song={this.song} changeable={true} value={this.song.ratings ? this.song.ratings.average : 0} />
+					<SongRating song={this.song} changeable={APIHelper.isLoggedIn()} value={this.song.ratings ? this.song.ratings.average : 0} />
 					<div className="song-dates">
 						<span className="song-creation-date">Created {this.song.getFormattedCreate()}</span>
 						<span className="song-update-date">{

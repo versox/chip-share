@@ -161,6 +161,9 @@ const apiHelper = {
 				.then(() => resolve(true))
 				.catch((err) => reject(err));
 		});
+	},
+	isLoggedIn: function() {
+		return !!Cookies.get('token');
 	}
 };
 
