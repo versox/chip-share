@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Varela');
-@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @font-face {
 	font-family: bit;
 	src: url(/assets/bit.otf);
@@ -146,6 +144,10 @@ hr {
 .song-list > li .song-header .btn.playback-btn.play-btn:after {
 	content: "\f04b";
 }
+.song-list > li > div:nth-child(2) {
+	text-align: right;
+	flex: 1;
+}
 .song-list > li .song-header .buttons-container {
 	list-style: none;
 	margin: 0;
@@ -189,10 +191,11 @@ hr {
 }
 .song-list > li .song-header .song-artist .name {
 	font-size: 16px;
+	line-height: 13px;
 }
 .song-list > li .song-header .song-artist .username {
 	font-size: 10px;
-	margin-top: -5px;
+	margin-top: 2px;
 }
 .song-list > li .song-header .play-progress {
 	position: absolute;
@@ -204,7 +207,7 @@ hr {
 	z-index: 1;
 }
 .song-list > li .song-body {
-	height: 56px;
+	min-height: 56px;
 	padding: 10px 20px;
 	color: #757575;
 	font-size: 12px;
