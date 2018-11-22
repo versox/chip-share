@@ -23,8 +23,10 @@ Remaining Tasks:
       * Note range overlapping.
       * Removing note ranges.
       * Dragging across lines prevents creating range until click.
+	  * Pausing at precise times can cause note (range?) to play infinitely.
+      * Songs keep playing when switching to editor.
   * Song list.
-    * Add rating stars.
+    * ~~Add rating stars.~~
   * Login page.
     * Display field error messages.
   * Registration page.
