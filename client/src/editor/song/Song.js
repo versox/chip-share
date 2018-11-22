@@ -18,6 +18,7 @@ class Song {
 	    this.updateDate = new Date(songMeta.updateDate);
 	    this.author = songMeta.user.name;
 	    this.username = songMeta.user.username;
+	    this.ratings = songMeta.ratings;
 
 	    this.id = songMeta.id;
 	} else {

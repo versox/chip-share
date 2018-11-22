@@ -89,6 +89,9 @@ hr {
 	padding: 20px;
 	position: relative;
 	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 .song-list > li .song-header .song-title {
 	font-size: 22px;
@@ -98,7 +101,7 @@ hr {
 	line-height: 40px;
 	vertical-align: top;
 	margin-left: 15px;
-	letter-spacing: 1px;
+	letter-spacing: 0.5px;
 	max-width: 90%;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -144,12 +147,11 @@ hr {
 	content: "\f04b";
 }
 .song-list > li .song-header .buttons-container {
-	position: absolute;
-	top: 20px;
-	right: 20px;
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	display: inline-block;
+	vertical-align: middle;
 }
 .song-list > li .song-header .buttons-container > * {
 	width: 30px;
@@ -173,6 +175,25 @@ hr {
 	line-height: 30px;
 	text-align: center;
 }
+.song-list > li .song-header .song-artist {
+	color: #bfbfbf;
+	text-align: right;
+	text-decoration: none;
+	transition: color 200ms;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 20px;
+}
+.song-list > li .song-header .song-artist:hover {
+	color: white;
+}
+.song-list > li .song-header .song-artist .name {
+	font-size: 16px;
+}
+.song-list > li .song-header .song-artist .username {
+	font-size: 10px;
+	margin-top: -5px;
+}
 .song-list > li .song-header .play-progress {
 	position: absolute;
 	bottom: 0;
@@ -183,36 +204,65 @@ hr {
 	z-index: 1;
 }
 .song-list > li .song-body {
+	height: 56px;
 	padding: 10px 20px;
-	color: gray;
+	color: #757575;
 	font-size: 12px;
 	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
 }
+.song-list > li .song-body .song-rating {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+.song-list > li .song-body .song-rating .star {
+	width: 30px;
+	height: 30px;
+	position: relative;
+}
+.song-list > li .song-body .song-rating.changeable .star {
+	cursor: pointer;
+}
+.song-list > li .song-body .song-rating .star:before,
+.song-list > li .song-body .song-rating .star:after {
+	position: absolute;
+	top: 0;
+	left: 5px;
+	width: 20px;
+	height: 30px;
+	line-height: 30px;
+	text-align: left;
+	font-size: 22px;
+	font-family: FontAwesome, sans-serif;
+	content: "\f005";
+	color: #444444;
+}
+.song-list > li .song-body .song-rating .star.active:before {
+	color: #d4b200;
+}
+.song-list > li .song-body .song-rating .star:after {
+	color: transparent;
+}
+.song-list > li .song-body .song-rating .star.full:after,
+.song-list > li .song-body .song-rating .star.half:after {
+	color: #ffffff75;
+}
+.song-list > li .song-body .song-rating .star.half:after {
+	content: "\f089";
+}
+.song-list > li .song-body .song-rating .star.hover:after {
+	color: #dcdcdc;
+	content: "\f005";
+}
 .song-list > li .song-body .song-dates {
-
+	text-align: right;
 }
 .song-list > li .song-body .song-dates .song-creation-date,
 .song-list > li .song-body .song-dates .song-update-date {
 	display: block;
-}
-.song-list > li .song-body .song-artist {
-	color: #bfbfbf;
-	text-align: right;
-	text-decoration: none;
-	transition: color 200ms;
-}
-.song-list > li .song-body .song-artist:hover {
-	color: white;
-}
-.song-list > li .song-body .song-artist .name {
-	font-size: 16px;
-}
-.song-list > li .song-body .song-artist .username {
-	font-size: 10px;
-	margin-top: -5px;
 }
 
 /* end content */

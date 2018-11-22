@@ -62,40 +62,35 @@ class Home extends Component {
 							<h3>Popular Songs</h3>
 							<ul className="song-list">
 								<li>
-									<div className="song-header" style={{background: '#00ff9545'}}>
-										<button className="btn btn-light playback-btn play-btn"></button>
-										<div className="song-title">Sample Song</div>
-										<div className="play-progress" style={{width: '60%'}}></div>
-										<div className="buttons-container">
-											<button className="btn btn-light"><i className="fa fa-pencil"></i></button>
-											<button className="btn btn-light"><i className="fa fa-trash"></i></button>
+									<div className="song-header" style={{background: '#007eff45'}}>
+										<div>
+											<button className="btn btn-light playback-btn play-btn"></button>
+											<div className="song-title">Sample Song</div>
 										</div>
+										<div>
+											<div className="buttons-container">
+												<button className="btn btn-light"><i className="fa fa-pencil"></i></button>
+												<button className="btn btn-light"><i className="fa fa-trash"></i></button>
+											</div>
+											<a href="#" className="song-artist">
+												<div className="name">Artist Name</div>
+												<div className="username">@johnsmith</div>
+											</a>
+										</div>
+										<div className="play-progress" style={{width: '60%'}}></div>
 									</div>
 									<div className="song-body">
+										<div className="song-rating changeable">
+											<div className="star active full"></div>
+											<div className="star full"></div>
+											<div className="star half"></div>
+											<div className="star"></div>
+											<div className="star"></div>
+										</div>
 										<div className="song-dates">
 											<span className="song-creation-date">Created November 15, 2018</span>
 											<span className="song-update-date">Updated November 16, 2018</span>
 										</div>
-										<a href="#" className="song-artist">
-											<div className="name">Artist Name</div>
-											<div className="username">@johnsmith</div>
-										</a>
-									</div>
-								</li>
-								<li>
-									<div className="song-header" style={{background: '#cc00ff45'}}>
-										<button className="btn btn-light playback-btn pause-btn"></button>
-										<div className="song-title">Best Song Ever</div>
-										<div className="play-progress" style={{width: '30%'}}></div>
-									</div>
-									<div className="song-body">
-										<div className="song-dates">
-											<span className="song-creation-date">Created October 29, 2018</span>
-										</div>
-										<a href="#" className="song-artist">
-											<div className="name">Another Artist</div>
-											<div className="username">@XxXusernameXxX</div>
-										</a>
 									</div>
 								</li>
 							</ul>
