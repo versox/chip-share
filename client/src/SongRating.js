@@ -26,6 +26,8 @@ class SongRating extends Component {
 		});
 	}
 	setRating(rating) {
+		if (!this.props.changeable)
+			return;
 		rating = rating === this.state.userValue ? null : rating;
 		apiHelper.rateSong(this.props.song.id, rating)
 			.then(() => {
