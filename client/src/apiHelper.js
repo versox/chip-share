@@ -131,7 +131,11 @@ const apiHelper = {
 		if (token)
 			req.setRequestHeader("Authorization", token);
 		req.send();
-		return (JSON.parse(req.response));
+		if (req.status === 200) {
+			return JSON.parse(req.response);
+		} else {
+			return [];
+		}
 	},
 	getSong: function(id, format = "full") {
 		var req = new XMLHttpRequest();

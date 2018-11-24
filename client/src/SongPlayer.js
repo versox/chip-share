@@ -13,6 +13,11 @@ class SongPlayer extends Component {
 			playing: false
 		};
 		this.song = props.song;
+		this.song.addProgressListener(this, (count) => {
+			this.setState({
+				progress: Math.ceil(((count+1)/(this.song.blockLength*16))*100)+'%'
+			});
+		});
 	}
 
 	onEdit() {
@@ -29,7 +34,7 @@ class SongPlayer extends Component {
 			this.song.pause();
 		} else {
 			if (!this.song.loaded) {
-				APIHelper.getSong(this.song.id)
+				APIHelper.getSong(this.song.id, 'composition')
 					.then((data) => {
 						return JSON.parse(data);
 					})
@@ -67,7 +72,7 @@ class SongPlayer extends Component {
 							<div className="username">@{this.song.username}</div>
 						</a>
 					</div>
-					<div className="play-progress" style={{width: '0%'}}></div>
+					<div className="play-progress" style={{width: this.state.progress}}></div>
 				</div>
 				<div className="song-body">
 					<SongRating song={this.song} changeable={APIHelper.isLoggedIn()} value={this.song.ratings ? this.song.ratings.average : 0} />
