@@ -276,5 +276,41 @@ hr {
 	margin: auto;
 	width: 400px;
 }
+.credits-block {
+	text-align: center;
+	padding: 30px;
+	background: #FFFFFF09;
+	background-clip: content-box;
+}
+.credits-block img {
+	width: 100%;
+	height: auto;
+	margin: 0 auto;
+}
+.credits-block h3 {
+	margin: 10px 0 3px;
+}
+.credits-block > a {
+	display: inline-block;
+	clear: both;
+	margin-bottom: 15px;
+}
+.credits-block .scrollarea {
+	height: 250px;
+	margin-bottom: 10px;
+}
+.credits-block ul {
+	margin: 0;
+	padding: 10px 15px;
+	font-size: 12px;
+	list-style: none;
+	text-align: left;
+}
+.credits-block ul li {
+	margin-bottom: 2px;
+	border-bottom: 1px dashed #FFFFFF0F;
+	display: block;
+	padding: 5px 0;
+}
 
 /* end pages */
