@@ -241,6 +241,10 @@ const Song = new mongoose.Schema({
 		type: [Rating],
 		default: []
 	},
+	score: {
+		type: Number,
+		default: 0
+	},
 	createDate: {
 		type: Date,
 		default: Date.now
@@ -261,6 +265,15 @@ Song.methods.getUser = function() {
 		});
 	});
 };
+Song.pre('save', function() {
+	const song = this;
+	let avgRating = 0;
+	for (const i of song.ratings.keys())
+		avgRating += song.ratings[i].rating;
+	avgRating /= song.ratings.length > 0 ? song.ratings.length : 1;
+	avgRating = Math.round(avgRating*10)/10;
+	this.score = avgRating;
+});
 Song.methods.getFormattedObject = function(currUserId = null) {
 	const song = this;
 	return new Promise(async resolve => {
@@ -297,6 +310,7 @@ Song.methods.getFormattedObject = function(currUserId = null) {
 		}
 		result.id = result._id;
 		delete result._id;
+		delete result.score;
 		resolve(result);
 	});
 };

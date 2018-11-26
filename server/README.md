@@ -126,7 +126,13 @@ The auth token should be discarded after this request.
 
 
 ### `GET /api/songs/[<songId>/<format>]`
-If optional parameters `songId` and `format` are **not** specified, returns an array of all songs, including all properties **except blocks and instruments**.
+If optional parameters `songId` and `format` are **not** specified, returns an array of all songs, including all properties **except blocks and instruments**.<br>
+<br>
+<br>
+The returned array contains a **maximum of 10 songs**, sorted by `createDate`. If there are additional songs that could be fetched, the 11th element of the returned array will be an object with a single property `delimiterId` (an id of the next song).<br>
+To get the next 10 songs, send the same request but append the `delimiterId` query field, e.g. `/api/songs?delimiterId=...`
+<br>
+<br>
 To fetch the **composition** of a song (the blocks and instruments data), specify the optional parameters (explained below).<br>
 Example response:
 ```json
@@ -156,10 +162,19 @@ Example response:
             "id": "5be0ecb6c14fa64be84a7611"
         },
         "id": "5beba410050a434fd42c421e"
+    },
+    
+    ...
+    
+    {
+    	"delimiterId": "5becb591b25d132d7cc7bdf6"
     }
 ]
 ```
 To get an array of songs from **one individual user** (by id), specify the user's id with the `?userId=...` query (e.g. `/api/songs/get?userId=5be0ecb6c14fa64be84a7611`).
+<br>
+<br>
+To sort the songs based on popularity (ratings), specify the `popular=1` query field (e.g. `/api/songs/get?delimiterId=...&popular=1`, _`delimiterId` added for demonstration_).
 <br>
 <br>
 You can fetch an individual song with the `songId` and `format` parameters (both must be provided).

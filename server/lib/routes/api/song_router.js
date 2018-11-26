@@ -4,6 +4,7 @@ const authTokenHandler = require('../../../bin/auth_token_handler');
 const Song = require('../../schemas/models/Song');
 const createError = require('http-errors');
 const ObjectId = require('mongoose').Types.ObjectId;
+const songResponseLimit = 10;
 
 router.get('/', authTokenHandler.parse(false), (req, res, next) => {
 	const conditions = {};
@@ -14,12 +15,27 @@ router.get('/', authTokenHandler.parse(false), (req, res, next) => {
 			return next(createError(400, 'invalid user id'));
 		}
 	}
-	Song.find(conditions, '-instruments -blocks', async function(err, songs) {
+	if (req.query.delimiterId) {
+		try {
+			conditions._id = {$lte: new ObjectId(req.query.delimiterId)};
+		} catch (e) {
+			return next(createError(400, 'invalid song delimiter id'));
+		}
+	}
+	const options = {
+		limit: songResponseLimit+1,
+		sort: req.query.popular === '1' ? '-score -createDate' : '-createDate'
+	};
+	Song.find(conditions, '-instruments -blocks', options, async function(err, songs) {
 		if (err) return next(createError(500, 'database error occurred while fetching songs'));
 		const resultArray = [];
 		for (const i in songs) {
 			const song = songs[i];
-			resultArray.push(await song.getFormattedObject(req.user ? req.user.id : null));
+			if (i >= songResponseLimit) {
+				resultArray.push({delimiterId: song.id});
+			} else {
+				resultArray.push(await song.getFormattedObject(req.user ? req.user.id : null));
+			}
 		}
 		res.send(resultArray);
 	});

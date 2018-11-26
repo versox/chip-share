@@ -28,7 +28,7 @@ const schema = new mongoose.Schema({
 		}
 	}
 });
-// hash password post validate (pre save)
+// hash password pre save
 schema.pre('save', async function(next) {
 	const user = this;
 	if (!user.isModified('password')) return next();
