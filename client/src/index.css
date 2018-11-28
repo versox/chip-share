@@ -312,5 +312,19 @@ hr {
 	display: block;
 	padding: 5px 0;
 }
-
+.ao {
+	overflow: auto;
+}
+.right-float {
+	width: 300px;
+	float: right;
+	margin: 0 30px;
+}
+.ins-img {
+	width: 300px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 5px 5px 10px #202020;
+}
 /* end pages */
