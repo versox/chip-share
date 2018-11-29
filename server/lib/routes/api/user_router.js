@@ -6,8 +6,12 @@ const User = require('../../schemas/models/User');
 const createError = require('http-errors');
 const bcrypt = require('bcryptjs');
 
-router.get('/account-info', authTokenHandler.parse(), (req, res) => {
-	res.send(req.user.toFormattedObject());
+router.get('/fetch/:username', (req, res) => {
+	User.findOne({username: req.params.username.toLowerCase()}, async (err, user) => {
+		if (err) return next(createError(500, 'database error'));
+		if (!user) return res.status(404).end();
+		res.status(200).send(user.toFormattedObject());
+	});
 });
 router.post('/login', (req, res, next) => {
 	try {

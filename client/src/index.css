@@ -55,13 +55,6 @@ hr {
 .carousel-button {
 	transform: translateY(-100%);
 }
-.account-name {
-	text-align: center;
-	font-family: bit;
-	font-size: 80pt;
-	margin-top: 20px;
-	text-shadow: 5px 5px black;
-}
 
 /* end header */
 /* content */
@@ -71,7 +64,7 @@ hr {
 	padding: 20px;
 }
 .song-list {
-	margin: 20px 0 0;
+	margin: 20px 0 20p;
 	padding: 0;
 	list-style: none;
 }
@@ -268,6 +261,21 @@ hr {
 .song-list > li .song-body .song-dates .song-update-date {
 	display: block;
 }
+.song-list-footer {
+	text-align: center;
+	margin-bottom: 20px;
+}
+.song-list-footer .btn {
+	background: rgba(255,255,255,0.1);
+	border: unset;
+	color: white;
+	padding: 10px 30px;
+	width: 50%;
+}
+.song-list-footer .btn:hover {
+	background: rgba(255,255,255,0.2);
+	color: white;
+}
 
 /* end content */
 /* pages */
@@ -312,6 +320,26 @@ hr {
 	display: block;
 	padding: 5px 0;
 }
+
+.account-name {
+	text-align: center;
+	font-family: bit;
+	font-size: 60pt;
+	margin: 40px 0 0;
+	text-shadow: 5px 5px black;
+}
+.account-username {
+	text-align: center;
+	/*font-family: bit;*/
+	font-size: 20pt;
+	margin: -10px 0 20px;
+	display: block;
+}
+.info-box {
+	text-align: center;
+	margin: 40px 0 20px;
+}
+
 .ao {
 	overflow: auto;
 }
@@ -327,4 +355,5 @@ hr {
 	margin-right: auto;
 	box-shadow: 5px 5px 10px #202020;
 }
+
 /* end pages */

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import * as Cookies from 'js-cookie';
 import Editor from './editor/Editor.js';
 import Home from './Home.js';
 import Login from './Login.js';
@@ -13,14 +12,16 @@ import ConclusionPage from "./assignment_pages/ConclusionPage";
 import InstallationPage from "./assignment_pages/InstallationPage";
 import CreditsPage from "./assignment_pages/CreditsPage";
 import MenuDropdown from "./MenuDropdown";
+import APIHelper from './apiHelper';
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
+		this.user = APIHelper.getCurrentUser();
 		this.menu = [
 			{ title: "Create", path: "editor/new" },
-			{ title: "My Songs", path: "profile" },
+			{ title: "My Songs", path: "profile/"+(this.user ? this.user.username : ''), userOnly: true },
 			{ title: "Assignment", path: "assignment", items: [
 					{ title: "Frameworks", path: "assignment/frameworks" },
 					{ title: "Installation", path: "assignment/installation" },
@@ -33,6 +34,8 @@ class App extends Component {
 
 	render() {
 		let navBarItems = this.menu.map((menuItem) => {
+			if (menuItem.userOnly && !this.user)
+				return;
 			if (menuItem.path)
 				menuItem.path = constant.ROOT_PATH+menuItem.path;
 		    return menuItem.items ? <MenuDropdown item={menuItem} /> : <li className={'nav-item'+(menuItem.items ? ' dropdown' : '')}>
@@ -42,21 +45,21 @@ class App extends Component {
 		    </li>;
 		});
 		const UserMenu = () => {
-		    var name = Cookies.get('name');
+		    const user = APIHelper.getCurrentUser();
 		    return <ul className="navbar-nav ml-auto">
-			{(name === undefined) ?
-			(<a class="nav-link" href={constant.ROOT_PATH + "login"}>Log In / Register</a>)
+			{!user ?
+			(<a className="nav-link" href={constant.ROOT_PATH + "login"}>Log In / Register</a>)
 			    :
-			(<li class="nav-item dropdown">
-			    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Logged in as: {name}
-			    </a>
-			    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				<a class="dropdown-item" href="#">Profile</a>
-				<a class="dropdown-item" href="#">Options</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Log Out</a>
-			    </div>
+			(<li className="nav-item dropdown">
+				<a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Logged in as: {user.name}
+				</a>
+				<div className="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a className="dropdown-item" href="#">Profile</a>
+					<a className="dropdown-item" href="#">Options</a>
+					<div className="dropdown-divider"></div>
+					<a className="dropdown-item" href={constant.ROOT_PATH + "logout"}>Log Out</a>
+				</div>
 			</li>)}
 			</ul>;
 		};
@@ -83,7 +86,7 @@ class App extends Component {
 						<Route path="/editor/:id" component={Editor} />
 						<Route path="/login" component={Login} />
 						<Route path="/register" component={Register} />
-						<Route path="/profile" component={Profile} />
+						<Route path="/profile/:username?" component={Profile} />
 					    <Route path="/assignment/frameworks" component={FrameworksPage} />
 					    <Route path="/assignment/installation" component={InstallationPage} />
 					    <Route path="/assignment/tutorial" component={TutorialPage} />

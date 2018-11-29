@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import APIHelper from './apiHelper.js';
+import constants from "./constants";
 
 class Login extends Component {
     constructor(props)
@@ -18,7 +19,7 @@ class Login extends Component {
 	event.preventDefault();
 	var response = APIHelper.login(this.state.user, this.state.pass);
 	var comp = (response === "Success" ? 
-		(<Redirect to="/profile"/>) : 
+		(<Redirect to={constants.ROOT_PATH+"profile/"+this.state.user.toLowerCase()}/>) :
 		(<div class="alert alert-danger" role="alert">{response}</div>));
 	this.setState({
 	    alertComponent: comp

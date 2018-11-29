@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import constant from './constants.js';
+import SongList from "./SongList";
 
 class Home extends Component {
 
@@ -60,40 +61,7 @@ class Home extends Component {
 					<div className="row">
 						<div className="col-lg-9 col-md-8">
 							<h3>Popular Songs</h3>
-							<ul className="song-list">
-								<li>
-									<div className="song-header" style={{background: '#007eff45'}}>
-										<div>
-											<button className="btn btn-light playback-btn play-btn"></button>
-											<div className="song-title">Sample Song</div>
-										</div>
-										<div>
-											<div className="buttons-container">
-												<button className="btn btn-light"><i className="fa fa-pencil"></i></button>
-												<button className="btn btn-light"><i className="fa fa-trash"></i></button>
-											</div>
-											<a href="#" className="song-artist">
-												<div className="name">Artist Name</div>
-												<div className="username">@johnsmith</div>
-											</a>
-										</div>
-										<div className="play-progress" style={{width: '60%'}}></div>
-									</div>
-									<div className="song-body">
-										<div className="song-rating changeable">
-											<div className="star active full"></div>
-											<div className="star full"></div>
-											<div className="star half"></div>
-											<div className="star"></div>
-											<div className="star"></div>
-										</div>
-										<div className="song-dates">
-											<span className="song-creation-date">Created November 15, 2018</span>
-											<span className="song-update-date">Updated November 16, 2018</span>
-										</div>
-									</div>
-								</li>
-							</ul>
+							<SongList popular={true} />
 						</div>
 						<div className="col-lg-3 col-md-4">
 							<h3>About</h3>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import APIHelper from './apiHelper.js';
 import SongRating from './SongRating.js';
+import constants from "./constants";
 
 class SongPlayer extends Component {
 	constructor(props) {
@@ -50,7 +51,6 @@ class SongPlayer extends Component {
 			this.song.play();
 		}
 	}
-
 	render() {
 		if (this.state.redirect) {
 			return <Redirect to={this.state.to} />;
@@ -63,11 +63,13 @@ class SongPlayer extends Component {
 						<div className="song-title">{this.song.name}</div>
 					</div>
 					<div>
+						{APIHelper.getCurrentUser() && APIHelper.getCurrentUser().username === this.song.username &&
 						<div className="buttons-container">
 							<button onClick={()=> this.onEdit()} className="btn btn-light"><i className="fa fa-pencil"></i></button>
 							<button className="btn btn-light"><i className="fa fa-trash"></i></button>
 						</div>
-						<a href="#" className="song-artist">
+						}
+						<a href={constants.ROOT_PATH+'profile/'+this.song.username} className="song-artist">
 							<div className="name">{this.song.author}</div>
 							<div className="username">@{this.song.username}</div>
 						</a>

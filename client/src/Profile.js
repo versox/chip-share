@@ -1,30 +1,66 @@
 import React, { Component } from 'react';
 import APIHelper from './apiHelper.js';
-import SongPlayer from './SongPlayer.js';
-import Song from './editor/song/Song.js';
+import SongList from "./SongList";
 
 class Profile extends Component {
-
-    render() {
-	var songs = [];
-	var songMetas = APIHelper.getSongs();
-	for (let i = 0; i< songMetas.length; i++) {
-	    songs.push(<SongPlayer song={new Song(songMetas[i])} />);
+	constructor(props) {
+		super(props);
+		this.state = {
+			loading: true
+		};
+		if (this.props.match && this.props.match.params && this.props.match.params.username) {
+			APIHelper.fetchUser(this.props.match.params.username)
+				.then(user => {
+					this.setState({
+						loading: false,
+						user: user
+					});
+				})
+				.catch(err => {
+					if (err.status === 404) {
+						this.setState({
+							loading: false,
+							user: null
+						});
+					} else {
+						// TODO display error
+					}
+				});
+		} else {
+			this.state.loading = false;
+			this.state.user = null;
+		}
 	}
-
-	return (
-	    <div>
-	      <h1 class="account-name">Account Name</h1>
-	      <div class="container">
-	          <h3>My Songs</h3>
-		  <hr></hr>
-	          <ul className='song-list'>
-		      {songs}
-	          </ul>
-	      </div>
-	    </div>
-	);
-    }
+	render() {
+		if (this.state.loading)
+			return (<div className="loading">Loading...</div>);
+		else
+			return (
+				<div>
+					<div className="container">
+						<div className="row">
+							<div className="col-12">
+								{!this.state.user ?
+									<div className="info-box">
+										<h1>User Not Found</h1>
+										<p>This profile page does not exist.</p>
+									</div>
+									:
+									<div>
+										<h1 className="account-name">{this.state.user.name}</h1>
+										<span className="account-username">@{this.state.user.username}</span>
+										<div className="container">
+											<h3>{this.state.user.name}'s Songs</h3>
+											<SongList userId={this.state.user.id}/>
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+	}
 }
 
 export default Profile;

@@ -41,6 +41,15 @@ const makeApiRequest = (method, route, body = null) => {
 			xhr.send();
 	});
 };
+const serializeParams = function(params) {
+	let str = "";
+	for (const key in params) {
+		if (str !== "")
+			str += "&";
+		str += key + "=" + encodeURIComponent(params[key]);
+	}
+	return str.length > 0 ? '?'+str : '';
+};
 
 const apiHelper = {
 	registerCaptcha: function() {
@@ -89,7 +98,7 @@ const apiHelper = {
 		if (req.status === 200)
 		{
 			var res = JSON.parse(req.response);
-			Cookies.set('name', res.name || "unknown", {
+			Cookies.set('user', JSON.stringify({name: res.name, username: user.toLowerCase()}) || "unknown", {
 				expires: in30Minutes
 			});
 			Cookies.set('token', res.token, {
@@ -118,7 +127,7 @@ const apiHelper = {
 			console.log("not logged in!");
 		}
 	},
-	getSongs: function(userId) {
+	getSongsDirty: function(userId) {
 		var req = new XMLHttpRequest();
 		var url;
 		if(userId === undefined) {
@@ -136,6 +145,17 @@ const apiHelper = {
 		} else {
 			return [];
 		}
+	},
+	getSongs: function(userId = null, popular = false, delimiterId = null) {
+		const params = {};
+		if (userId) params.userId = userId;
+		if (popular) params.popular = 1;
+		if (delimiterId) params.delimiterId = delimiterId;
+		return new Promise(function(resolve, reject) {
+			makeApiRequest('GET', 'songs'+serializeParams(params))
+				.then((xhr) => resolve(getResponse(xhr)))
+				.catch((err) => reject(err));
+		});
 	},
 	getSong: function(id, format = "full") {
 		var req = new XMLHttpRequest();
@@ -166,8 +186,23 @@ const apiHelper = {
 				.catch((err) => reject(err));
 		});
 	},
+	fetchUser: function(username) {
+		return new Promise(function(resolve, reject) {
+			makeApiRequest('GET', 'user/fetch/'+username)
+				.then((xhr) => resolve(getResponse(xhr)))
+				.catch((err) => reject(err));
+		});
+	},
 	isLoggedIn: function() {
 		return !!Cookies.get('token');
+	},
+	getCurrentUser: function() {
+		if (!Cookies.get('token') || !Cookies.get('user')) return null;
+		try {
+			return JSON.parse(Cookies.get('user'));
+		} catch (e) {
+			return null;
+		}
 	}
 };
 

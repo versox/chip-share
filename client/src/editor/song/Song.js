@@ -15,7 +15,7 @@ class Song {
 			this.blockLength = songMeta.blockLength;
 
 			this.createDate = new Date(songMeta.createDate);
-			this.updateDate = new Date(songMeta.updateDate);
+			this.updateDate = songMeta.updateDate ? new Date(songMeta.updateDate) : null;
 			this.author = songMeta.user.name;
 			this.username = songMeta.user.username;
 			this.ratings = songMeta.ratings;
@@ -146,7 +146,7 @@ class Song {
 	}
 
 	hasBeenUpdated() {
-		return (!(Math.abs(this.createDate - this.updateDate) < 50));
+		return this.updateDate && Math.abs(this.createDate - this.updateDate) >= 50;
 	}
 	addProgressListener(context, listener) {
 		this.progressListeners.push(listener.bind(context));
