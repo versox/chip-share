@@ -267,12 +267,10 @@ Song.methods.getUser = function() {
 };
 Song.pre('save', function() {
 	const song = this;
-	let avgRating = 0;
+	let totalRating = 0;
 	for (const i of song.ratings.keys())
-		avgRating += song.ratings[i].rating;
-	avgRating /= song.ratings.length > 0 ? song.ratings.length : 1;
-	avgRating = Math.round(avgRating*10)/10;
-	this.score = avgRating;
+		totalRating += song.ratings[i].rating-3; // 3 stars is the 'neutral' rating
+	this.score = totalRating;
 });
 Song.methods.getFormattedObject = function(currUserId = null) {
 	const song = this;
