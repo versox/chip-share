@@ -14,7 +14,7 @@ setInterval(function() {
 }, 60000);
 exports.generateCaptcha = function() {
 	return new Promise(function(resolve) {
-		const captcha = svgCaptcha.create({size: 6, background: 'black', width: 150, height: 50});
+		const captcha = svgCaptcha.create({size: 4, background: 'black', width: 150, height: 50});
 		const expiry = Math.round(Date.now()/1000)+300; // 5 minutes
 		const key = cryptr.encrypt(captcha.text+'|'+expiry);
 		resolve([captcha.data, key]);

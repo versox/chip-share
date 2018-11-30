@@ -27,7 +27,7 @@ class SongList extends Component {
 						this.songs.push(<SongPlayer song={new Song(songData)} />);
 					}
 				}
-				this.setState({loading: false});
+				this.setState({loading: false, loaded: true});
 			})
 			.catch(err => {
 				// TODO
@@ -36,10 +36,13 @@ class SongList extends Component {
 	render() {
 		return (
 			<div>
-				<ul className='song-list'>
-					{this.songs}
-					{}
-				</ul>
+				{this.songs.length === 0 && this.state.loaded ?
+					<p className="text-center">Looks like there are no songs to display :(</p>
+					:
+					<ul className='song-list'>
+						{this.songs}
+					</ul>
+				}
 				{(this.state.loading || this.delimiterId) &&
 				<div className="song-list-footer">
 					{!this.delimiterId ?

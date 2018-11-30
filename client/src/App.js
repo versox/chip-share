@@ -13,6 +13,7 @@ import InstallationPage from "./assignment_pages/InstallationPage";
 import CreditsPage from "./assignment_pages/CreditsPage";
 import MenuDropdown from "./MenuDropdown";
 import APIHelper from './apiHelper';
+import Logout from "./Logout";
 
 class App extends Component {
 
@@ -55,9 +56,6 @@ class App extends Component {
 					Logged in as: {user.name}
 				</a>
 				<div className="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a className="dropdown-item" href="#">Profile</a>
-					<a className="dropdown-item" href="#">Options</a>
-					<div className="dropdown-divider"></div>
 					<a className="dropdown-item" href={constant.ROOT_PATH + "logout"}>Log Out</a>
 				</div>
 			</li>)}
@@ -92,6 +90,7 @@ class App extends Component {
 					    <Route path="/assignment/tutorial" component={TutorialPage} />
 					    <Route path="/assignment/conclusion" component={ConclusionPage} />
 					    <Route path="/credits" component={CreditsPage} />
+					    <Route path="/logout" component={Logout} />
 				    </div>
 				</Router>
 			</div>

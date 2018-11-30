@@ -10,7 +10,7 @@ class Login extends Component {
 			fieldErrors: {},
 			error: null,
 			redirect: null
-		}
+		};
 	}
 	onSubmit(event) {
 		event.preventDefault();
@@ -18,8 +18,8 @@ class Login extends Component {
 			this.setState({
 				errors: null,
 				fieldErrors: {
-					username: this.refs.username.value.length === 0 ? 'This field is required' : null,
-					password: this.refs.password.value.length === 0 ? 'This field is required' : null
+					username: this.refs.username.value.length === 0 ? 'This field is required.' : null,
+					password: this.refs.password.value.length === 0 ? 'This field is required.' : null
 				}
 			});
 			return;
@@ -79,7 +79,7 @@ class Login extends Component {
 								{this.state.error &&
 								<div style={{'margin': '-10px 0 5px'}}><small className="text-warning">{this.state.error}</small></div>
 								}
-								<button className="btn btn-light" type="submit">Login</button>
+								<button className="btn btn-primary" type="submit">Login</button>
 							</div>
 						</form>
 						<hr />

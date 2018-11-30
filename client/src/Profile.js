@@ -33,13 +33,17 @@ class Profile extends Component {
 	}
 	render() {
 		if (this.state.loading)
-			return (<div className="loading">Loading...</div>);
+			return (
+				<div className="info-box">
+					<p>Loading...</p>
+				</div>
+			);
 		else
 			return (
 				<div>
 					<div className="container">
 						<div className="row">
-							<div className="col-12">
+							<div className="col-12 col-lg-8 offset-lg-2">
 								{!this.state.user ?
 									<div className="info-box">
 										<h1>User Not Found</h1>
@@ -49,10 +53,7 @@ class Profile extends Component {
 									<div>
 										<h1 className="account-name">{this.state.user.name}</h1>
 										<span className="account-username">@{this.state.user.username}</span>
-										<div className="container">
-											<h3>{this.state.user.name}'s Songs</h3>
-											<SongList userId={this.state.user.id}/>
-										</div>
+										<SongList userId={this.state.user.id}/>
 									</div>
 								}
 							</div>

@@ -52,40 +52,25 @@ const serializeParams = function(params) {
 };
 
 const apiHelper = {
-	registerCaptcha: function() {
-		var req = new XMLHttpRequest();
-		req.open("GET", constant.ROOT_PATH + "api/user/register", true);
-		var captchaPromise = new Promise((resolve, reject) => {
-			req.onreadystatechange = () => {
-				// Done
-				if (req.readyState === 4) {
-					if (req.status === 200) {
-						resolve(req.response);
-					} else {
-						reject(req.response);
-					}
-				}
-			};
+	getCaptcha: function() {
+		return new Promise(function(resolve, reject) {
+			makeApiRequest('GET', 'user/register')
+				.then((xhr) => resolve(getResponse(xhr)))
+				.catch((err) => reject(err));
 		});
-		req.send();
-		return captchaPromise;
 	},
-	register: function(name, user, pass, captcha) {
-		console.log(captcha);
-		var req = new XMLHttpRequest();
+	register: function(inputData, captchaKey) {
+		const req = new XMLHttpRequest();
 		req.open("POST", constant.ROOT_PATH + "api/user/register", false);
 		req.setRequestHeader("Content-Type", "application/json");
-		req.send(JSON.stringify({
-			name: name,
-			username: user,
-			password: pass,
-			captcha: captcha
-		}));
-		if (req.status === 201)
-		{
-			return "Success";
+		if (inputData.captcha) {
+			inputData.captcha = {
+				answer: inputData.captcha,
+				key: captchaKey
+			}
 		}
-		return req.response;
+		req.send(JSON.stringify(inputData));
+		return req;
 	},
 	login: function(user, pass) {
 		const req = new XMLHttpRequest();
@@ -108,6 +93,11 @@ const apiHelper = {
 			});
 		}
 		return req;
+	},
+	logout: function() {
+		Cookies.remove('user');
+		Cookies.remove('token');
+		Cookies.remove('secret');
 	},
 	createSong: function(song) {
 		var token = Cookies.get('token');

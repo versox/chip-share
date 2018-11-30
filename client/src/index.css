@@ -20,6 +20,7 @@ h1, h2, h3 {
 }
 .form-control {
 	border-radius: 0px;
+	border-width: 2px;
 }
 
 code {
@@ -296,6 +297,27 @@ hr {
 .form-login .btn {
 	padding-left: 20px;
 	padding-right: 20px;
+}
+.form-login .captcha-group {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+}
+.form-login .captcha-group .form-group {
+	flex: 1;
+	margin: 0;
+}
+.form-login .captcha-container {
+	width: 150px;
+	height: 50px;
+	background: rgba(0,0,0,0.1);
+	line-height: 50px;
+	text-align: center;
+	font-size: 12px;
+	margin-right: 15px;
+	border: 1px solid white;
+	box-sizing: content-box;
 }
 .register-prompt h2 {
 	font-size: 20px;

@@ -46,6 +46,7 @@ router.post('/refresh-access', authTokenHandler.parse(), async (req, res, next) 
 router.get('/register', async (req, res, next) => {
 	try {
 		const [image, key] = await captchaHelper.generateCaptcha();
+		res.set('Cache-Control', 'public, max-age=20');
 		res.status(200).send({captcha: {image: image, key: key}});
 	} catch (e) {
 		next(createError(500, 'failed to generate captcha'));
