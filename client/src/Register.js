@@ -59,19 +59,23 @@ class Register extends Component {
     
     render() {
 	return (
-	    <div>
-		<form onSubmit={(evt) => this.onSubmit(evt)} class="form-signin">
-		    <h1>Register</h1>
-		    <input value={this.state.name} onChange={evt => this.onChange(evt)} type="text" id="name" class="form-control" placeholder="Name" required autofocus /> 
-		    <input value={this.state.user} onChange={evt => this.onChange(evt)} type="text" id="user" class="form-control" placeholder="Username" required />
-		    <input value={this.state.pass} onChange={evt => this.onChange(evt)} type="password" id="pass" class="form-control" placeholder="Password" required />
-		    {this.state.captcha}
-		    <input value={this.state.capt} onChange={evt => this.onChange(evt)} type="text" id="capt" class="form-control" placeholder="Captcha Text" required />
-		    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-		    <h3>Already have an account?</h3>
-		    <Link to="/login">Login Here</Link>
-		</form>
-		{this.state.alertComponent}
+	    <div className="container">
+		    <div className="row">
+			    <div className="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3 col-10 offset-1">
+				    <form onSubmit={(evt) => this.onSubmit(evt)} className="form-register">
+					    <h1>Register</h1>
+					    <input value={this.state.name} onChange={evt => this.onChange(evt)} type="text" id="name" className="form-control" placeholder="Name" required />
+					    <input value={this.state.user} onChange={evt => this.onChange(evt)} type="text" id="user" className="form-control" placeholder="Username" required />
+					    <input value={this.state.pass} onChange={evt => this.onChange(evt)} type="password" id="pass" className="form-control" placeholder="Password" required />
+					    {this.state.captcha}
+					    <input value={this.state.capt} onChange={evt => this.onChange(evt)} type="text" id="capt" className="form-control" placeholder="Captcha Text" required />
+					    <button className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+					    <h3>Already have an account?</h3>
+					    <Link to="/login">Login Here</Link>
+				    </form>
+				    {this.state.alertComponent}
+			    </div>
+		    </div>
 	    </div>
 	);
     }

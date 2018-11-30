@@ -18,6 +18,9 @@ h1, h2, h3 {
 .btn {
 	border-radius: 0;
 }
+.form-control {
+	border-radius: 0px;
+}
 
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -280,10 +283,25 @@ hr {
 /* end content */
 /* pages */
 
-.form-signin {
-	margin: auto;
-	width: 400px;
+.form-login {
+	text-align: left;
 }
+.form-login h1 {
+	font-size: 30px;
+	margin: 20px 0 15px;
+}
+.form-login input {
+	/*margin: 0 auto;*/
+}
+.form-login .btn {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.register-prompt h2 {
+	font-size: 20px;
+	margin: 0 0 10px;
+}
+
 .credits-block {
 	text-align: center;
 	padding: 30px;

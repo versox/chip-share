@@ -88,15 +88,14 @@ const apiHelper = {
 		return req.response;
 	},
 	login: function(user, pass) {
-		var req = new XMLHttpRequest();
+		const req = new XMLHttpRequest();
 		req.open("POST", constant.ROOT_PATH + "api/user/login", false);
 		req.setRequestHeader("Content-Type", "application/json");
 		req.send(JSON.stringify({
 			username: user,
 			password: pass
 		}));
-		if (req.status === 200)
-		{
+		if (req.status === 200) {
 			var res = JSON.parse(req.response);
 			Cookies.set('user', JSON.stringify({name: res.name, username: user.toLowerCase()}) || "unknown", {
 				expires: in30Minutes
@@ -107,9 +106,8 @@ const apiHelper = {
 			Cookies.set('secret', res.refreshSecret, {
 				expires: in30Minutes
 			});
-			return "Success";
 		}
-		return req.response;
+		return req;
 	},
 	createSong: function(song) {
 		var token = Cookies.get('token');
