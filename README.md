@@ -4,7 +4,7 @@
 
 Remaining Tasks:
 ---------
-<span style="color:red">**Only 1 week left!!**</span>
+**Project due December 3rd**
 
 * Server.
   * ~~Song ratings API.~~
@@ -13,10 +13,10 @@ Remaining Tasks:
   * Add song colors enum.
   * Add ability to update names/passwords.
 * Client.
-  * Homepage.
-    * Ability to play/pause songs.
-    * Loading more songs.
-    * Remove "favorites" tab (not really supported by API).
+  * ~~Homepage.~~
+    * ~~Ability to play/pause songs.~~
+    * ~~Loading more songs.~~
+    * ~~Remove "favorites" tab (not really supported by API).~~
   * Song editor.
     * Style
     * Fix quirks.
@@ -25,19 +25,24 @@ Remaining Tasks:
       * Dragging across lines prevents creating range until click.
 	  * Pausing at precise times can cause note (range?) to play infinitely.
       * Songs keep playing when switching to editor.
-  * Song list.
+  * ~~Song list.~~
     * ~~Add rating stars.~~
-  * Login page.
-    * Display field error messages.
-  * Registration page.
-    * Display field error messages.
-    * Captcha implementation.
-  * Profile page.
-    * For now, just song listing (remember to use grid system) with user's name/username at the top.
+  * ~~Login page.~~
+    * ~~Display field error messages.~~
+  * ~~Registration page.~~
+    * ~~Display field error messages.~~
+    * ~~Captcha implementation.~~
+  * ~~Profile page.~~
+    * ~~For now, just song listing (remember to use grid system) with user's name/username at the top.~~
   * User settings page.
     * Ability to update name/password.
-  * The 6 required assignment pages.
-  * Build everything to static files for production.
+  * The 5 required assignment pages.
+    * Frameworks.
+	* ~~Installation.~~
+	* Tutorial.
+	* Conclusion.
+	* Credits.
+  * ~~Build static files for production.~~
 
 ---
 
