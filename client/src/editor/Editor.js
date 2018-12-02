@@ -29,7 +29,7 @@ class Editor extends Component {
 	if (this.songId === "new") {
 	    this.song = new Song();
 	    this.song.load();
-	    this.song.start();
+	    this.song.init();
 	    this.ready = true;
 	} else if (!(this.songId === undefined)) {
 	    APIHelper.getSong(this.songId)
@@ -39,7 +39,7 @@ class Editor extends Component {
 	    .then((parsed) => {
 		this.song = new Song(parsed);
 		this.song.load(parsed);
-		this.song.start();
+		this.song.init();
 		this.ready = true;
 		this.setState({ 
 		    name: this.song.name,
@@ -60,7 +60,7 @@ class Editor extends Component {
 	if(false && this.song && !this.ready)
 	{
 	    this.song.load(this.songMeta);
-	    this.song.start();
+	    this.song.init();
 	    this.ready = true;
 	    this.forceUpdate();
 	}
@@ -119,13 +119,20 @@ class Editor extends Component {
 	}
 
 	return (
-	    <div class="editor">
-		<div class="editor-header">
-		    <span class="header-left">
-		    <i onClick={this.handleToggle.bind(this)} class={"fa " + (this.state.playing ? "fa-stop" : "fa-play")}></i>
-		    <div class="header-controls">
+		<div className="container" style={{'margin-top': '40px'}}>
+			{!APIHelper.isLoggedIn() &&
+			<div className="alert alert-danger" role="alert">
+				You are not logged in, saving songs will not be possible! If you plan on making something awesome, login first!
+			</div>
+			}
+			<div className="editor">
+				<div className="editor-header">
+		    <span className="header-left">
+		    <i onClick={this.handleToggle.bind(this)}
+		       className={"fa " + (this.state.playing ? "fa-stop" : "fa-play")}></i>
+		    <div className="header-controls">
 		        <span>BPM </span>
-		        <input value={this.state.bpm} id='bpm' onChange={evt => this.onChange(evt)} type="number" />
+		        <input value={this.state.bpm} id='bpm' onChange={evt => this.onChange(evt)} type="number"/>
 		        <span>Key </span>
 		        <select id="key" value={this.state.key} onChange={evt => this.onChange(evt)}>
 			    {this.keyOptions}
@@ -136,19 +143,21 @@ class Editor extends Component {
 		        </select>
 		    </div>
 		    </span>
-		    <div class="song-name">
-			<form onSubmit={(evt) => this.onSave(evt)}>
-			    <input required onChange={evt => this.onChange(evt)} value={this.state.name} id='name' type='text' placeholder='untitled' class="name-input" />
-			    <input type='submit' value="Save" className='btn btn-success' />
-			</form>
-		    </div>
+					<div className="song-name">
+						<form onSubmit={(evt) => this.onSave(evt)}>
+							<input required onChange={evt => this.onChange(evt)} value={this.state.name} id='name'
+							       type='text' placeholder='untitled' className="name-input"/>
+							<input type='submit' value="Save" className='btn btn-success'/>
+						</form>
+					</div>
+				</div>
+				<div className="row">
+					<InstrEdit/>
+					<BlockEdit block={this.song.activeBlock}/>
+				</div>
+				<Time/>
+			</div>
 		</div>
-		<div class="row">
-		    <InstrEdit />
-		    <BlockEdit block={this.song.activeBlock} />
-		</div>
-		<Time />
-	    </div>
 	);
     }
 }

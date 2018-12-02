@@ -14,9 +14,9 @@ class SongPlayer extends Component {
 			playing: false
 		};
 		this.song = props.song;
-		this.song.addProgressListener(this, (count) => {
+		this.song.addProgressListener(this, (pct) => {
 			this.setState({
-				progress: Math.ceil(((count+1)/(this.song.blockLength*16))*100)+'%'
+				progress: Math.floor(pct*100)+'%'
 			});
 		});
 	}
@@ -30,25 +30,30 @@ class SongPlayer extends Component {
 	}
 
 	onPlayPause() {
+		if (this.loading)
+			return;
 		if (this.state.playing) {
 			this.setState({ playBtn: "play-btn", playing: false });
 			this.song.pause();
 		} else {
 			if (!this.song.loaded) {
+				this.loading = true;
 				APIHelper.getSong(this.song.id, 'composition')
 					.then((data) => {
 						return JSON.parse(data);
 					})
 					.then((parsed) => {
 						this.song.load(parsed);
-						this.song.start();
+						this.loading = false;
+						this.onPlayPause();
 					})
-					.catch({
+					.catch(() => {
 						// Could not play error
 					});
+			} else {
+				this.setState({ playBtn: "pause-btn", playing: true });
+				this.song.play();
 			}
-			this.setState({ playBtn: "pause-btn", playing: true });
-			this.song.play();
 		}
 	}
 	render() {

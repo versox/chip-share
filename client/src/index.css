@@ -202,7 +202,6 @@ hr {
 	height: 10px;
 	background: #ffffff1a;
 	z-index: 1;
-	transition: width 100ms;
 }
 .song-list > li .song-body {
 	min-height: 56px;

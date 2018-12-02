@@ -67,13 +67,9 @@ class Song {
 		this.loaded = true;
 	}
 
-	start() {
+	init() {
 		Tone.Transport.cancel();
 		this.synth = new Tone.PolySynth(6, Tone.Synth).toMaster();
-		this.synth.triggerAttackRelease('C4', '4n');
-		Tone.Transport.loopEnd = this.blockLength + "m";
-		Tone.Transport.loop = true;
-		Tone.Transport.bpm.value = this.bpm;
 		this.count = 0;
 		this.loop = new Tone.Loop((time) => {
 			for (let i = 0; i < 12; i++) {
@@ -94,18 +90,38 @@ class Song {
 			} else {
 				this.count++;
 			}
-			for (const key of this.progressListeners.keys())
-				this.progressListeners[key].bind(this, this.count)();
-		}, '16n').start();
+		}, '16n');
 	}
 
 	play() {
+		if (!this.initialized) {
+			this.init();
+			this.initialized = true;
+		}
+		Tone.Transport.loopEnd = this.blockLength + "m";
+		Tone.Transport.loop = true;
+		Tone.Transport.bpm.value = this.bpm;
+		//schedule an event on the 16th measure
+		this.progressTickEvent = Tone.Transport.scheduleRepeat(function(time) {
+			const pct = Tone.Transport.seconds/Tone.Transport.loopEnd;
+			if (pct < 0 || pct > 1)
+				return;
+			for (const key of this.progressListeners.keys())
+				this.progressListeners[key](pct);
+			console.log();
+		}.bind(this), "8i");
+		this.loop.start(0);
 		Tone.Transport.start();
+		if (this.pauseTime)
+			Tone.Transport.seconds = this.pauseTime;
 	}
 
 	pause() {
+		this.pauseTime = Tone.Transport.seconds;
+		this.loop.stop(0);
 		Tone.Transport.stop();
 		this.synth.releaseAll();
+		Tone.Transport.clear(this.progressTickEvent);
 	}
 
 	save() {
