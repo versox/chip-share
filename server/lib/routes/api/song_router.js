@@ -15,19 +15,16 @@ router.get('/', authTokenHandler.parse(false), (req, res, next) => {
 			return next(createError(400, 'invalid user id'));
 		}
 	}
+	let delimiterId = null;
 	if (req.query.delimiterId) {
 		try {
+			delimiterId = new ObjectId(req.query.delimiterId);
 			conditions._id = {$lte: new ObjectId(req.query.delimiterId)};
 		} catch (e) {
 			return next(createError(400, 'invalid song delimiter id'));
 		}
 	}
-	const options = {
-		limit: songResponseLimit+1,
-		sort: req.query.popular === '1' ? '-score -createDate' : '-createDate'
-	};
-	Song.find(conditions, '-instruments -blocks', options, async function(err, songs) {
-		if (err) return next(createError(500, 'database error occurred while fetching songs'));
+	const sendResponse = async (songs, newDelimiter = null) => {
 		const resultArray = [];
 		for (const i in songs) {
 			const song = songs[i];
@@ -37,8 +34,43 @@ router.get('/', authTokenHandler.parse(false), (req, res, next) => {
 				resultArray.push(await song.getFormattedObject(req.user ? req.user.id : null));
 			}
 		}
+		if (newDelimiter && songs.length === songResponseLimit)
+			resultArray.push({delimiterId: newDelimiter});
 		res.send(resultArray);
-	});
+	};
+	if (req.query.popular === '1') {
+		Song.find({}, '_id', {sort: '-score -createDate'}, function(err, songs) {
+			if (err) return next(createError(500, 'database error occurred while organizing songs'));
+			let ids = [];
+			let newDelimiter = null;
+			for (const i in songs) {
+				const song = songs[i];
+				if (ids.length === 0) {
+					if (!delimiterId || song._id.equals(delimiterId)) {
+						ids.push(song.id);
+					}
+				} else if (ids.length < songResponseLimit) {
+					ids.push(song.id);
+				} else {
+					newDelimiter = song.id;
+					break;
+				}
+			}
+			Song.find({_id: {$in: ids}}, '-instruments -blocks', {sort: '-score -createDate'}, async function(err, songs) {
+				if (err) return next(createError(500, 'database error occurred while fetching songs'));
+				sendResponse(songs, newDelimiter);
+			});
+		});
+	} else {
+		const options = {
+			limit: songResponseLimit+1,
+			sort: '-createDate'
+		};
+		Song.find(conditions, '-instruments -blocks', options, async function(err, songs) {
+			if (err) return next(createError(500, 'database error occurred while fetching songs'));
+			sendResponse(songs);
+		});
+	}
 });
 router.get('/:songId/:format?', authTokenHandler.parse(false), (req, res, next) => {
 	let selector = null;
