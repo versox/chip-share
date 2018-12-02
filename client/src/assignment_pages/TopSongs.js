@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SongPlayer from './SongPlayer.js';
-import './topsongs.css';
 
 class TopSongs extends Component {
     
@@ -58,8 +57,8 @@ class TopSongs extends Component {
 	);
 
 	return (
-	    <div className='container'>
-		<h1>Top Songs:</h1>
+	    <div className='container' style={{'marginTop': '40px'}}>
+		<h3>Top Songs:</h3>
 		<ul className='song-list'>
 		    {songPlayers}
 		</ul>

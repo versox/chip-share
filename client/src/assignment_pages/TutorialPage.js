@@ -65,9 +65,9 @@ class TutorialPage extends Component {
 						<ThemedGist id="10fb179e4635750a1fe10443f5ed6e6a" theme="one-dark"/>
 						<h3>Tutorial Conclusion</h3>
 						<p>We have now created a great looking page using React and Express.</p>
-						<p>I encourage you to checkout both the page made with this tutorial and our actual site <a href="http://chipshare.me">chipshare.me</a></p>
+						<p>We encourage you to checkout both the page made with this tutorial and our actual site <a href="http://chipshare.me">chipshare.me</a></p>
 						<Link className="btn btn-lg btn-light" style={{marginRight: '25px'}} to="/assignment/topsongs">Tutorial Page (TopSongs)</Link>
-						<Link className="btn btn-lg btn-light" to="/">Chipshare Homepage</Link>
+						<a href="http://chipshare.me" className="btn btn-lg btn-success">Chip Share Homepage</a>
 					</div>
 				</div>
 			</div>
