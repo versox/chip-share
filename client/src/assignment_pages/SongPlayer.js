@@ -28,10 +28,7 @@ class SongPlayer extends Component {
 	 	</div>
 		<div className="song-body">
 		    <div className="song-dates">
-			<span className="song-creation-date">Created {this.song.getFormattedCreate()}</span>
-			<span className="song-update-date">{
-			    this.song.hasBeenUpdated() ? "Updated " + this.song.getFormattedUpdate() : ""
-			}</span>
+			<span className="song-creation-date">Created {this.song.createDate}</span>
 		    </div>
 		</div>
 	    </li>

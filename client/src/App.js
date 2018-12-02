@@ -8,6 +8,7 @@ import Profile from './Profile.js';
 import constant from './constants.js';
 import FrameworksPage from "./assignment_pages/FrameworksPage";
 import TutorialPage from "./assignment_pages/TutorialPage";
+import TopSongs from './assignment_pages/TopSongs.js';
 import ConclusionPage from "./assignment_pages/ConclusionPage";
 import InstallationPage from "./assignment_pages/InstallationPage";
 import CreditsPage from "./assignment_pages/CreditsPage";
@@ -88,6 +89,7 @@ class App extends Component {
 					    <Route path="/assignment/frameworks" component={FrameworksPage} />
 					    <Route path="/assignment/installation" component={InstallationPage} />
 					    <Route path="/assignment/tutorial" component={TutorialPage} />
+					    <Route path="/assignment/topsongs" component={TopSongs} />
 					    <Route path="/assignment/conclusion" component={ConclusionPage} />
 					    <Route path="/credits" component={CreditsPage} />
 					    <Route path="/logout" component={Logout} />
