@@ -88,7 +88,7 @@ class Editor extends Component {
 
 	onSave(evt) {
 		evt.preventDefault();
-		if (!this.name || this.name === '') {
+		if (!this.song.name || this.song.name === '') {
 			this.setState({
 				saveBtn: 3
 			});
