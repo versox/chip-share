@@ -23,20 +23,23 @@ class FrameworksPage extends Component {
 							<li>Drawback 3</li>
 						</ul>
 						<h2>React</h2>
-						<p>Risus feugiat in ante metus dictum. Semper feugiat nibh sed pulvinar. Cras semper auctor neque vitae tempus quam. Cras semper auctor neque vitae tempus quam pellentesque. Viverra justo nec ultrices dui sapien.</p>
+						<h3>Popularity</h3>
+						<p>
+						</p>
+						<h3>Strengths</h3>
 						<ul>
 							<li>Virtual Document Object Model, that allows arranging documents in HTML format into a tree from which is better acceptable by web browsers while parsing different elements of the web app.</li>
 							<li>100% open source JavaScript library which get everyday updates and improvements according to the contributions of developers all over the world.</li>
-                                <li>Light-weighted because the data performing on the user side can be easily represented on the server side simultaneously.</li>
-                                <li>Benefit 3</li>
-                                <li>Benefit 3</li>
+                                			<li>Light-weighted because the data performing on the user side can be easily represented on the server side simultaneously.</li>
 						</ul>
-						<p>Tristique magna sit amet purus gravida quis blandit. Odio tempor orci dapibus ultrices in iaculis nunc. Tempor commodo ullamcorper a lacus vestibulum sed arcu non odio.</p>
+						<h3>Weaknesses</h3>
+						<p>
+						</p>
 						<ul>
 							<li>React JS requires deep knowledge</li>
 							<li>Takes time to learn</li>
-							<li>Drawback 3</li>
 						</ul>
+						<h3>Usage</h3>
 						<hr />
 						<a href="/assignment/installation" className="btn btn-lg btn-primary">Continue to Installation</a>
 					</div>
