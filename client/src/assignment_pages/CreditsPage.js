@@ -47,12 +47,10 @@ class CreditsPage extends Component {
 						<a href="https://github.com/briltz" title="Github Account">github.com/briltz</a>
 						<ScrollArea horizontal={false} speed={0.8}>
 							<ul>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent hash</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
+								<li>Created installation page, conclusion page, and helped with frameworks page</li>
+								<li>Prototyped navbar, home page, and profile page</li>
+								<li>Styled song editor, aided with main style and page layout</li>
+								<li>Created carousel on home page</li>
 							</ul>
 						</ScrollArea>
 					</div>

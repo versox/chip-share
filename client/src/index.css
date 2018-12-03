@@ -390,5 +390,19 @@ hr {
 	margin-right: auto;
 	box-shadow: 5px 5px 10px #202020;
 }
-
+.conclusion-progress {
+	height: 30px;
+}
+.react-bar {
+	width: 70%;
+	height: 30px;
+	font-weight: bold;
+	font-size: 14pt;
+}
+.express-bar {
+	width: 90%;
+	height: 30px;
+	font-weight: bold;
+	font-size: 14pt;
+}
 /* end pages */
