@@ -4,7 +4,7 @@ Demo URL:	http://www.chipshare.me
 
 Group Members		Ryerson Student ID
 ----------------------------------------------
-Jake Briltz		(500813679)
-Carson Cass		(500821516)
-Mishel Galperin		(500849274)
-Alexander Yaroslavtsev	(500825066)
+Jake Briltz		500813679
+Carson Cass		500821516
+Mishel Galperin		500849274
+Alexander Yaroslavtsev	500825066
