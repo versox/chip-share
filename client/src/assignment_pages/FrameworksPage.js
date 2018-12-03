@@ -15,11 +15,26 @@ class FrameworksPage extends Component {
 							Big companies like Twitter, Netflix, Instagram and Airbnb are using React framework.
 						</p>
 						<h2>Express</h2>
-						<p>
-							Express.js is among the top Node.js frameworks.<br />
-							Express framework has a minimalist outline that allows the developer to take control of each project and how it will be organized. This provides great flexibility but can be a bit overwhelming to those who are new to Node.js.<br />
-							Express is utilized in many major corporations, including but not limited to IBM, Uber, Fox Sports, Mulesoft, etc.
-						</p>
+						<p>Express is a javascript framework that is used to make web servers. It allows for the handling of HTTP GET / POST requests as well as serving a variety of dynamic content.</p>
+						<img style={{width: '200px', height: 'auto', float: 'right'}} src="https://amandeepmittal.gallerycdn.vsassets.io/extensions/amandeepmittal/expressjs/2.0.0/1509881293872/Microsoft.VisualStudio.Services.Icons.Default"></img>
+						<h3>Popularity</h3>
+						<p>One of the most depended upon NPM packages (<a href="https://www.npmjs.com/browse/depended">https://www.npmjs.com/browse/depended</a>), express has been downloaded 26 million times and is very popular among javascript developers. </p>
+						<h3>Strengths</h3>
+						<ul>
+							<li>Issues are fixed quickly because express is open source and popular.</li>
+							<li>Well-documented.</li>
+							<li>Easy to learn.</li>
+							<li>Simple if you're making something small.</li>
+							<li>Works well with a variety of other node.js packages.</li>
+						</ul>
+						<h3>Weaknesses</h3>
+						<ul>
+							<li>There is no universal way of doing things.</li>
+							<li>Hard to use correctly because of the open endedness</li>
+							<li>Can get confusing for large scale projects.</li>
+						</ul>
+						<h3>Usage</h3>
+						<p>Express is utilized in many major corporations, including but not limited to IBM, Uber, Fox Sports, Mulesoft, etc.</p>	
 						<h4>References</h4>
 						<ul style={{fontSize: '12px', marginBottom: '10px'}}>
 							<li>Kostrzewa, Denis. "Is React.js the Best Javascript Framework in 2018? – Hacker Noon." Hacker Noon, Hacker Noon, 19 July 2018, hackernoon.com/is-react-js-the-best-javascript-framework-in-2018-264a0eb373c8.</li>
