@@ -9,11 +9,34 @@ class FrameworksPage extends Component {
 						<h1>Frameworks</h1>
 						<p>For our project, two major frameworks were used, namely React and Express, both stemming from the Node.js environment. The following is a brief explanation of both frameworks.</p>
 						<h2>React</h2>
+						<h3>Popularity</h3>
 						<p>
-							React is a flexible and efficient front end javascript library for building UI, and is considered the most in demand in the job markets of 2018.<br />
-							It's also considered as one of the most popular javascript frameworks these days.<br />
-							Big companies like Twitter, Netflix, Instagram and Airbnb are using React framework.
+			                        React is a flexible and efficient front end javascript library for building UI, and is considered the most in demand in the job markets of 2018.<br />
+			                        It's also considered as one of the most popular javascript frameworks these days.<br />
+			                        </p>
+						<h3>Strengths</h3>
+						<ul>
+							<li>Virtual Document Object Model, that allows arranging documents in HTML format into a tree from which is better acceptable by web browsers while parsing different elements of the web app.</li>
+							<li>100% open source JavaScript library which get everyday updates and improvements according to the contributions of developers all over the world.</li>
+                                			<li>Light-weighted because the data performing on the user side can be easily represented on the server side simultaneously.</li>
+						</ul>
+						<h3>Weaknesses</h3>
+						<p>
 						</p>
+						<ul>
+							<li>React JS requires deep knowledge</li>
+							<li>Takes time to learn</li>
+						</ul>
+						<h3>Usage</h3>
+						<p>
+						Big companies like Twitter, Netflix, Instagram and Airbnb are using React framework.
+						</p>
+						<img src="https://pbs.twimg.com/profile_images/3513354941/24aaffa670e634a7da9a087bfa83abe6_200x200.png" alt="Facebook" class="usage"/>
+						<img src="https://pbs.twimg.com/profile_images/1013798240683266048/zRim1x6M.jpg" alt="Twitter" class="usage"/>
+						<img src="https://www.themarysue.com/wp-content/uploads/2011/02/netflix-logo-square.jpg" alt="Netflix" class="usage"/>
+						<img src="https://cdn.pixabay.com/photo/2016/08/09/17/52/instagram-1581266_960_720.jpg" alt="Instagram" class="usage"/>
+						<img src="https://pbs.twimg.com/profile_images/933353721400037377/1WtmW5o5_400x400.jpg" alt="Airbnb" class="usage"/>
+						<br /><br />
 						<h2>Express</h2>
 						<p>Express is a javascript framework that is used to make web servers. It allows for the handling of HTTP GET / POST requests as well as serving a variety of dynamic content.</p>
 						<img style={{width: '200px', height: 'auto', float: 'right'}} src="https://amandeepmittal.gallerycdn.vsassets.io/extensions/amandeepmittal/expressjs/2.0.0/1509881293872/Microsoft.VisualStudio.Services.Icons.Default"></img>

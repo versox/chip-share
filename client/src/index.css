@@ -392,17 +392,27 @@ hr {
 }
 .conclusion-progress {
 	height: 30px;
+	background-color: black;
 }
 .react-bar {
 	width: 70%;
 	height: 30px;
 	font-weight: bold;
 	font-size: 14pt;
+	background-color: #b3b300;
+	color: black;
 }
 .express-bar {
 	width: 90%;
 	height: 30px;
 	font-weight: bold;
 	font-size: 14pt;
+	background-color: #b3b300;
+	color: black;
+}
+.usage {
+	height: 100px;
+	display: inline;
+	margin: 20px;
 }
 /* end pages */
