@@ -36,6 +36,8 @@ const makeApiRequest = (method, route, body = null) => {
 		};
 		if (body != null && typeof body !== 'undefined') {
 			xhr.setRequestHeader("Content-Type", "application/json");
+			if (typeof body === 'object')
+				body = JSON.stringify(body);
 			xhr.send(body);
 		} else
 			xhr.send();
@@ -99,9 +101,9 @@ const apiHelper = {
 		Cookies.remove('token');
 		Cookies.remove('secret');
 	},
-	createSong: function(song) {
+	createSongDirty: function(song) {
 		var token = Cookies.get('token');
-		if(!(token === undefined)) {
+		if(!(token === undefined)) { // try !(!(!(!(!(!(!(!(token !== undefined)))))))) - alex
 			var req = new XMLHttpRequest();
 			req.open("POST", constant.ROOT_PATH + "api/songs/create", false);
 			req.setRequestHeader("Content-Type", "application/json");
@@ -114,6 +116,20 @@ const apiHelper = {
 		} else {
 			console.log("not logged in!");
 		}
+	},
+	createSong: function(songData) {
+		return new Promise((resolve, reject) => {
+			makeApiRequest('POST', 'songs/create', songData)
+				.then(resolve)
+				.catch(reject);
+		});
+	},
+	updateSong: function(id, songData) {
+		return new Promise((resolve, reject) => {
+			makeApiRequest('POST', 'songs/update/'+id, songData)
+				.then(resolve)
+				.catch(reject);
+		});
 	},
 	getSongsDirty: function(userId) {
 		var req = new XMLHttpRequest();

@@ -138,7 +138,7 @@ router.post('/update/:songId', authTokenHandler.parse(), (req, res, next) => {
 	Song.findOne({_id: id}, 'userId' , async function(err, song) {
 		if (err) return next(createError(500, 'database error occurred while fetching song'));
 		if (!song) return next(createError(404, 'song with that id does not exist'));
-		if (song.userId.equals(req.user.id)) return next(createError(403, 'you cannot edit this song'));
+		if (!song.userId.equals(req.user.id)) return next(createError(403, 'you cannot edit this song'));
 		song.set(req.body); // update
 		song.updateDate = Date.now(); // set update date
 		song.save(err => {
