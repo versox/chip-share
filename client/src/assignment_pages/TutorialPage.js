@@ -67,7 +67,8 @@ class TutorialPage extends Component {
 						<p>We have now created a great looking page using React and Express.</p>
 						<p>We encourage you to checkout both the page made with this tutorial and our actual site <a href="http://chipshare.me">chipshare.me</a></p>
 						<Link className="btn btn-lg btn-light" style={{marginRight: '25px'}} to="/assignment/topsongs">Tutorial Page (TopSongs)</Link>
-						<a href="http://chipshare.me" className="btn btn-lg btn-success">Chip Share Homepage</a>
+						<a href="http://chipshare.me" className="btn btn-lg btn-success" style={{marginRight: '25px'}}>Chip Share Homepage</a>
+						<a href="/assignment/conclusion" className="btn btn-lg btn-primary">Continue to Conclusion</a>
 					</div>
 				</div>
 			</div>

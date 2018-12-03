@@ -125,12 +125,17 @@ class Song {
 	}
 
 	save() {
-		if(this.id === undefined) {
+		if (!this.id) {
 			// create new song and get id
-			var id = APIHelper.createSong(this.getSendableSong());
+			const promise = APIHelper.createSong(this.getSendableSong());
+			promise.then((xhr) => {
+				const json = JSON.parse(xhr.response);
+				this.id = json.id;
+			});
+			return promise;
 		} else {
 			// update song
-
+			return APIHelper.updateSong(this.id, this.getSendableSong());
 		}
 	}
 
@@ -166,6 +171,9 @@ class Song {
 	}
 	addProgressListener(context, listener) {
 		this.progressListeners.push(listener.bind(context));
+	}
+	getId() {
+		return this.id ? this.id : null;
 	}
 }
 
