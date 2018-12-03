@@ -15,7 +15,6 @@ class CreditsPage extends Component {
 					<div className="col-lg-3 col-sm-6 col-8 credits-block">
 						<img src="https://avatars2.githubusercontent.com/u/44684541?s=400" />
 						<h3>Alexander</h3>
-						<a href="https://github.com/alxyaro" title="Github Account">github.com/alxyaro</a>
 						<ScrollArea horizontal={false} speed={0.8}>
 							<ul>
 								<li>Created the entirety of the backend REST API for Chip Share.</li>
@@ -34,7 +33,6 @@ class CreditsPage extends Component {
 					<div className="col-lg-3 col-sm-6 col-8 credits-block">
 						<img src="https://avatars3.githubusercontent.com/u/6993228?s=400" />
 						<h3>Carson</h3>
-						<a href="https://github.com/versox" title="Github Account">github.com/versox</a>
 						<ScrollArea horizontal={false} speed={0.8}>
 							<ul>
 								<li>Created the <Link to="/editor/new">editor</Link>.</li>
@@ -49,28 +47,25 @@ class CreditsPage extends Component {
 					<div className="col-lg-3 col-sm-6 col-8 credits-block">
 						<img src="https://avatars2.githubusercontent.com/u/44612512?s=400" />
 						<h3>Jake</h3>
-						<a href="https://github.com/briltz" title="Github Account">github.com/briltz</a>
 						<ScrollArea horizontal={false} speed={0.8}>
 							<ul>
-								<li>Created installation page, conclusion page, and helped with frameworks page</li>
-								<li>Prototyped navbar, home page, and profile page</li>
-								<li>Styled song editor, aided with main style and page layout</li>
-								<li>Created carousel on home page</li>
+								<li>Created installation page, conclusion page, and helped with frameworks page.</li>
+								<li>Prototyped navbar, home page, and profile page.</li>
+								<li>Styled song editor, aided with main style and page layout.</li>
+								<li>Created carousel on home page.</li>
 							</ul>
 						</ScrollArea>
 					</div>
 					<div className="col-lg-3 col-sm-6 col-8 credits-block">
 						<img src="https://avatars0.githubusercontent.com/u/45542192?s=400" />
 						<h3>Mishel</h3>
-						<a href="https://github.com/galperinmishel" title="Github Account">github.com/galperinmishel</a>
 						<ScrollArea horizontal={false} speed={0.8}>
 							<ul>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent hash</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
+								<li>Conducted research on the frameworks and created the frameworks page.</li>
+								<li>Worked on a tutorial for the song editor.</li>
+								<li>Helped with quality assurance of site usability.</li>
+								<li>Assisted in adding demo content for Chip Share.</li>
+								<li>Learned various new foreign concepts used throughout the project.</li>
 							</ul>
 						</ScrollArea>
 					</div>
