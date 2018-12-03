@@ -127,7 +127,12 @@ class Song {
 	save() {
 		if (!this.id) {
 			// create new song and get id
-			return APIHelper.createSong(this.getSendableSong());
+			const promise = APIHelper.createSong(this.getSendableSong());
+			promise.then((xhr) => {
+				const json = JSON.parse(xhr.response);
+				this.id = json.id;
+			});
+			return promise;
 		} else {
 			// update song
 			return APIHelper.updateSong(this.id, this.getSendableSong());
