@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import constant from './constants.js';
 import SongList from "./SongList";
+import Link from "react-router-dom/es/Link";
 
 class Home extends Component {
 
@@ -62,8 +63,10 @@ class Home extends Component {
 						</div>
 						<div className="col-lg-3 col-md-4">
 							<h3>About</h3>
-							<p>Chip Share is a chiptune song editor right on your browser! It is developed using <a href="https://reactjs.org/">ReactJS</a> as a front-end framework and <a href="https://expressjs.com/">Express</a> back-end framework.</p>
-							<p>The project is the result of a school project collectively developed by Jake, Carson, Mishel, and Alex at Ryerson University, Toronto, Canada.</p>
+							<p>Chip Share is a chiptune song sharing website! It is developed using the <a href="https://reactjs.org/">React</a> framework for the front-end, and <a href="https://expressjs.com/">Express</a> for the back-end.</p>
+							<p>This school project has been collectively developed by Jake, Carson, Mishel, and Alex at Ryerson University, Toronto, Canada.</p>
+							<h3>Get Started</h3>
+							<p>Try out our custom chiptune editor to create your very own songs! Simply <Link to={'/register'}>create an account</Link> and play around to master the art of 8-bit music!</p>
 						</div>
 					</div>
 				</div>

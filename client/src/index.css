@@ -12,7 +12,7 @@ body {
 	padding-top: 55px;
 	color: #ababab;
 }
-h1, h2, h3 {
+h1, h2, h3, h4 {
 	color: white;
 }
 .btn {
@@ -409,5 +409,10 @@ hr {
 	font-size: 14pt;
 	background-color: #b3b300;
 	color: black;
+}
+.usage {
+	height: 100px;
+	display: inline;
+	margin: 20px;
 }
 /* end pages */
