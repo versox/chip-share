@@ -20,7 +20,7 @@ class TutorialPage extends Component {
 		return (
 			<div className="container" style={{margin: '30px auto 50px'}}>
 				<div className="row">
-					<div className="col-12">
+					<div className="col-12 tutorialHolder">
 						<h1>Creating a page using React and Express:</h1>
 
 						<p>For our demo website, we have created an online chiptune sharing application. You can create new songs, adapt from the songs of other users, or simply browse the site and rate the previously submitted songs. </p>

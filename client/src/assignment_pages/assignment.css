@@ -1,3 +1,7 @@
+.tutorialHolder p {
+    font-size:20px;   
+}
+
 .file {
     color: red;
 }

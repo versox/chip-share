@@ -147,7 +147,7 @@ class Editor extends Component {
 		}
 
 		return (
-			<div className="container" style={{'margin-top': '40px'}}>
+			<div className="container econtainer" style={{'margin-top': '40px'}}>
 				{!APIHelper.isLoggedIn() &&
 				<div className="alert alert-danger" role="alert">
 					You are not logged in, saving songs will not be possible! If you plan on making something awesome, login first!
@@ -183,7 +183,7 @@ class Editor extends Component {
 						<InstrEdit/>
 						<BlockEdit block={this.song.activeBlock}/>
 					</div>
-					<Time/>
+					<br/><br/><br/>
 				</div>
 			</div>
 		);

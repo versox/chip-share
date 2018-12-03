@@ -28,7 +28,7 @@ class InstallationPage extends Component {
 						<h4>Creating a React App</h4>
 						<hr />
 						<p>
-						The easiest way to install React is by using  a command called <b>create-react-app</b>. Open a command prompt, and install create-react-app with npm by typing:<br /><code>npx create-react-app <b>my-app</b></code><br />In which you may <b>replace my-app with your app name</b>. This will create a project folder containing the required React files. You may then start your local server by typing:<br /><code>npm start</code>
+						The easiest way to install React is by using  a command called <b>create-react-app</b>. Open a command prompt, and install create-react-app with npm by typing:<br /><code>npm install -g create-react-app</code>. <br/>After it is installed you can create an app with <br/><code>npx create-react-app <b>my-app</b></code><br />In which you may <b>replace my-app with your app name</b>. This will create a project folder containing the required React files. You may then start your local server by typing:<br /><code>npm start</code>
 						</p>
 						<p>
 						A webpage should open at the default port 3000. if it does not open, open a web browser and go to the url <b>localhost:3000</b>, or replace the number with the port number used to run the local server. The default webpage looks like this: 
@@ -47,8 +47,8 @@ class InstallationPage extends Component {
 						<p>
 						The installation process for Express is fast and easy. You must first change to your <b>project directory</b>, and run:<br /><code>npm init</code><br /> 
 						The command will prompt the user to enter a number of fields, fill these out appropriately or you may also leave them blank for now by pressing the <b>return</b> key.
-						To install Express and <b>save it in the dependencies list</b>, type:<br /><code>install express --save</code><br />If you would not like to add it to the dependencies list, type:
-						<br /><code>install express --no-save</code><br />
+						To install Express and <b>save it in the dependencies list</b>, type:<br /><code>npm install express --save</code><br />If you would not like to add it to the dependencies list, type:
+						<br /><code>npm install express --no-save</code><br />
 						</p>
 						<p>
 						And after those two simple steps, Express is already installed to your project directory. The API for express can be found   

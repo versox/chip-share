@@ -12,6 +12,10 @@
     margin: auto;
 }
 
+.econtainer {
+    max-width: 80%;
+}
+
 .row {
     display: flex;
 }

@@ -31,19 +31,16 @@ class Home extends Component {
 							<div className="carousel-item active" style={this.slide1}>
 								<div class="slide">
 									<h1 class="slide-cap">Create 8-Bit Music in Just Minutes</h1>
-									<button type="button" className="btn btn-light carousel-button">View The Tutorial</button>
 								</div>
 							</div>
 							<div className="carousel-item" style={this.slide2}>
 								<div class="slide">
 									<h1 class="slide-cap">Perfect For Retro-Style Games</h1>
-									<button type="button" className="btn btn-light carousel-button">Listen To Example Songs</button>
 								</div>
 							</div>
 							<div className="carousel-item" style={this.slide3}>
 								<div class="slide">
 									<h1 class="slide-cap">Get Started With Our Free Chiptune Editor</h1>
-									<button type="button" className="btn btn-light carousel-button">Create a New Song</button>
 								</div>
 							</div>
 						</div>

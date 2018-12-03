@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ScrollArea from 'react-scrollbar';
+import { Link } from 'react-router-dom';
 
 class CreditsPage extends Component {
 	render() {
@@ -36,12 +37,12 @@ class CreditsPage extends Component {
 						<a href="https://github.com/versox" title="Github Account">github.com/versox</a>
 						<ScrollArea horizontal={false} speed={0.8}>
 							<ul>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent hash</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
-								<li>Lorem ipsum dolor sit amet, ex movet putent has</li>
+								<li>Created the <Link to="/editor/new">editor</Link>.</li>
+								<li>Created the skeleton for the client and made routing / page navigation work.</li>
+								<li>Made the tutorial for how to create a great looking page.</li>
+								<li>Implemented songs on the client. Made them load, play, editable, and saveable.</li>
+								<li>Implemented user accounts on the client.</li>
+								<li>Responsible for chipshare.me domain name.</li>
 							</ul>
 						</ScrollArea>
 					</div>
