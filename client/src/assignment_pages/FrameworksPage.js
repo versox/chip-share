@@ -16,16 +16,16 @@ class FrameworksPage extends Component {
 			                        </p>
 						<h3>Strengths</h3>
 						<ul>
-							<li>Virtual Document Object Model, that allows arranging documents in HTML format into a tree from which is better acceptable by web browsers while parsing different elements of the web app.</li>
-							<li>100% open source JavaScript library which get everyday updates and improvements according to the contributions of developers all over the world.</li>
+							<li>Virtual Document Object Model, that allows the user to arrange documents in HTML format into a tree form which is more acceptable by web browsers while parsing different elements of the web app.</li>
+							<li>100% open source JavaScript library which recieves daily updates and improvements according to the contributions of developers all over the world.</li>
                                 			<li>Light-weighted because the data performing on the user side can be easily represented on the server side simultaneously.</li>
 						</ul>
 						<h3>Weaknesses</h3>
 						<p>
 						</p>
 						<ul>
-							<li>React JS requires deep knowledge</li>
-							<li>Takes time to learn</li>
+							<li>React JS requires extensive JavaScript knolwedge</li>
+							<li>Lack of proper documentation</li>
 						</ul>
 						<h3>Usage</h3>
 						<p>
